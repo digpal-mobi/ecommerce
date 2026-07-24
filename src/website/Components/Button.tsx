@@ -3,15 +3,17 @@ import React from "react";
 type Props = {
   btnText: string;
   variant: "primary" | "secondary" | "outline";
-  classNames?: string;
+  className?: string;
 };
 
 const Button = (props: Props) => {
-  const { btnText, variant = "primary", classNames } = props;
+  const { btnText, variant = "primary", className } = props;
   return (
-    <div className="flex justify-center items-center w-full h-[52px]">
+    <div
+      className={`flex items-center h-[52px] ${variant == "primary" ? "w-[210px]" : "w-[218px]"}`}
+    >
       <button
-        className={`px-[80px] py-[15px] font-satoshi border-[#000000/10] border-[1px] outline-none rounded-full ${classNames} ${variant === "primary" ? "bg-[#000000] text-[#ffff] hover:opacity-80" : variant === "secondary" ? "bg-outline text-[#000] hover:opacity-80" : null} `}
+        className={`py-[15px] font-satoshi font-[500] w-full text-[16px] leading-[1.3em] outline-none rounded-full ${className} ${variant === "primary" ? "bg-[#000000] text-[#ffff] hover:opacity-80" : variant === "secondary" ? "bg-outline text-[#000] hover:opacity-80 border-[#000000]/10 border-[1px]" : null} `}
       >
         {btnText}
       </button>

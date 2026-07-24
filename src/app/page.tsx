@@ -1,11 +1,17 @@
-import Button from "@/website/Components/Button";
-import Increment from "@/website/Components/Increment";
+import SectionBrandLogo from "@/website/Section/SectionBrandLogo";
+import SectionMainBanner from "@/website/Section/SectionMainBanner";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home Page || Ecommerce",
+  description: "A fully functional ecommerce website.",
+};
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center gap-[20px]">
-      <Button variant="primary" btnText="View All" />
-      <Increment />
+    <div>
+      <SectionMainBanner />
+      <SectionBrandLogo />
     </div>
   );
 }
