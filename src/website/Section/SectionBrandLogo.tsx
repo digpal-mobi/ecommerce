@@ -14,14 +14,14 @@ const BrandLogos = [
 
 const SectionBrandLogo = (props: Props) => {
   return (
-    <Container className="bg-[#000]">
-      <div className="grid grid-cols-4 laptop:grid-cols-5 gap-[106px] py-[44px]">
+    <Container className="bg-[#000] !py-0">
+      <div className="flex flex-wrap gap-[30px] laptop:gap-[106px] py-[44px]">
         {BrandLogos.map((img, index) => (
           <Image
             key={index}
             src={img.image}
             alt={img.alt}
-            width={96}
+            width={160}
             height={38}
             className="h-[38px] object-contain"
           />

@@ -1,44 +1,53 @@
-import React from "react";
-import Container from "@/Components/Container";
+import Container from "@/website/Components/Container";
 import Image from "next/image";
-import DesktopHeader from "@/website/Navigation/DesktopHeader";
-import SectionHomeBanner from "@/website/Section/SectionHomeBanner";
+import Link from "next/link";
+import DesktopHeader from "@/website/Navigation/DesktopNavigation";
+import MobileHeader from "@/website/Navigation/MobileNavigation";
 import SearchBar from "@/website/Components/SearchBar";
-import { CartIcon, ProfileIcon } from "../lib/Icons";
+import SectionHomeBanner from "@/website/Section/SectionHomeBanner";
+import { CartIcon, ProfileIcon } from "@/website/lib/Icons";
 
-type Props = {};
-
-const index = (props: Props) => {
+const Header = () => {
   return (
     <header>
       <SectionHomeBanner />
-      <Container>
-        <div className="flex items-center py-[24px] justify-between">
-          <div className="flex max-w-[50%] laptop:max-w-[55%] items-center w-full gap-[40px]">
-            <Image
-              src="/logo.png"
-              alt="SHOP"
-              width={160}
-              height={22}
-              className="object-contain h-auto desktop:w-[160px] mobile:w-[126px] tablet:w-[150px]"
-            />
-            <DesktopHeader />
-          </div>
-          <div className="flex items-center max-w-[50%] w-full justify-between gap-[40px]">
-            <SearchBar />
-            <div className="flex items-center justify-center gap-[14px]">
-              <span>
+
+      {/* Desktop */}
+      <div className="hidden laptop:block">
+        <Container className="!py-0">
+          <div className="flex items-center justify-between py-6">
+            <div className="flex items-center gap-10 w-1/2 laptop:w-[65%]">
+              <Link href="/">
+                <Image
+                  src="/shop-logo.png"
+                  alt="SHOP.CO"
+                  width={160}
+                  height={22}
+                  priority
+                  className="h-auto w-auto"
+                />
+              </Link>
+              <DesktopHeader />
+            </div>
+
+            <div className="flex items-center justify-between w-1/2 laptop:w-[40%] gap-10">
+              <SearchBar />
+
+              <div className="flex items-center gap-4">
                 <CartIcon />
-              </span>
-              <span>
                 <ProfileIcon />
-              </span>
+              </div>
             </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
+
+      {/* Mobile */}
+      <div className="block laptop:hidden">
+        <MobileHeader />
+      </div>
     </header>
   );
 };
 
-export default index;
+export default Header;

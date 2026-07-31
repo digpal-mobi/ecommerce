@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navigation from "@/website/Navigation";
+import Footer from "@/website/FooterNavigation";
 
 const satoshi = localFont({
   src: [
@@ -85,6 +86,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Navigation />
         {children}
+        <Footer />
       </body>
     </html>
   );

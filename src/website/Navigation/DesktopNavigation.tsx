@@ -1,5 +1,5 @@
 "use client";
-import { NAVIGATION_ITEMS } from "@/Navigation/DummyNavigation";
+import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
 import { ChevronDown } from "../lib/Icons";
 import { useState } from "react";
 
@@ -38,11 +38,15 @@ export const DesktopHeader = (props: Props) => {
                   onClick={() => handleDropdownClick(item.id)}
                 >
                   <span className="">{item.title}</span>
-                  <ChevronDown />
+                  {expandedId ? ( 
+                    <ChevronDown className="rotate-180 mt-[2px]" />
+                  ) : (
+                    <ChevronDown className="mt-[2px]" />
+                  )}
                 </div>
 
                 {expandedId === item.id && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white w-[200px] shadow-lg px-[25px] py-[20px] z-10 rounded-lg">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white w-[200px] shadow-lg px-[25px] py-[20px] z-100 rounded-lg">
                     {item.children.map((subItem) => (
                       <div
                         key={subItem.href}

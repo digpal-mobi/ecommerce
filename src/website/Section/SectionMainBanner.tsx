@@ -1,74 +1,123 @@
 import React from "react";
 import Image from "next/image";
-import Container from "@/Components/Container";
-import Button from "@/Components/Button";
-import { SparkleIcon, SparkleIcon2 } from "@/lib/Icons";
+import Container from "@/website/Components/Container";
+import Button from "@/website/Components/Button";
+import { SparkleIcon, SparkleIcon2 } from "@/website/lib/Icons";
 
 const Metrics = [
-  { Number: 200, description: "International Brands" },
-  { Number: 2000, description: "High-Quality Products" },
-  { Number: 30000, description: "Happy Customers" },
+  {
+    number: "200+",
+    description: "International Brands",
+  },
+  {
+    number: "2,000+",
+    description: "High-Quality Products",
+  },
+  {
+    number: "30,000+",
+    description: "Happy Customers",
+  },
 ];
 
 const SectionMainBanner = () => {
   return (
-    <div className="relative w-full">
-      {/* Banner Image */}
-      <Image
-        src="/banner.png"
-        alt="Banner"
-        width={1920}
-        height={663}
-        priority
-        className="h-auto w-full object-cover"
-      />
+    <section className="relative overflow-hidden bg-[#F2F0F1]">
+      <div className="hidden laptop:block absolute right-0 bottom-0 w-[48%] h-full">
+        <Image
+          src="/banner-image.png"
+          alt="Banner"
+          fill
+          priority
+          className="object-contain object-right-bottom"
+        />
 
-      <div className=" absolute top-[50%] right-[45%] ">
-        <SparkleIcon />
+        <div className="absolute top-[12%] right-[7%]">
+          <SparkleIcon2 className="laptop:w-[104px] w-[76px] h-auto" />
+        </div>
+
+        <div className="absolute top-[45%] left-[5%]">
+          <SparkleIcon className="" />
+        </div>
       </div>
-      <div className="absolute top-[16%] right-[4%]">
-        <SparkleIcon2 />
-      </div>
 
-      <div className="absolute inset-0 flex items-center">
-        <Container>
-          <div className="flex h-full flex-col items-start">
-            <div className="w-full max-w-[46.6%]">
-              <h1 className="font-integral desktop:text-[64px] tablet:text-[45px] mobile:text-[36px] leading-[64px] font-[700]">
-                FIND CLOTHES THAT MATCHES YOUR STYLE
-              </h1>
+      <Container>
+        <div className="relative z-10 flex min-h-[50%] items-center">
+          <div className="w-full laptop:max-w-[52%] pt-[40px] laptop:!pt-0">
+            <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
+              FIND CLOTHES THAT MATCHES YOUR STYLE
+            </h1>
 
-              <p className="mt-8 text-[16px] leading-6 text-[#000000]/60 font-satoshi font-[400]">
-                Browse through our diverse range of meticulously crafted
-                garments, designed to bring out your individuality and cater to
-                your sense of style.
-              </p>
+            <p className="mt-6 text-[14px] font-satoshi laptop:text-[16px] font-[400] laptop:leading-[28px] text-black/60">
+              Browse through our diverse range of meticulously crafted garments,
+              designed to bring out your individuality and cater to your sense
+              of style.
+            </p>
 
-              <Button
-                btnText="Shop Now"
-                variant="primary"
-                className="!justify-start mt-[32px]"
-              />
-            </div>
-            <div className="flex mt-[48px] items-center">
-              {Metrics.map((items, index) => (
+            <Button
+              btnText="Shop Now"
+              variant="primary"
+              className="mt-8 w-full laptop:max-w-[210px]"
+            />
+
+            {/* Metrics */}
+            <div className="mt-12 flex flex-wrap">
+              {Metrics.map((item, index) => (
                 <React.Fragment key={index}>
-                  <div className="flex flex-col items-start">
-                    <span className="font-[700] font-satoshi text-[40px] leading-[1em]">
-                      {items.Number}+
-                    </span>
-                    <p className="font-[400] font-satoshi text-[16px] text-[#000000]/60 leading-[1em]">
-                      {items.description}
-                    </p>
+                  <div
+                    className={`${
+                      index === 2
+                        ? "w-full mt-6 flex justify-center items-center laptop:w-auto laptop:mt-0"
+                        : "w-1/2 laptop:w-auto flex justify-center items-center"
+                    }`}
+                  >
+                    <div
+                      className={`
+            ${
+              index === 0
+                ? "laptop:pr-8"
+                : index === Metrics.length - 1
+                  ? "laptop:pl-8"
+                  : "laptop:px-8"
+            }
+          `}
+                    >
+                      <h3 className="text-[32px] laptop:text-[40px] font-bold leading-none">
+                        {item.number}
+                      </h3>
+
+                      <p className="mt-2 text-black/60">{item.description}</p>
+                    </div>
                   </div>
-                  <div className="w-[1px] h-[60px] mx-[32px] bg-[#000000]/10"></div>
+
+                  {index !== Metrics.length - 1 && (
+                    <div className="hidden laptop:block w-px h-14 bg-black/10" />
+                  )}
                 </React.Fragment>
               ))}
             </div>
           </div>
-        </Container>
+        </div>
+      </Container>
+
+      <div className="relative laptop:hidden mt-8">
+        <Image
+          src="/banner-image.png"
+          alt="Banner"
+          width={700}
+          height={800}
+          priority
+          className="w-full h-auto object-contain object-bottom"
+        />
+
+        <div className="absolute top-[15%] right-[8%]">
+          <SparkleIcon2 />
+        </div>
+
+        <div className="absolute top-[45%] left-[8%]">
+          <SparkleIcon />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

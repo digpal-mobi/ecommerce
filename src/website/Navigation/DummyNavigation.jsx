@@ -1,3 +1,5 @@
+
+ 
 export const NAVIGATION_ITEMS = [
   {
     id: 1,
@@ -15,7 +17,8 @@ export const NAVIGATION_ITEMS = [
       {
         title: "Kids",
         href: "/shop/kids",
-      },
+      },      
+      
       {
         title: "Accessories",
         href: "/shop/accessories",
