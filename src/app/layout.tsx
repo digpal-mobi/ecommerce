@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Navigation from "@/website/Navigation";
+import Footer from "@/website/FooterNavigation";
 
 const satoshi = localFont({
   src: [
     {
-      path: "./fonts/Satoshi/Satoshi-Bold.woff2",
-      weight: "700",
+      path: "./fonts/Satoshi/Satoshi-Light.woff2",
+      weight: "300",
       style: "normal",
     },
     {
@@ -19,6 +21,16 @@ const satoshi = localFont({
       weight: "500",
       style: "normal",
     },
+    {
+      path: "./fonts/Satoshi/Satoshi-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Satoshi/Satoshi-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
   ],
   variable: "--font-satoshi",
   display: "swap",
@@ -27,8 +39,28 @@ const satoshi = localFont({
 const integral = localFont({
   src: [
     {
+      path: "./fonts/Integral/integral-regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Integral/integral-medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Integral/integral-semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
       path: "./fonts/Integral/integral-bold.woff2",
       weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Integral/integral-extrabold.woff2",
+      weight: "800",
       style: "normal",
     },
   ],
@@ -51,7 +83,11 @@ export default function RootLayout({
       lang="en"
       className={`${satoshi.variable} ${integral.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navigation />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

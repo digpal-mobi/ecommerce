@@ -1,1 +1,32 @@
 @import "tailwindcss";
+@theme {
+  --font-satoshi: var(--font-satoshi), sans-serif;
+  --font-integral: var(--font-integral), sans-serif;
+
+  --breakpoint-mobile: 390px;
+  --breakpoint-mobile-lg: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-tablet-lg: 992px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-laptop-lg: 1200px;
+  --breakpoint-desktop: 1440px;
+  --breakpoint-desktop-lg: 1500px;
+}
+
+.embla {
+  overflow: hidden;
+}
+
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  min-width: 0;
+}
