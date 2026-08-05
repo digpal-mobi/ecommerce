@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Container from "@/website/Components/Container";
-import Button from "@/website/Components/Button";
+import Container from "@/website/Components/common/Container";
+import Button from "@/website/Components/common/Button";
 import { SparkleIcon, SparkleIcon2 } from "@/website/lib/Icons";
 
 const Metrics = [
@@ -42,7 +42,7 @@ const SectionMainBanner = () => {
 
       <Container>
         <div className="relative z-10 flex min-h-[50%] items-center">
-          <div className="w-full laptop:max-w-[52%] pt-[40px] laptop:!pt-0">
+          <div className="w-full laptop:max-w-[52%] ">
             <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
               FIND CLOTHES THAT MATCHES YOUR STYLE
             </h1>
@@ -53,11 +53,9 @@ const SectionMainBanner = () => {
               of style.
             </p>
 
-            <Button
-              btnText="Shop Now"
-              variant="primary"
-              className="mt-8 w-full laptop:max-w-[210px]"
-            />
+            <div className="mt-[24px] flex tablet:justify-start justify-center desktop:mt-[32px]">
+              <Button variant="primary">Shop Now</Button>
+            </div>
 
             {/* Metrics */}
             <div className="mt-12 flex flex-wrap">

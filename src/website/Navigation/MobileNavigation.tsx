@@ -21,7 +21,7 @@ const MobileNavigation = () => {
 
               <Link href="/">
                 <Image
-                  src="/logo.png"
+                  src="/shop-logo.png"
                   alt="SHOP.CO"
                   width={120}
                   height={18}

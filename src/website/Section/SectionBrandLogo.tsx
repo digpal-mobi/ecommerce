@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "../Components/Container";
+import Container from "../Components/common/Container";
 import Image from "next/image";
 
 type Props = {};
@@ -15,7 +15,7 @@ const BrandLogos = [
 const SectionBrandLogo = (props: Props) => {
   return (
     <Container className="bg-[#000] !py-0">
-      <div className="flex flex-wrap gap-[30px] laptop:gap-[106px] py-[44px]">
+      <div className="flex flex-wrap gap-x-[30px] gap-y-[20px] desktop:gap-x-[106px] py-[44px]">
         {BrandLogos.map((img, index) => (
           <Image
             key={index}
@@ -23,7 +23,7 @@ const SectionBrandLogo = (props: Props) => {
             alt={img.alt}
             width={160}
             height={38}
-            className="h-[38px] object-contain"
+            className="h-[38px] max-w-[120px] tablet:max-w-[160px] object-contain"
           />
         ))}
       </div>

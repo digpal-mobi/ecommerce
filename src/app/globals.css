@@ -30,3 +30,8 @@
   transform: translate3d(0, 0, 0);
   min-width: 0;
 }
+
+/* Hide scrollbar for Webkit-based browsers */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

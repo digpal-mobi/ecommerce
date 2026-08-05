@@ -1,8 +1,6 @@
-import React from "react";
-import Container from "../Components/Container";
+import Container from "../Components/common/Container";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../Components/Button";
 import {
   FacebookIcon,
   GithubIcon,
@@ -46,7 +44,7 @@ const index = (props: Props) => {
         </div>
       </Container>
 
-      <Container className="bg-[#F0F0F0] laptop:!pt-[150px]">
+      <Container className="bg-[#F0F0F0] laptop:!pt-[150px] pt-[120px]">
         <div className="flex flex-col gap-12 laptop:flex-row laptop:items-start">
           {/* Left */}
           <div className="w-full laptop:max-w-[250px] desktop:max-w-[260px]">

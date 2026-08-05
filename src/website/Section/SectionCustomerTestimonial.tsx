@@ -3,7 +3,7 @@
 import React from "react";
 import EmblaCarousel from "@/website/Components/EmblaCaraousel/EmblaCaraousel";
 import ReviewCard from "@/website/Components/ReviewCard";
-import Container from "@/website/Components/Container";
+import Container from "@/website/Components/common/Container";
 import { TESTIMONIALS } from "@/website/data/TestimonialData";
 import { EmblaOptionsType } from "embla-carousel";
 

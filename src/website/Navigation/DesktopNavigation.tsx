@@ -2,6 +2,7 @@
 import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
 import { ChevronDown } from "../lib/Icons";
 import { useState } from "react";
+import Link from "next/link";
 
 type Props = {};
 
@@ -30,36 +31,44 @@ export const DesktopHeader = (props: Props) => {
     <nav className="flex items-center ">
       <div className="flex items-center gap-[24px]">
         {NAVIGATION_ITEMS.map((item) => (
-          <div key={item.id} className="relative">
+          <div
+            key={item.id}
+            className="relative"
+            onMouseEnter={() => setExpandedId(item.id)}
+            onMouseLeave={() => setExpandedId(null)}
+          >
             {item.children ? (
               <>
-                <div
-                  className="flex items-center ease-in-out transition-all gap-1 cursor-pointer"
+                <button
+                  type="button"
+                  className="flex items-center gap-1 cursor-pointer"
                   onClick={() => handleDropdownClick(item.id)}
                 >
-                  <span className="">{item.title}</span>
-                  {expandedId ? ( 
-                    <ChevronDown className="rotate-180 mt-[2px]" />
-                  ) : (
-                    <ChevronDown className="mt-[2px]" />
-                  )}
-                </div>
+                  <span>{item.title}</span>
+
+                  <ChevronDown
+                    className={`mt-[2px] transition-transform duration-200 ${
+                      expandedId === item.id ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
                 {expandedId === item.id && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white w-[200px] shadow-lg px-[25px] py-[20px] z-100 rounded-lg">
+                  <div className="absolute left-1/2 top-full z-50 mt-3 w-[200px] -translate-x-1/2 rounded-lg bg-white py-4 shadow-lg">
                     {item.children.map((subItem) => (
-                      <div
+                      <Link
                         key={subItem.href}
-                        className="py-[10px] items-center flex hover:text-gray-600 cursor-pointer"
+                        href={subItem.href}
+                        className="block px-5 py-2 hover:bg-gray-100"
                       >
                         {subItem.title}
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 )}
               </>
             ) : (
-              <div>{item.title}</div>
+              <Link href={item.href}>{item.title}</Link>
             )}
           </div>
         ))}
