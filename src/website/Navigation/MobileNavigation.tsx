@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CartIcon, HamburgerIcon, ProfileIcon, SearchIcon } from "../lib/Icons";
+import { CartIcon, HamburgerIcon, ProfileIcon, SearchIcon } from "@/website/lib/Icons";
 import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
 
 const MobileNavigation = () => {
@@ -21,7 +21,7 @@ const MobileNavigation = () => {
 
               <Link href="/">
                 <Image
-                  src="/logo.png"
+                  src="/shop-logo.png"
                   alt="SHOP.CO"
                   width={120}
                   height={18}

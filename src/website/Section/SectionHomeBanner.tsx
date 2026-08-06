@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { CrossIcon } from "@/website/lib/Icons";
-import Container from "@/website/Components/Container";
+import Container from "@/website/Components/common/Container";
 
 type Props = {};
 

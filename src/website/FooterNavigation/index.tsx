@@ -1,15 +1,13 @@
-import React from "react";
-import Container from "../Components/Container";
+import Container from "@/website/Components/common/Container";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../Components/Button";
 import {
   FacebookIcon,
   GithubIcon,
   InstagramIcon,
   MailIcon,
   TwitterIcon,
-} from "../lib/Icons";
+} from "@/website/lib/Icons";
 import { FOOTER_NAVIGATION } from "@/website/FooterNavigation/DummyFooter";
 
 type Props = {};
@@ -46,7 +44,7 @@ const index = (props: Props) => {
         </div>
       </Container>
 
-      <Container className="bg-[#F0F0F0] laptop:!pt-[150px]">
+      <Container className="bg-[#F0F0F0] laptop:!pt-[150px] pt-[120px]">
         <div className="flex flex-col gap-12 laptop:flex-row laptop:items-start">
           {/* Left */}
           <div className="w-full laptop:max-w-[250px] desktop:max-w-[260px]">

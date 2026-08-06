@@ -6,8 +6,8 @@ import {
   NextButton,
   PrevButton,
   usePrevNextButtons,
-} from "./EmblaCaraouselArrowButton";
-import Container from "../Container";
+} from "@/website/Components/EmblaCaraousel/EmblaCaraouselArrowButton";
+import Container from "@/website/Components/common/Container";
 
 type PropType = {
   slides?: number[];

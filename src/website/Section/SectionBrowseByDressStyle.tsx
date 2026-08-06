@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "../Components/Container";
+import Container from "@/website/Components/common/Container";
 import Image from "next/image";
 
 const DRESS_STYLES = [
