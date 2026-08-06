@@ -1,10 +1,10 @@
 import Image from "next/image";
 import SectionRating from "@/website/Section/SectionRating";
-import Button from "./common/Button";
-import { AddToCartIcon } from "../lib/Icons";
-import TitleTag from "./common/TitleTag";
-import Paragraph from "./common/Paragraph";
-import Increment from "./Increment";
+import Button from "@/website/Components/common/Button";
+import { AddToCartIcon } from "@/website/lib/Icons";
+import TitleTag from "@/website/Components/common/TitleTag";
+import Paragraph from "@/website/Components/common/Paragraph";
+import Increment from "@/website/Components/Increment";
 
 type Props = {
   products?: Array<any>;
@@ -36,11 +36,11 @@ const ProductCard = ({ products }: Props) => {
               </div>
             </div>
             <div className="mt-[16px] flex items-center justify-center w-full">
-              <Button
-                variant="withIcon"
-                icon={<AddToCartIcon className="h-[20px] w-[20px]" />}
-              >
-                <span>Add to Cart</span>
+              <Button variant="primary">
+                <AddToCartIcon className="h-[20px] w-[20px]" />
+                <TitleTag as="span" variant="satoshiBold">
+                  Add to Cart
+                </TitleTag>
               </Button>
             </div>
           </div>

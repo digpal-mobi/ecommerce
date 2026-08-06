@@ -9,9 +9,5 @@ export const metadata: Metadata = {
 
 export default async function Products() {
   const data = await FetchProductsById(121);
-  return (
-    <div>
-      <SectionProductAbout data={data} />
-    </div>
-  );
+  return <div>{/* <SectionProductAbout data={data} /> */}</div>;
 }

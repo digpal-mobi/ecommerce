@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import LazyImage from "../Components/common/LazyImage";
+import LazyImage from "@/website/Components/common/LazyImage";
 
 type Props = {
   images?: string[];

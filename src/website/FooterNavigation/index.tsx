@@ -1,4 +1,4 @@
-import Container from "../Components/common/Container";
+import Container from "@/website/Components/common/Container";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -7,7 +7,7 @@ import {
   InstagramIcon,
   MailIcon,
   TwitterIcon,
-} from "../lib/Icons";
+} from "@/website/lib/Icons";
 import { FOOTER_NAVIGATION } from "@/website/FooterNavigation/DummyFooter";
 
 type Props = {};

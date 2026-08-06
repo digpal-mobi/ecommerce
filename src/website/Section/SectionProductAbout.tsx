@@ -1,16 +1,16 @@
 import React from "react";
-import Container from "../Components/common/Container";
-import Breadcrumb from "../Components/common/Breadcrumb";
-import SectionImageGallery from "./SectionImageGallery";
-import TitleTag from "../Components/common/TitleTag";
+import Container from "@/website/Components/common/Container";
+import Breadcrumb from "@/website/Components/common/Breadcrumb";
+import SectionImageGallery from "@/website/Section/SectionImageGallery";
+import TitleTag from "@/website/Components/common/TitleTag";
 
-import { ApiResponse } from "../utils/api";
-import SectionRating from "./SectionRating";
-import SectionProductPrices from "./SectionProductPrices";
-import Paragraph from "../Components/common/Paragraph";
-import Increment from "../Components/Increment";
-import Button from "../Components/common/Button";
-import { AddToCartIcon, WishlistIcon } from "../lib/Icons";
+import { ApiResponse } from "@/website/utils/api";
+import SectionRating from "@/website/Section/SectionRating";
+import SectionProductPrices from "@/website/Section/SectionProductPrices";
+import Paragraph from "@/website/Components/common/Paragraph";
+import Increment from "@/website/Components/Increment";
+import Button from "@/website/Components/common/Button";
+import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
 
 type Props = {
   data?: ApiResponse | any;
@@ -56,7 +56,7 @@ const SectionProductAbout = ({ data }: Props) => {
               {data.description}
             </Paragraph>
           </div>
-          <div className="flex w-full justify-between py-[20px] ">
+          <div className="flex w-full laptop:flex-row flex-col gap-[20px] laptop:gap-0 justify-between py-[0px] tablet:py-[20px] ">
             <div className="flex flex-col gap-[10px]">
               <TitleTag variant="bold" as="h3">
                 Brand
@@ -84,15 +84,19 @@ const SectionProductAbout = ({ data }: Props) => {
           </div>
           <div className="flex w-full gap-[24px] mt-[24px] items-center">
             <Increment className="w-[170px] shrink-0" />
-            <Button variant="primary" className="flex-1 shrink-0">
-              <AddToCartIcon className="h-[20px] w-[20px]" />
-              <span>Add to Cart</span>
+            <Button variant="primary" className="flex-1 gap-[10px] shrink-0">
+              <AddToCartIcon className="h-[22px] w-[22px]" />
+              <TitleTag as="span" variant="satoshiBold">
+                Add to Cart
+              </TitleTag>
             </Button>
           </div>
           <div className="flex w-full items-center mt-[20px]">
-            <Button variant="outline" className="flex-1">
-              <WishlistIcon className="h-[20px] w-[20px]" />
-              <span>Add to Whislist</span>
+            <Button variant="outline" className="flex-1 shrink-0 gap-[10px]">
+              <WishlistIcon className="h-[22px] w-[22px]" />
+              <TitleTag as="span" variant="satoshiBold">
+                Add to wishlist
+              </TitleTag>
             </Button>
           </div>
         </div>

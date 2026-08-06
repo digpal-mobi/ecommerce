@@ -1,6 +1,6 @@
 "use client";
 import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
-import { ChevronDown } from "../lib/Icons";
+import { ChevronDown } from "@/website/lib/Icons";
 import { useState } from "react";
 import Link from "next/link";
 

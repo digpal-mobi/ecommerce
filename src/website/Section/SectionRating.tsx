@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ReviewStar, HalfReviewStar } from "../lib/Icons";
-import { RoundRating } from "../helpers/helper";
+import { ReviewStar, HalfReviewStar } from "@/website/lib/Icons";
+import { RoundRating } from "@/website/helpers/helper";
 
 export default function SectionRating({ rating }: { rating: number }) {
   const roundedRating = RoundRating(rating);

@@ -4,9 +4,9 @@ import {
   useSelector as useAppSelector,
 } from "react-redux";
 import authSlice from "@/redux/slices/authSlice";
-// import cartSlice from "./slices/cartSlice";
-// import productsSlice from "./slices/productsSlice";
-// import sidebarSlice from "./slices/sidebarSlice";
+// import cartSlice from "@/redux/slices/cartSlice";
+// import productsSlice from "@/redux/slices/productsSlice";
+// import sidebarSlice from "@/redux/slices/sidebarSlice";
 
 // Custom logger middleware
 const logger: Middleware = (storeApi) => (next) => (action) => {

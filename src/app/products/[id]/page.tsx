@@ -1,4 +1,5 @@
 import SectionProductAbout from "@/website/Section/SectionProductAbout";
+import SectionProductDetails from "@/website/Section/SectionProductDetails";
 import { FetchProductsById } from "@/website/utils/api";
 import { Metadata } from "next";
 
@@ -13,11 +14,12 @@ export default async function ProductsDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  console.log(id);
   const data = await FetchProductsById(Number(id));
+
   return (
     <div>
       <SectionProductAbout data={data} />
+      <SectionProductDetails data={data} />
     </div>
   );
 }

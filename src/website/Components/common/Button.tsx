@@ -29,7 +29,7 @@ const BUTTON_VARIANTS: Record<
 
   outline: {
     button:
-      "border-2 border-black bg-transparent text-black hover:bg-black hover:text-white flex items-center justify-center",
+      "border-2 border-[#000000]/30 bg-transparent text-black hover:bg-black hover:text-white flex items-center justify-center",
   },
 };
 

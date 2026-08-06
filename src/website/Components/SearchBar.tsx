@@ -1,6 +1,6 @@
 import React from "react";
-import { SearchIcon } from "../lib/Icons";
-import Input from "./common/Input";
+import { SearchIcon } from "@/website/lib/Icons";
+import Input from "@/website/Components/common/Input";
 
 type Props = {};
 
