@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "@/app/globals.css";
 import Navigation from "@/website/Navigation";
 import Footer from "@/website/FooterNavigation";
+import { Providers } from "@/redux/Provider";
 
 const satoshi = localFont({
   src: [
@@ -84,9 +85,11 @@ export default function RootLayout({
       className={`${satoshi.variable} ${integral.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navigation />
-        {children}
-        <Footer />
+        <Providers>
+          <Navigation />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

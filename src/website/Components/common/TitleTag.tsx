@@ -1,8 +1,8 @@
-import { JSX, ReactNode } from "react";
+import { HTMLAttributes, JSX, ReactNode } from "react";
 
 type TitleVariant = "bold" | "heading" | "mainHeading" | "satoshiBold";
 
-type Props = {
+type Props = HTMLAttributes<HTMLElement> & {
   children?: ReactNode;
   as?: keyof Pick<
     JSX.IntrinsicElements,
@@ -29,9 +29,13 @@ const TitleTag = ({
   as: Tag = "h2",
   variant = "bold",
   className = "",
+  ...props
 }: Props) => {
   return (
-    <Tag className={`${VARIANT_CLASSES[variant]} ${className}`.trim()}>
+    <Tag
+      className={`${VARIANT_CLASSES[variant]} ${className}`.trim()}
+      {...props}
+    >
       {children}
     </Tag>
   );

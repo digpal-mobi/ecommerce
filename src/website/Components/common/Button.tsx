@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
+import React, { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "outline";
 
-type Props = {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   className?: string;
   children: ReactNode;
@@ -39,6 +39,7 @@ const Button = ({
   children,
   onClick,
   type = "button",
+  ...props
 }: Props) => {
   const styles = BUTTON_VARIANTS[variant];
 
@@ -46,6 +47,7 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
+      {...props}
       className={`rounded-full py-[15px] px-[32px] h-full cursor-pointer font-satoshi text-[16px] font-[500] leading-[1.3em] outline-none transition-all ${styles.button} ${className}`}
     >
       {children}

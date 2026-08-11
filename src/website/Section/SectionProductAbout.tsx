@@ -82,9 +82,9 @@ const SectionProductAbout = ({ data }: Props) => {
               </TitleTag>
             </div>
           </div>
-          <div className="flex w-full gap-[24px] mt-[24px] items-center">
-            <Increment className="w-[170px] shrink-0" />
-            <Button variant="primary" className="flex-1 gap-[10px] shrink-0">
+          <div className="flex w-full flex-col tablet:flex-row gap-[24px] mt-[24px] items-center">
+            <Increment className="w-full flex" />
+            <Button variant="primary" className=" gap-[10px] w-full">
               <AddToCartIcon className="h-[22px] w-[22px]" />
               <TitleTag as="span" variant="satoshiBold">
                 Add to Cart

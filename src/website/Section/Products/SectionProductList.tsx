@@ -1,20 +1,22 @@
-import Image from "next/image";
-import SectionRating from "@/website/Section/SectionRating";
-import Button from "@/website/Components/common/Button";
-import { AddToCartIcon } from "@/website/lib/Icons";
-import TitleTag from "@/website/Components/common/TitleTag";
 import Paragraph from "@/website/Components/common/Paragraph";
 import Increment from "@/website/Components/Increment";
+import SectionRating from "../SectionRating";
+import TitleTag from "@/website/Components/common/TitleTag";
+import Image from "next/image";
+import Pagination from "@/website/Components/common/Pagination";
 
 type Props = {
-  products?: Array<any>;
+  data?: any[];
 };
 
-const ProductCard = ({ products }: Props) => {
+const SectionProductList = ({ data }: Props) => {
   return (
-    <section className="w-full py-[32px] laptop:py-[55px]">
-      <div className="flex gap-[20px] laptop:justify-center justify-start">
-        {products?.map((items) => (
+    <main className="flex-1">
+      <div className="mb-[24px] flex items-center justify-between">
+        <h2 className="text-[14px] font-semibold text-[#111111]">Products</h2>
+      </div>
+      <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
+        {data?.map((items: any) => (
           <div key={items.id} className="flex flex-col shrink-0">
             <button>
               <Image
@@ -35,19 +37,14 @@ const ProductCard = ({ products }: Props) => {
                 <Increment />
               </div>
             </div>
-            <div className="mt-[16px] flex items-center justify-center w-full">
-              <Button variant="primary">
-                <AddToCartIcon className="h-[20px] w-[20px]" />
-                <TitleTag as="span" variant="satoshiBold">
-                  Add to Cart
-                </TitleTag>
-              </Button>
-            </div>
           </div>
         ))}
       </div>
-    </section>
+      <div>
+        <Pagination />
+      </div>
+    </main>
   );
 };
 
-export default ProductCard;
+export default SectionProductList;
