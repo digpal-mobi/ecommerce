@@ -1,7 +1,8 @@
 import React from "react";
-import ProductCard from "@/website/Components/ProductCard";
-import Container from "@/website/Components/common/Container";
-import Button from "@/website/Components/common/Button";
+import ProductCard from "@/website/components/ProductCard";
+import Container from "@/website/components/common/Container";
+import Button from "@/website/components/common/Button";
+import TitleTag from "../components/common/TitleTag";
 
 type Props = {
   products: Array<any>;
@@ -11,9 +12,9 @@ const SectionTopSelling = ({ products }: Props) => {
   return (
     <Container className="w-full !pb-[0px]">
       <div className="flex justify-center items-center w-full">
-        <h1 className="font-integral laptop:text-[48px] text-[32px] leading-[1em] font-[700]">
+        <TitleTag as="h2" variant="heading">
           TOP SELLING
-        </h1>
+        </TitleTag>
       </div>
       <div className="overflow-x-auto overflow-y-hidden scrollbar-hide w-full">
         <ProductCard products={products} />

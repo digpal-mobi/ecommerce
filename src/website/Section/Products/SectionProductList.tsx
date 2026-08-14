@@ -1,32 +1,68 @@
-import Paragraph from "@/website/Components/common/Paragraph";
-import Increment from "@/website/Components/Increment";
+"use client";
+
+import Paragraph from "@/website/components/common/Paragraph";
+import Increment from "@/website/components/Increment";
 import SectionRating from "../SectionRating";
-import TitleTag from "@/website/Components/common/TitleTag";
+import TitleTag from "@/website/components/common/TitleTag";
 import Image from "next/image";
-import Pagination from "@/website/Components/common/Pagination";
+import Pagination from "@/website/components/common/Pagination";
+import Link from "next/link";
+import { useDispatch } from "@/redux/store";
+import { useState } from "react";
+import { addToCart } from "@/redux/slices/cartSlice";
+import Button from "@/website/components/common/Button";
+import { AddToCartIcon } from "@/website/lib/Icons";
 
 type Props = {
   data?: any[];
 };
 
 const SectionProductList = ({ data }: Props) => {
+  const dispatch = useDispatch();
+  const [quantities, setQuantities] = useState<Record<number, number>>({});
+
+  const getQuantity = (id: number) => {
+    return quantities[id] ?? 1;
+  };
+
+  const handleQuantityChange = (id: number, quantity: number) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: quantity,
+    }));
+  };
+
+  const HandleAddToCart = (product: any) => {
+    const quantity = getQuantity(product.id);
+    const productCart = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      thumbnail: product.thumbnail,
+      quantity,
+    };
+
+    dispatch(addToCart(productCart));
+  };
   return (
     <main className="flex-1">
       <div className="mb-[24px] flex items-center justify-between">
-        <h2 className="text-[14px] font-semibold text-[#111111]">Products</h2>
+        <TitleTag variant="heading" as="h2">
+          {data && data.length > 0 ? data[0].category : "Products"}
+        </TitleTag>
       </div>
       <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
         {data?.map((items: any) => (
           <div key={items.id} className="flex flex-col shrink-0">
-            <button>
+            <Link className="w-full" href={`/shop/${items.id}`}>
               <Image
                 src={items.thumbnail}
                 width={295}
                 height={298}
                 alt="product image"
-                className="bg-[#F0EEED] rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                className="bg-[#F0EEED] w-full rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
               />
-            </button>
+            </Link>
             <div className="mt-[16px] flex flex-col items-start">
               <TitleTag variant="satoshiBold" as="h3">
                 {items.title}
@@ -34,8 +70,27 @@ const SectionProductList = ({ data }: Props) => {
               <SectionRating rating={items.rating} />
               <div className="flex items-center justify-between w-full">
                 <Paragraph variant="boldPara">${items.price}</Paragraph>
-                <Increment />
+                <Increment
+                  value={getQuantity(items.id)}
+                  onChange={(quantity) =>
+                    handleQuantityChange(items.id, quantity)
+                  }
+                />
               </div>
+            </div>
+            <div className="mt-[16px] flex items-center justify-center w-full">
+              <Button
+                onClick={() => {
+                  HandleAddToCart(items);
+                }}
+                variant="primary"
+                className="w-full gap-[10px]"
+              >
+                <AddToCartIcon className="h-[20px] w-[20px]" />
+                <TitleTag as="span" variant="satoshiBold">
+                  Add to Cart
+                </TitleTag>
+              </Button>
             </div>
           </div>
         ))}

@@ -1,18 +1,33 @@
-import Breadcrumb from "@/website/Components/common/Breadcrumb";
-import Container from "@/website/Components/common/Container";
-import SectionProductList from "@/website/Section/Products/SectionProductList";
-import SectionFilter from "@/website/Section/SectionFilters";
+import Breadcrumb from "@/website/components/common/Breadcrumb";
+import Container from "@/website/components/common/Container";
+import SectionProductList from "@/website/section/products/SectionProductList";
+import SectionFilter from "@/website/section/SectionFilters";
 import { FetchProducts } from "@/website/utils/api";
 import { Metadata } from "next";
-
 
 export const metadata: Metadata = {
   title: "Products Page || Ecommerce",
   description: "A fully functional ecommerce website.",
 };
 
-export default async function Products() {
-  const data = await FetchProducts();
+type Props = {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+};
+
+export default async function Products({ searchParams }: Props) {
+  const params = await searchParams;
+
+  const currentPage = Number(params.page) || 1;
+
+  const limit = 9;
+  const skip = (currentPage - 1) * limit;
+
+  const data = await FetchProducts({
+    limit,
+    skip,
+  });
 
   const BreadCrumbItems = [
     { name: "Home", url: "/" },

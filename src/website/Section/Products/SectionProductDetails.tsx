@@ -1,6 +1,5 @@
-import Paragraph from "@/website/Components/common/Paragraph";
-import TitleTag from "@/website/Components/common/TitleTag";
-import { FormatDate } from "@/website/helpers/helper";
+import Paragraph from "@/website/components/common/Paragraph";
+import TitleTag from "@/website/components/common/TitleTag";
 
 type Props = {
   data?: any;

@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Container from "../Components/common/Container";
-import LazyImage from "../Components/common/LazyImage";
-import Input from "../Components/common/Input";
-import Button from "../Components/common/Button";
-import TitleTag from "../Components/common/TitleTag";
+import Container from "../components/common/Container";
+import LazyImage from "../components/common/LazyImage";
+import Input from "../components/common/Input";
+import Button from "../components/common/Button";
+import TitleTag from "../components/common/TitleTag";
 import { useDispatch, useSelector } from "@/redux/store";
 import {
   setLoading,
@@ -14,7 +14,9 @@ import {
   loginSuccess,
 } from "@/redux/slices/authSlice";
 import { LoginUser } from "@/website/utils/api";
-  
+import { showToast } from "@/redux/slices/toastSlice";
+import { useRouter } from "next/navigation";
+
 interface LoginFormData {
   username: string;
   password: string;
@@ -24,6 +26,8 @@ const SectionLogin = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state: any) => state.auth);
   const [apiError, setApiError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const {
     register,
@@ -51,9 +55,19 @@ const SectionLogin = () => {
       ) {
         dispatch(setUserDetails(response));
         dispatch(loginSuccess(response));
+        dispatch(showToast({ message: "Login Sucessfull", type: "success" }));
+        router.push("/");
       } else {
         setApiError(
           response.message || "Login failed. Please check your credentials.",
+        );
+        dispatch(
+          showToast({
+            message:
+              response.message ||
+              "Login Failed. Please check your credentials.",
+            type: "error",
+          }),
         );
       }
     } catch (error: any) {

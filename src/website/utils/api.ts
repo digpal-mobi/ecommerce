@@ -1,5 +1,5 @@
 import { GetData, PostData } from "@/website/utils/ApiHandlers";
-import { stringify } from "querystring";
+import { stringify } from "node:querystring";
 
 export interface ApiResponse<T = any> { 
   products?: T;
@@ -39,7 +39,7 @@ export const FetchProducts = async ({
   }
 };
 
-export const FetchProductsByCategory = async (categoryName: String, limit = 9): Promise<ApiResponse> => {
+export const FetchProductsByCategory = async (categoryName: string, limit = 4): Promise<ApiResponse> => {
   try {
     const data = await GetData<ApiResponse>(`/products/category/${categoryName}?limit=${limit}`);
     return data;
@@ -48,13 +48,13 @@ export const FetchProductsByCategory = async (categoryName: String, limit = 9): 
   }
 };
 
-export const FetchProductsById = async (id: Number): Promise<ApiResponse> => {
+export const FetchProductsById = async (id: number): Promise<ApiResponse> => {
   try {
     const data = await GetData<ApiResponse>(`/products/${id}`);
     return data;
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };
-  }
+  } 
 };
 
 export const LoginUser = async (credentials: any): Promise<ApiResponse> => {
@@ -65,6 +65,19 @@ export const LoginUser = async (credentials: any): Promise<ApiResponse> => {
     return {
       status: false,
       message: e.message || e.error || "Login failed. Please check your credentials.",
+    };
+  }
+};
+
+
+export const AddToCart = async(product:any)=>{
+  try {
+    const data = await PostData<ApiResponse>("/carts/add", product);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: e.message || e.error || "Add to cart failed. Please try again.",
     };
   }
 };

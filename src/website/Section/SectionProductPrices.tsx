@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import { ConvertToFinalPrice } from "@/website/helpers/helper";
-import TitleTag from "@/website/Components/common/TitleTag";
+import TitleTag from "@/website/components/common/TitleTag";
 
 type Props = {
   price?: number;

@@ -6,7 +6,8 @@ import {
 } from "react-redux";
 import authSlice from "@/redux/slices/authSlice";
 import paginationSlice from "@/redux/slices/pagination";
-// import cartSlice from "@/redux/slices/cartSlice";
+import toastSlice from "@/redux/slices/toastSlice";
+import cartSlice from "@/redux/slices/cartSlice";
 // import productsSlice from "@/redux/slices/productsSlice";
 // import sidebarSlice from "@/redux/slices/sidebarSlice";
 
@@ -21,7 +22,8 @@ const logger: Middleware = (storeApi) => (next) => (action) => {
 const rootReducer = combineReducers({
   auth: authSlice,
   pagination: paginationSlice,
-  //   cart: cartSlice,
+  toast: toastSlice,
+  cart: cartSlice,
   //   products: productsSlice,
   //   sidebar: sidebarSlice,
 });

@@ -6,8 +6,8 @@ import {
   NextButton,
   PrevButton,
   usePrevNextButtons,
-} from "@/website/Components/EmblaCaraousel/EmblaCaraouselArrowButton";
-import Container from "@/website/Components/common/Container";
+} from "@/website/components/EmblaCaraousel/EmblaCaraouselArrowButton";
+import Container from "@/website/components/common/Container";
 
 type PropType = {
   slides?: number[];
@@ -33,7 +33,7 @@ const EmblaCarousel = (props: PropType) => {
       {(title || showButtons) && (
         <div className="flex pb-[40px]">
           {title ? (
-            <h2 className="font-integral w-full text-center laptop:text-[48px] text-[32px] leading-[1em] font-[700] uppercase">
+            <h2 className="font-integral w-full laptop:text-[48px] text-[32px] leading-[1em] font-[700] uppercase">
               {title}
             </h2>
           ) : (

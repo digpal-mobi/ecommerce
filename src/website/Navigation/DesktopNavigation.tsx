@@ -1,5 +1,5 @@
 "use client";
-import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
+import { NAVIGATION_ITEMS } from "@/website/navigation/DummyNavigation";
 import { ChevronDown } from "@/website/lib/Icons";
 import { useState } from "react";
 import Link from "next/link";
@@ -44,7 +44,9 @@ export const DesktopHeader = (props: Props) => {
                   className="flex items-center gap-1 cursor-pointer"
                   onClick={() => handleDropdownClick(item.id)}
                 >
-                  <span>{item.title}</span>
+                  <Link href={item.href}>
+                    <span>{item.title}</span>
+                  </Link>
 
                   <ChevronDown
                     className={`mt-[2px] transition-transform duration-200 ${
