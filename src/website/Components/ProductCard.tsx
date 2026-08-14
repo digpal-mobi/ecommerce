@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import SectionRating from "@/website/section/SectionRating";
 import Button from "@/website/components/common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
@@ -14,6 +13,8 @@ import LazyImage from "./common/LazyImage";
 import { useState } from "react";
 import { showToast } from "@/redux/slices/toastSlice";
 import { AddToCart } from "../utils/api";
+import { useSelector } from "@/redux/store";
+import { CurrencyConverter } from "../helpers/helper";
 
 type Props = {
   products?: Array<any>;
@@ -23,8 +24,15 @@ const ProductCard = ({ products }: Props) => {
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
+  const currency = useSelector((state: any) => state.currency.currency);
+
   const getQuantity = (id: number) => {
     return quantities[id] ?? 1;
+  };
+
+  const handlePrice = (price: number) => {
+    const newPrice = CurrencyConverter(price, currency);
+    return newPrice;
   };
 
   const handleQuantityChange = (id: number, quantity: number) => {
@@ -70,7 +78,7 @@ const ProductCard = ({ products }: Props) => {
               />
 
               <div className="absolute top-0 right-0">
-                <button>
+                <button type="button">
                   <WishlistIcon />
                 </button>
               </div>
@@ -81,7 +89,9 @@ const ProductCard = ({ products }: Props) => {
               </TitleTag>
               <SectionRating rating={items.rating} />
               <div className="flex items-center justify-between w-full">
-                <Paragraph variant="boldPara">${items.price}</Paragraph>
+                <Paragraph variant="boldPara">
+                  {handlePrice(items.price)}
+                </Paragraph>
                 <Increment
                   value={getQuantity(items.id)}
                   onChange={(quantity) =>

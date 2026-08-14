@@ -6,7 +6,6 @@ type Props = {
 };
 
 const SectionProductDetails = ({ data }: Props) => {
-  console.log(data.meta);
   return (
     <section className="w-full">
       {/* Description */}

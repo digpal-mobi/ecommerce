@@ -98,7 +98,7 @@ const SectionFilter = () => {
           <div className="relative h-[20px]">
             <div className="absolute top-[8px] left-0 h-[4px] w-full rounded-full bg-[#EEEEEE]" />
 
-            <div className="absolute top-[8px] left-[18%] right-[18%] h-[4px] rounded-full bg-black" />
+            <div className="absolute top-[8px] left-0 right-[18%] h-[4px] rounded-full bg-black" />
 
             <input
               type="range"
@@ -106,7 +106,7 @@ const SectionFilter = () => {
               max={250}
               value={minPrice}
               onChange={(e) => setMinPrice(Number(e.target.value))}
-              className="pointer-events-none absolute left-[18%] top-[1px] h-[18px] w-[64%] appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[13px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
+              className="pointer-events-none absolute left-[18%] top-[1px] h-[18px] w-[100%] appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[13px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
             />
 
             <input
@@ -115,7 +115,7 @@ const SectionFilter = () => {
               max={250}
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="pointer-events-none absolute left-[18%] top-[1px] h-[18px] w-[64%] appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[13px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
+              className="pointer-events-none absolute left-[18%] top-[1px] h-[18px] w-[100%] appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[13px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
             />
           </div>
 

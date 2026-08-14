@@ -4,18 +4,18 @@ import React from "react";
 import { MinusIcon, PlusIcon } from "@/website/lib/Icons";
 
 type Props = {
-  value: number;
-  onChange: (value: number) => void;
+  value?: number;
+  onChange?: (value: number) => void;
   className?: string;
 };
 
-const Increment = ({ value, onChange, className = "" }: Props) => {
+const Increment = ({ value = 1, onChange, className = "" }: Props) => {
   const handleDecrease = () => {
-    onChange(Math.max(1, value - 1));
+    onChange?.(Math.max(1, value - 1));
   };
 
   const handleIncrease = () => {
-    onChange(value + 1);
+    onChange?.(value + 1);
   };
 
   return (

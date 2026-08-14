@@ -1,6 +1,10 @@
 "use client";
-import { ConvertToFinalPrice } from "@/website/helpers/helper";
+import {
+  ConvertToFinalPrice,
+  CurrencyConverter,
+} from "@/website/helpers/helper";
 import TitleTag from "@/website/components/common/TitleTag";
+import { useSelector } from "@/redux/store";
 
 type Props = {
   price?: number;
@@ -8,6 +12,7 @@ type Props = {
 };
 
 const SectionProductPrices = ({ price = 0, discountPercentage = 0 }: Props) => {
+  const currency = useSelector((state) => state.currency.currency);
   const parsedPrice = price || 0;
   const parsedDiscountPercentage = parseFloat(
     discountPercentage?.toString() || "0",
@@ -21,13 +26,13 @@ const SectionProductPrices = ({ price = 0, discountPercentage = 0 }: Props) => {
         variant="bold"
         className="laptop:text-[32px] font-satoshi text-[24px] font-[700] leading-[1em]"
       >
-        ${finalPrice}
+        {CurrencyConverter(finalPrice, currency)}
       </TitleTag>
       <TitleTag
         as="h3"
         className="laptop:text-[32px] text-[24px] line-through font-satoshi font-[700] leading-[1em] text-[#000000]/20"
       >
-        ${price}
+        {CurrencyConverter(price, currency)}
       </TitleTag>
       <TitleTag
         as="h4"

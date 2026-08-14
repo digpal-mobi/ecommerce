@@ -5,17 +5,14 @@ import {
   TypedUseSelectorHook,
 } from "react-redux";
 import authSlice from "@/redux/slices/authSlice";
-import paginationSlice from "@/redux/slices/pagination";
+import paginationSlice from "@/redux/slices/paginationSlice";
 import toastSlice from "@/redux/slices/toastSlice";
 import cartSlice from "@/redux/slices/cartSlice";
-// import productsSlice from "@/redux/slices/productsSlice";
-// import sidebarSlice from "@/redux/slices/sidebarSlice";
+import currencySlice from "@/redux/slices/currencySlice";
 
 // Custom logger middleware
 const logger: Middleware = (storeApi) => (next) => (action) => {
-  console.log("Dispatching:", action);
   const result = next(action);
-  console.log("Next state:", storeApi.getState());
   return result;
 };
 
@@ -24,6 +21,7 @@ const rootReducer = combineReducers({
   pagination: paginationSlice,
   toast: toastSlice,
   cart: cartSlice,
+  currency: currencySlice,
   //   products: productsSlice,
   //   sidebar: sidebarSlice,
 });

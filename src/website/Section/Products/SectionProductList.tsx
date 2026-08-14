@@ -7,19 +7,22 @@ import TitleTag from "@/website/components/common/TitleTag";
 import Image from "next/image";
 import Pagination from "@/website/components/common/Pagination";
 import Link from "next/link";
-import { useDispatch } from "@/redux/store";
+import { useDispatch, useSelector } from "@/redux/store";
 import { useState } from "react";
 import { addToCart } from "@/redux/slices/cartSlice";
 import Button from "@/website/components/common/Button";
 import { AddToCartIcon } from "@/website/lib/Icons";
+import { CurrencyConverter } from "@/website/helpers/helper";
 
 type Props = {
   data?: any[];
 };
 
 const SectionProductList = ({ data }: Props) => {
+
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
+  const currency = useSelector((state) => state.currency.currency);
 
   const getQuantity = (id: number) => {
     return quantities[id] ?? 1;
@@ -46,8 +49,12 @@ const SectionProductList = ({ data }: Props) => {
   };
   return (
     <main className="flex-1">
-      <div className="mb-[24px] flex items-center justify-between">
-        <TitleTag variant="heading" as="h2">
+      <div className="mb-[16px] flex items-center justify-between">
+        <TitleTag
+          className="!laptop:text-[32px] !text-[24px]"
+          variant="heading"
+          as="h2"
+        >
           {data && data.length > 0 ? data[0].category : "Products"}
         </TitleTag>
       </div>
@@ -69,7 +76,9 @@ const SectionProductList = ({ data }: Props) => {
               </TitleTag>
               <SectionRating rating={items.rating} />
               <div className="flex items-center justify-between w-full">
-                <Paragraph variant="boldPara">${items.price}</Paragraph>
+                <Paragraph variant="boldPara">
+                  {CurrencyConverter(items.price, currency)}
+                </Paragraph>
                 <Increment
                   value={getQuantity(items.id)}
                   onChange={(quantity) =>

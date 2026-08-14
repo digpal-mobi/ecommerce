@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "@/redux/store";
 import { logoutSuccess } from "@/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
 import CartIconComponent from "@/website/components/common/CartIconComponent";
+import CurrencySelector from "@/website/components/CurrencySelector";
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -111,6 +112,9 @@ const Header = () => {
                       )}
                     </div>
                   )}
+                </div>
+                <div>
+                  <CurrencySelector />
                 </div>
               </div>
             </div>
