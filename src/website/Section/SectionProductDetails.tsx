@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Container from "@/website/Components/common/Container";
-import TitleTag from "@/website/Components/common/TitleTag";
-import ProductDetailsContent from "@/website/Section/Products/SectionProductDetails";
-import SectionRatingAndReviews from "@/website/Section/Products/SectionRatingAndReviews";
-import SectionFAQs from "@/website/Section/Products/SectionFAQs";
+import Container from "@/website/components/common/Container";
+import TitleTag from "@/website/components/common/TitleTag";
+import ProductDetailsContent from "@/website/section/products/SectionProductDetails";
+import SectionRatingAndReviews from "@/website/section/products/SectionRatingAndReviews";
+import SectionFAQs from "@/website/section/products/SectionFAQs";
 
 type Tab = "details" | "reviews" | "faqs";
 
@@ -35,6 +35,7 @@ const SectionProductDetails = ({ data }: any) => {
 
           return (
             <button
+              type="button"
               key={tab.id}
               onClick={() => setActiveTab(tab.id as Tab)}
               className={`w-full pb-[24px] flex items-center justify-center border-b-2 transition-all cursor-pointer ${

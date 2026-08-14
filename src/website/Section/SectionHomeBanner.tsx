@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { CrossIcon } from "@/website/lib/Icons";
-import Container from "@/website/Components/common/Container";
+import Container from "@/website/components/common/Container";
 
 type Props = {};
 
@@ -17,7 +17,7 @@ const SectionHomeBanner = (props: Props) => {
             </Link>
           </span>
         </div>
-        <div className="text-[#FFF] flex justify-end cursor-pointer items-center">
+        <div className="text-[#FFF] flex justify-en d cursor-pointer items-center">
           <CrossIcon />
         </div>
       </div>

@@ -1,15 +1,15 @@
 import React from "react";
-import Container from "@/website/Components/common/Container";
-import Breadcrumb from "@/website/Components/common/Breadcrumb";
-import SectionImageGallery from "@/website/Section/SectionImageGallery";
-import TitleTag from "@/website/Components/common/TitleTag";
+import Container from "@/website/components/common/Container";
+import Breadcrumb from "@/website/components/common/Breadcrumb";
+import SectionImageGallery from "@/website/section/SectionImageGallery";
+import TitleTag from "@/website/components/common/TitleTag";
 
 import { ApiResponse } from "@/website/utils/api";
-import SectionRating from "@/website/Section/SectionRating";
-import SectionProductPrices from "@/website/Section/SectionProductPrices";
-import Paragraph from "@/website/Components/common/Paragraph";
-import Increment from "@/website/Components/Increment";
-import Button from "@/website/Components/common/Button";
+import SectionRating from "@/website/section/SectionRating";
+import SectionProductPrices from "@/website/section/SectionProductPrices";
+import Paragraph from "@/website/components/common/Paragraph";
+import Increment from "@/website/components/Increment";
+import Button from "@/website/components/common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
 
 type Props = {
@@ -28,7 +28,6 @@ const SectionProductAbout = ({ data }: Props) => {
   const images: string[] =
     (data as any)?.images || (data as any)?.products?.images || [];
 
-  console.log("Data", data);
   return (
     <Container className="!pt-[24px] !pb-[36px] border-t border-[#000000]/10">
       <section>
@@ -82,9 +81,11 @@ const SectionProductAbout = ({ data }: Props) => {
               </TitleTag>
             </div>
           </div>
-          <div className="flex w-full gap-[24px] mt-[24px] items-center">
-            <Increment className="w-[170px] shrink-0" />
-            <Button variant="primary" className="flex-1 gap-[10px] shrink-0">
+          <div className="flex w-full flex-col tablet:flex-row gap-[24px] mt-[24px] items-center">
+            <div className="w-[40%] flex">
+              <Increment className="w-full flex" />
+            </div>
+            <Button variant="primary" className=" gap-[10px] w-full">
               <AddToCartIcon className="h-[22px] w-[22px]" />
               <TitleTag as="span" variant="satoshiBold">
                 Add to Cart

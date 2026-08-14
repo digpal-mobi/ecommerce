@@ -1,25 +1,23 @@
 "use client";
 
-import Image from "next/image";
-import SectionRating from "@/website/section/SectionRating";
-import Button from "@/website/components/common/Button";
-import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
-import TitleTag from "@/website/components/common/TitleTag";
 import Paragraph from "@/website/components/common/Paragraph";
 import Increment from "@/website/components/Increment";
+import SectionRating from "../SectionRating";
+import TitleTag from "@/website/components/common/TitleTag";
+import Image from "next/image";
+import Pagination from "@/website/components/common/Pagination";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/slices/cartSlice";
-import LazyImage from "./common/LazyImage";
+import { useDispatch } from "@/redux/store";
 import { useState } from "react";
-import { showToast } from "@/redux/slices/toastSlice";
-import { AddToCart } from "../utils/api";
+import { addToCart } from "@/redux/slices/cartSlice";
+import Button from "@/website/components/common/Button";
+import { AddToCartIcon } from "@/website/lib/Icons";
 
 type Props = {
-  products?: Array<any>;
+  data?: any[];
 };
 
-const ProductCard = ({ products }: Props) => {
+const SectionProductList = ({ data }: Props) => {
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
@@ -45,35 +43,25 @@ const ProductCard = ({ products }: Props) => {
     };
 
     dispatch(addToCart(productCart));
-    const AddProductToCart = AddToCart(productCart);
-    dispatch(
-      showToast({
-        title: "Success",
-        message: "Item added to cart",
-        variant: "success",
-      }),
-    );
   };
-
   return (
-    <section className="w-full py-[32px] laptop:py-[55px]">
-      <div className="flex gap-[20px] laptop:justify-center justify-start">
-        {products?.map((items) => (
+    <main className="flex-1">
+      <div className="mb-[24px] flex items-center justify-between">
+        <TitleTag variant="heading" as="h2">
+          {data && data.length > 0 ? data[0].category : "Products"}
+        </TitleTag>
+      </div>
+      <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
+        {data?.map((items: any) => (
           <div key={items.id} className="flex flex-col shrink-0">
-            <Link href={`/shop/${items.id}`} className="relative">
-              <LazyImage
+            <Link className="w-full" href={`/shop/${items.id}`}>
+              <Image
                 src={items.thumbnail}
                 width={295}
                 height={298}
                 alt="product image"
-                className="bg-[#F0EEED] rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                className="bg-[#F0EEED] w-full rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
               />
-
-              <div className="absolute top-0 right-0">
-                <button>
-                  <WishlistIcon />
-                </button>
-              </div>
             </Link>
             <div className="mt-[16px] flex flex-col items-start">
               <TitleTag variant="satoshiBold" as="h3">
@@ -107,8 +95,11 @@ const ProductCard = ({ products }: Props) => {
           </div>
         ))}
       </div>
-    </section>
+      <div>
+        <Pagination />
+      </div>
+    </main>
   );
 };
 
-export default ProductCard;
+export default SectionProductList;

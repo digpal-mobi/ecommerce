@@ -1,7 +1,7 @@
 import React from "react";
-import ProductCard from "@/website/Components/ProductCard";
-import Container from "@/website/Components/common/Container";
-import Button from "@/website/Components/common/Button";
+import ProductCard from "@/website/components/ProductCard";
+import Container from "@/website/components/common/Container";
+import Button from "@/website/components/common/Button";
 
 type Props = {
   products: Array<any>;

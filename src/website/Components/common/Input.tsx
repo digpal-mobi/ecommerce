@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, InputHTMLAttributes } from "react";
+import React, { forwardRef, type InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;
@@ -25,12 +25,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     return (
-      <div>
+      <div className="w-full">
+        {label && <label>{label}</label>}
+
         <input
           ref={ref}
           maxLength={maxLength}
           minLength={minLength}
-          className={`w-full rounded px-[13px] text-satoshi outline-none transition focus:border-primary active:border-[#333333] disabled:cursor-default ${className}`}
+          className={`w-full rounded px-[13px] py-[12px] text-satoshi outline-none transition focus:border-primary active:border-[#333333] disabled:cursor-default ${className}`}
           {...props}
         />
 

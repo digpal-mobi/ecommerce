@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Container from "@/website/Components/common/Container";
-import Button from "@/website/Components/common/Button";
+import Container from "@/website/components/common/Container";
+import Button from "@/website/components/common/Button";
 import { SparkleIcon, SparkleIcon2 } from "@/website/lib/Icons";
 
 const Metrics = [
@@ -22,7 +22,7 @@ const Metrics = [
 const SectionMainBanner = () => {
   return (
     <section className="relative overflow-hidden bg-[#F2F0F1]">
-      <div className="hidden laptop:block absolute right-0 bottom-0 w-[48%] h-full">
+      <div className="hidden laptop:block absolute right-[4%] bottom-0 w-[48%] h-full">
         <Image
           src="/banner-image.png"
           alt="Banner"
@@ -31,16 +31,16 @@ const SectionMainBanner = () => {
           className="object-contain object-right-bottom"
         />
 
-        <div className="absolute top-[12%] right-[7%]">
+        <div className="absolute top-[13.4%] right-[3%]">
           <SparkleIcon2 className="laptop:w-[104px] w-[76px] h-auto" />
         </div>
 
-        <div className="absolute top-[45%] left-[5%]">
+        <div className="absolute top-[45.4%] left-[8.5%]">
           <SparkleIcon className="" />
         </div>
       </div>
 
-      <Container>
+      <Container className="laptop:!pt-[80px] laptop:!pb-[100px] ">
         <div className="relative z-10 flex min-h-[50%] items-center">
           <div className="w-full laptop:max-w-[52%] ">
             <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
@@ -48,13 +48,15 @@ const SectionMainBanner = () => {
             </h1>
 
             <p className="mt-6 text-[14px] font-satoshi laptop:text-[16px] font-[400] laptop:leading-[28px] text-black/60">
-              Browse through our diverse range of meticulously crafted garments,
-              designed to bring out your individuality and cater to your sense
-              of style.
+              Browse through our diverse range of met iculously crafted
+              garments, designed to bring out your individuality and cater to
+              your sense of style.
             </p>
 
-            <div className="mt-[24px] flex tablet:justify-start justify-center desktop:mt-[32px]">
-              <Button variant="primary">Shop Now</Button>
+            <div className="mt-[24px] flex max-w-[210px] tablet:justify-start justify-center desktop:mt-[32px]">
+              <Button className="w-full" variant="primary">
+                Shop Now
+              </Button>
             </div>
 
             {/* Metrics */}
@@ -72,10 +74,10 @@ const SectionMainBanner = () => {
                       className={`
             ${
               index === 0
-                ? "laptop:pr-8"
+                ? "laptop:pr-[32px]"
                 : index === Metrics.length - 1
-                  ? "laptop:pl-8"
-                  : "laptop:px-8"
+                  ? "laptop:pl-[32px]"
+                  : "laptop:px-[32px]"
             }
           `}
                     >
@@ -97,7 +99,7 @@ const SectionMainBanner = () => {
         </div>
       </Container>
 
-      <div className="relative laptop:hidden mt-8">
+      <div className="relative laptop:hidden">
         <Image
           src="/banner-image.png"
           alt="Banner"

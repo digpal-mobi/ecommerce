@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import EmblaCarousel from "@/website/Components/EmblaCaraousel/EmblaCaraousel";
-import ReviewCard from "@/website/Components/ReviewCard";
-import Container from "@/website/Components/common/Container";
+import EmblaCarousel from "@/website/components/EmblaCaraousel/EmblaCaraousel";
+import ReviewCard from "@/website/components/ReviewCard";
+import Container from "@/website/components/common/Container";
 import { TESTIMONIALS } from "@/website/data/TestimonialData";
 import { EmblaOptionsType } from "embla-carousel";
 
@@ -16,7 +16,7 @@ const SectionCustomerTestimonial = () => {
         {TESTIMONIALS.map((testimonial) => (
           <div
             key={testimonial.id}
-            className="embla__slide flex-[0_0_100%] laptop:flex-[0_0_calc((100%-40px)/3)] pl-[20px]"
+            className="embla__slide flex-[0_0_100%] mobile-lg:flex-[0_0_calc((100%-20px)/2)] laptop:flex-[0_0_calc((100%-40px)/3)] pl-[20px]"
           >
             <ReviewCard
               name={testimonial.name}

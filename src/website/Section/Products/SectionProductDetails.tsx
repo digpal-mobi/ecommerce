@@ -1,11 +1,12 @@
-import Paragraph from "@/website/Components/common/Paragraph";
-import TitleTag from "@/website/Components/common/TitleTag";
+import Paragraph from "@/website/components/common/Paragraph";
+import TitleTag from "@/website/components/common/TitleTag";
 
 type Props = {
   data?: any;
 };
 
 const SectionProductDetails = ({ data }: Props) => {
+  console.log(data.meta);
   return (
     <section className="w-full">
       {/* Description */}
@@ -57,17 +58,7 @@ const SectionProductDetails = ({ data }: Props) => {
 
           <Specification title="Return Policy" value={data?.returnPolicy} />
 
-          <Specification title="Barcode" value={data?.meta?.barcode} />
-
-          <Specification
-            title="Created"
-            value={new Date(data?.meta?.createdAt).toLocaleDateString()}
-          />
-
-          <Specification
-            title="Updated"
-            value={new Date(data?.meta?.updatedAt).toLocaleDateString()}
-          />
+          {/* <Specification title="Barcode" value={data?.meta?.barcode} /><Br */}
         </div>
       </div>
     </section>
