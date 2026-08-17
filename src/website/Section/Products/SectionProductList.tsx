@@ -13,6 +13,7 @@ import { addToCart } from "@/redux/slices/cartSlice";
 import Button from "@/website/components/common/Button";
 import { AddToCartIcon } from "@/website/lib/Icons";
 import { CurrencyConverter } from "@/website/helpers/helper";
+import SortingComponent from "@/website/components/common/Sorting";
 
 type Props = {
   data?: any[];
@@ -22,6 +23,9 @@ const SectionProductList = ({ data }: Props) => {
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const currency = useSelector((state) => state.currency.currency);
+  const totalProduct = useSelector(
+    (state) => state.pagination.setTotalProductCount,
+  );
 
   const getQuantity = (id: number) => {
     return quantities[id] ?? 1;
@@ -60,9 +64,13 @@ const SectionProductList = ({ data }: Props) => {
         </div>
         <div className="flex items-center gap-[15px]">
           <div>
-            <Paragraph>total product : {data?.length}</Paragraph>
+            <Paragraph variant="normalPara">
+              Showing {data?.length} out of {totalProduct}
+            </Paragraph>
           </div>
-          <div>sorting</div>
+          <div>
+            <SortingComponent />
+          </div>
         </div>
       </div>
       <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">

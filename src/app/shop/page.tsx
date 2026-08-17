@@ -32,8 +32,6 @@ export default async function Products({ searchParams }: Props) {
 
   const categories = await FetchCategory();
 
-  console.log(categories);
-
   const BreadCrumbItems = [
     { name: "Home", url: "/" },
     { name: "Shop", url: "/shop" },

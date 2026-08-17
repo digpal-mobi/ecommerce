@@ -5,7 +5,7 @@ import { ChevronDown, FilterIcon } from "../lib/Icons";
 import { CurrencyConverter } from "../helpers/helper";
 import TitleTag from "../components/common/TitleTag";
 import { useSelector } from "@/redux/store";
-import { useFilters } from "../hooks/useFilters"; 
+import { useFilters } from "../hooks/useFilters";
 
 const colors = [
   { name: "Green", value: "#00B83D" },
@@ -212,15 +212,21 @@ const SectionFilter = ({ categories }: SectionFilterProps) => {
               setMinPriceValue(value);
             }}
             onMouseUp={(e) => {
-              const value = Math.min(Number((e.target as HTMLInputElement).value), maxPrice);
+              const value = Math.min(
+                Number((e.target as HTMLInputElement).value),
+                maxPrice,
+              );
               applyPriceFilter(value, maxPrice);
             }}
             onTouchEnd={(e) => {
-              const value = Math.min(Number((e.target as HTMLInputElement).value), maxPrice);
+              const value = Math.min(
+                Number((e.target as HTMLInputElement).value),
+                maxPrice,
+              );
               applyPriceFilter(value, maxPrice);
             }}
             className={`pointer-events-none absolute right-0 top-[1px] h-[18px] w-full appearance-none bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[13px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black cursor-pointer ${
-              minPrice > MAX - 20 ? "z-[4]" :   "z-[3]"
+              minPrice > MAX - 20 ? "z-[4]" : "z-[3]"
             }`}
           />
 
@@ -234,11 +240,17 @@ const SectionFilter = ({ categories }: SectionFilterProps) => {
               setMaxPriceValue(value);
             }}
             onMouseUp={(e) => {
-              const value = Math.max(Number((e.target as HTMLInputElement).value), minPrice);
+              const value = Math.max(
+                Number((e.target as HTMLInputElement).value),
+                minPrice,
+              );
               applyPriceFilter(minPrice, value);
             }}
             onTouchEnd={(e) => {
-              const value = Math.max(Number((e.target as HTMLInputElement).value), minPrice);
+              const value = Math.max(
+                Number((e.target as HTMLInputElement).value),
+                minPrice,
+              );
               applyPriceFilter(minPrice, value);
             }}
             className="pointer-events-none absolute right-0 top-[1px] h-[18px] w-full appearance-none bg-transparent z-[3] [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:h-[13px] [&::-webkit-slider-thumb]:w-[13px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black cursor-pointer"
@@ -261,7 +273,7 @@ const SectionFilter = ({ categories }: SectionFilterProps) => {
         isOpen={openSections.colors}
         onToggle={() => toggleSection("colors")}
       >
-        <div className="grid grid-cols-5 gap-x-[10px] gap-y-[9px] pt-[10px]">
+        <div className="grid grid-cols-5 pb-[10px] gap-x-[10px] gap-y-[9px] pt-[10px]">
           {colors.map((c) => {
             const selected = selectedColor === c.name;
 
@@ -303,7 +315,7 @@ const SectionFilter = ({ categories }: SectionFilterProps) => {
         isOpen={openSections.size}
         onToggle={() => toggleSection("size")}
       >
-        <div className="flex flex-wrap gap-[7px] pt-[10px]">
+        <div className="flex flex-wrap gap-[7px] pt-[10px]  pb-[10px]">
           {sizes.map((s) => {
             const selected = selectedSize === s;
 
@@ -331,7 +343,7 @@ const SectionFilter = ({ categories }: SectionFilterProps) => {
         isOpen={openSections.dressStyle}
         onToggle={() => toggleSection("dressStyle")}
       >
-        <div className="pt-[10px] space-y-[4px]">
+        <div className="pt-[10px] space-y-[4px]  pb-[10px]">
           {dressStyles.map((style) => {
             const selected = selectedDressStyle === style;
             return (
@@ -352,26 +364,11 @@ const SectionFilter = ({ categories }: SectionFilterProps) => {
                 >
                   {style}
                 </span>
-
-                <ChevronDown
-                  size={13}
-                  strokeWidth={1.5}
-                  className={selected ? "text-white" : "text-[#555555]"}
-                />
               </button>
             );
           })}
         </div>
       </FilterSection>
-
-      {/* Apply */}
-      <button
-        type="button"
-        onClick={() => applyPriceFilter(minPrice, maxPrice)}
-        className="mt-[13px] h-[36px] w-full rounded-full bg-black text-[12px] font-medium text-white transition hover:opacity-85 cursor-pointer active:scale-[0.98]"
-      >
-        Apply Filter
-      </button>
     </aside>
   );
 };
@@ -390,7 +387,7 @@ const FilterSection = ({
   children,
 }: FilterSectionProps) => {
   return (
-    <div className="border-b border-[#EEEEEE] py-[14px]">
+    <div className="border-b border-[#EEEEEE] pt-[14px]">
       <button
         type="button"
         onClick={onToggle}

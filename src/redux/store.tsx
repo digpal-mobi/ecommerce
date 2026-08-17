@@ -10,7 +10,7 @@ import toastSlice from "@/redux/slices/toastSlice";
 import cartSlice from "@/redux/slices/cartSlice";
 import currencySlice from "@/redux/slices/currencySlice";
 import filterSlice from "@/redux/slices/filterSlice";
-
+import sortingSlice from "@/redux/slices/sortingSlice";
 // Custom logger middleware
 const logger: Middleware = (storeApi) => (next) => (action) => {
   const result = next(action);
@@ -24,6 +24,7 @@ const rootReducer = combineReducers({
   cart: cartSlice,
   currency: currencySlice,
   filter: filterSlice,
+  sorting: sortingSlice,
   //   products: productsSlice,
   //   sidebar: sidebarSlice,
 });

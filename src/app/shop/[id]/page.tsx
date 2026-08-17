@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 
 export default async function ProductsDetailPage({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
   const data = await FetchProductsById(Number(id));
 

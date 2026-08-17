@@ -1,13 +1,25 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { CrossIcon } from "@/website/lib/Icons";
 import Container from "@/website/components/common/Container";
 
 type Props = {};
 
 const SectionHomeBanner = (props: Props) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleClick = () => {
+    setIsVisible(false);
+  };
+
+  if (!isVisible) {
+    return null;
+  }
+
   return (
-    <Container className="bg-[#000] !py-0">
+    <Container className="bg-[#000000] !py-0">
       <div className="flex text-[#FFF] w-full py-[10px] h-full">
         <div className="flex w-full justify-center items-center">
           <span className="text-[12px] laptop:text-[14px] font-satoshi font-[400] leading-[1em]">
@@ -17,9 +29,13 @@ const SectionHomeBanner = (props: Props) => {
             </Link>
           </span>
         </div>
-        <div className="text-[#FFF] flex justify-en d cursor-pointer items-center">
+        <button
+          type="button"
+          onClick={handleClick}
+          className="text-[#FFFFFF] flex justify-end cursor-pointer items-center"
+        >
           <CrossIcon />
-        </div>
+        </button>
       </div>
     </Container>
   );
