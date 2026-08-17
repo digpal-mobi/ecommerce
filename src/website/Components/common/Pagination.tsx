@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import { ArrowLeft } from "@/website/lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
-import { setCurrentPage } from "@/redux/slices/paginationSlice";
+import {
+  setCurrentPage,
+  setTotalProductCount,
+} from "@/redux/slices/paginationSlice";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { GetPaginationPages } from "@/website/helpers/helper";
 
@@ -51,6 +54,10 @@ const Pagination: React.FC<PaginationProps> = ({
       router.push(`${pathname}?${params.toString()}`);
     }
   };
+
+  useEffect(() => {
+    dispatch(setTotalProductCount(total));
+  }, [total]);
 
   return (
     <div className="w-full flex items-center justify-between mt-[20px]">
