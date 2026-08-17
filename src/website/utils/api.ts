@@ -91,11 +91,15 @@ export const FetchCategory = async () => {
   }
 }
 
-export const FetchSearchedProducts = async ({query}: {query: string}) => {
-   try {
+export const FetchSearchedProducts = async ({ query }: { query: string }) => {
+  try {
     const data = await GetData<ApiResponse>(`/products/search?q=${query}`);
-    return data;
+    return {
+      status: true,
+      products: data?.products || [],
+      message: "Success",
+    };
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };
   }
-}
+};

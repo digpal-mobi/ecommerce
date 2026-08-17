@@ -67,7 +67,7 @@ const ProductCard = ({ products }: Props) => {
     <section className="w-full py-[32px] laptop:py-[55px]">
       <div className="flex gap-[20px] laptop:justify-center justify-start">
         {products?.map((items) => (
-          <div key={items.id} className="flex flex-col shrink-0">
+          <div key={items.id} className="flex flex-col shrink-0 w-[295px]">
             <Link href={`/shop/${items.id}`} className="relative">
               <LazyImage
                 src={items.thumbnail}
@@ -83,15 +83,25 @@ const ProductCard = ({ products }: Props) => {
                 </button>
               </div>
             </Link>
+
             <div className="mt-[16px] flex flex-col items-start">
-              <TitleTag variant="satoshiBold" as="h3">
-                {items.title}
-              </TitleTag>
+              <div className="!h-[48px] overflow-hidden">
+                <TitleTag
+                  variant="satoshiBold"
+                  as="h3"
+                  className="line-clamp-2 leading-[24px]"
+                >
+                  {items.title}
+                </TitleTag>
+              </div>
+
               <SectionRating rating={items.rating} />
+
               <div className="flex items-center justify-between w-full">
                 <Paragraph variant="boldPara">
                   {handlePrice(items.price)}
                 </Paragraph>
+
                 <Increment
                   value={getQuantity(items.id)}
                   onChange={(quantity) =>
@@ -100,15 +110,15 @@ const ProductCard = ({ products }: Props) => {
                 />
               </div>
             </div>
+
             <div className="mt-[16px] flex items-center justify-center w-full">
               <Button
-                onClick={() => {
-                  HandleAddToCart(items);
-                }}
+                onClick={() => HandleAddToCart(items)}
                 variant="primary"
                 className="w-full gap-[10px]"
               >
                 <AddToCartIcon className="h-[20px] w-[20px]" />
+
                 <TitleTag as="span" variant="satoshiBold">
                   Add to Cart
                 </TitleTag>
