@@ -67,7 +67,7 @@ const Header = () => {
               <DesktopHeader />
             </div>
 
-            <div className="flex items-center justify-between w-1/2 desktop:w-[65%] laptop:w-[40%] gap-10">
+            <div className="flex items-center justify-between w-1/2 desktop:w-[60%] laptop:w-[40%] gap-10">
               <SearchBar />
 
               <div className="flex items-center gap-4">

@@ -1,15 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { FetchProducts, FetchProductsByCategory } from "@/website/utils/api";
+import {
+  FetchProducts,
+  FetchProductsByCategory,
+  FetchSearchedProducts,
+} from "@/website/utils/api";
 
 interface ProductState {
   products: any[];
+  searchProducts: any[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: ProductState = {
   products: [],
+  searchProducts: [],
   loading: false,
   error: null,
 };
@@ -34,6 +40,24 @@ const productSlice = createSlice({
           (action.payload as string) ||
           action.error.message ||
           "Failed to fetch products";
+      })
+        // search Products
+      .addCase(fetchSearchedProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchSearchedProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.searchProducts = action.payload?.data || [];
+      })
+
+      .addCase(fetchSearchedProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          (action.payload as string) ||
+          action.error.message ||
+          "Failed to search products";
       });
   },
 });
@@ -42,7 +66,6 @@ export const fetchProducts = createAsyncThunk(
   "/products",
   async (_, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
-      // Make an HTTP GET request to the API
       const {
         status,
         message,
@@ -67,12 +90,35 @@ export const fetchProductsByCategory = createAsyncThunk(
     { dispatch, fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      // Make an HTTP GET request to the API
       const {
         status,
         message,
         products: data,
       } = await FetchProductsByCategory(categoryName);
+      if (status === true) {
+        return fulfillWithValue({ data });
+      } else {
+        return rejectWithValue(message);
+      }
+    } catch (error: any) {
+      console.error("Error fetching card resources:", error);
+      return rejectWithValue(error?.message);
+    }
+  },
+);
+
+export const fetchSearchedProducts = createAsyncThunk(
+  "/search-products",
+  async (
+    { query }: { query: string },
+    { dispatch, fulfillWithValue, rejectWithValue },
+  ) => {
+    try {
+      const {
+        status,
+        message,
+        products: data,
+      } = await FetchSearchedProducts({ query });
       if (status === true) {
         return fulfillWithValue({ data });
       } else {

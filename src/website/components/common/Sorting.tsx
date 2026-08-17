@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import TitleTag from "@/website/components/common/TitleTag";
 import { ChevronDown } from "@/website/lib/Icons";
@@ -39,6 +39,22 @@ const SortingComponent = () => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const urlSortBy = searchParams.get("sortBy");
+    const urlSortOrder = searchParams.get("sortOrder") ?? "";
+
+    if (urlSortBy) {
+      const match = SortingOption.find(
+        (o) => o.sortBy === urlSortBy && o.sortOrder === urlSortOrder,
+      );
+      if (match) {
+        dispatch(setSortBy(match.sortBy));
+        dispatch(setSortOrder(match.sortOrder));
+        dispatch(setSortingLabel(match.label));
+      }
+    }
+  }, []);
+
   return (
     <div className="relative">
       <button
@@ -56,26 +72,30 @@ const SortingComponent = () => {
         />
       </button>
 
-      {isOpen && (
-        <div className="absolute top-[70%] right-[-16%] mt-[10px] w-[200%] rounded-md border border-[#000000]/10 bg-white px-[10px] py-[10px] shadow-2xl">
-          {SortingOption.map((sorting) => (
-            <button
-              key={sorting.id}
-              type="button"
-              className="flex w-full cursor-pointer items-center justify-center gap-[20px]"
-              onClick={() => handleSelect(sorting)}
+      <div
+        className={`absolute right-[-16%] top-[70%] z-50 mt-[10px] w-[200%] rounded-md border border-[#000000]/10 bg-white px-[10px] py-[10px] shadow-2xl transition-all duration-200 ease-out origin-top-right ${
+          isOpen
+            ? "scale-115 opacity-100 pointer-events-auto"
+            : "scale-95 opacity-0 pointer-events-none"
+        }`}
+      >
+        {SortingOption.map((sorting) => (
+          <button
+            key={sorting.id}
+            type="button"
+            className="flex w-full cursor-pointer items-center justify-center gap-[20px]"
+            onClick={() => handleSelect(sorting)}
+          >
+            <TitleTag
+              as="span"
+              variant="satoshiBold"
+              className="w-full rounded-md py-[8px] text-left! text-[12px] hover:bg-[#000000]/30"
             >
-              <TitleTag
-                as="span"
-                variant="satoshiBold"
-                className="w-full rounded-md py-[8px] text-left! text-[12px] hover:bg-[#000000]/30"
-              >
-                {sorting.label}
-              </TitleTag>
-            </button>
-          ))}
-        </div>
-      )}
+              {sorting.label}
+            </TitleTag>
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

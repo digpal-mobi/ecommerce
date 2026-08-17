@@ -4,12 +4,14 @@ interface SortingState {
   sortBy: string;
   sortOrder: string;
   sortingLabel: string;
+  searchQuery: string;
 }
 
 const initialState: SortingState = {
   sortBy: "priceAsc",
   sortOrder: "asc",
   sortingLabel: "Price: low to high",
+  searchQuery: "",
 };
 
 const SortingSlice = createSlice({
@@ -25,9 +27,12 @@ const SortingSlice = createSlice({
     setSortingLabel: (state, action: PayloadAction<string>) => {
       state.sortingLabel = action.payload;
     },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
-export const { setSortBy, setSortOrder, setSortingLabel } =
+export const { setSortBy, setSortOrder, setSortingLabel, setSearchQuery } =
   SortingSlice.actions;
 export default SortingSlice.reducer;
