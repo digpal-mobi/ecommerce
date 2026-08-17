@@ -56,16 +56,30 @@ export const DesktopHeader = (props: Props) => {
                 </button>
 
                 {expandedId === item.id && (
-                  <div className="absolute left-1/2 top-full z-50 mt-3 w-[200px] -translate-x-1/2 rounded-lg bg-white py-4 shadow-lg">
-                    {item.children.map((subItem) => (
-                      <Link
-                        key={subItem.href}
-                        href={subItem.href}
-                        className="block px-5 py-2 hover:bg-gray-100"
-                      >
-                        {subItem.title}
-                      </Link>
-                    ))}
+                  <div
+                    className={`
+    absolute left-1/2 top-full z-50 
+    w-[200px] -translate-x-1/2
+    overflow-hidden rounded-lg bg-white shadow-lg
+    transition-all duration-300 ease-in-out
+    ${
+      expandedId === item.id
+        ? "visible max-h-[500px] translate-y-0 opacity-100"
+        : "invisible max-h-0 -translate-y-2 opacity-0"
+    }
+  `}
+                  >
+                    <div className="py-4">
+                      {item.children.map((subItem) => (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          className="block px-5 py-2 hover:bg-gray-100"
+                        >
+                          {subItem.title}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </>

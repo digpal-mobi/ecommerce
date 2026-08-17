@@ -81,3 +81,12 @@ export const AddToCart = async(product:any)=>{
     };
   }
 };
+
+export const FetchCategory = async () => {
+  try {
+    const data = await GetData<ApiResponse>(`/products/categories`);
+    return data;
+  } catch (e: any) {
+    return { products: [], status: false, message: e.message, token: null };
+  }
+}

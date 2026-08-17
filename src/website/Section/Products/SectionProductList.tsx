@@ -7,11 +7,12 @@ import TitleTag from "@/website/components/common/TitleTag";
 import Image from "next/image";
 import Pagination from "@/website/components/common/Pagination";
 import Link from "next/link";
-import { useDispatch } from "@/redux/store";
+import { useDispatch, useSelector } from "@/redux/store";
 import { useState } from "react";
 import { addToCart } from "@/redux/slices/cartSlice";
 import Button from "@/website/components/common/Button";
 import { AddToCartIcon } from "@/website/lib/Icons";
+import { CurrencyConverter } from "@/website/helpers/helper";
 
 type Props = {
   data?: any[];
@@ -20,6 +21,7 @@ type Props = {
 const SectionProductList = ({ data }: Props) => {
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
+  const currency = useSelector((state) => state.currency.currency);
 
   const getQuantity = (id: number) => {
     return quantities[id] ?? 1;
@@ -46,10 +48,22 @@ const SectionProductList = ({ data }: Props) => {
   };
   return (
     <main className="flex-1">
-      <div className="mb-[24px] flex items-center justify-between">
-        <TitleTag variant="heading" as="h2">
-          {data && data.length > 0 ? data[0].category : "Products"}
-        </TitleTag>
+      <div className="mb-[16px] flex items-center justify-between">
+        <div>
+          <TitleTag
+            className="!laptop:text-[32px] !text-[24px]"
+            variant="heading"
+            as="h2"
+          >
+            {data && data.length > 0 ? data[0].category : "Products"}
+          </TitleTag>
+        </div>
+        <div className="flex items-center gap-[15px]">
+          <div>
+            <Paragraph>total product : {data?.length}</Paragraph>
+          </div>
+          <div>sorting</div>
+        </div>
       </div>
       <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
         {data?.map((items: any) => (
@@ -60,7 +74,7 @@ const SectionProductList = ({ data }: Props) => {
                 width={295}
                 height={298}
                 alt="product image"
-                className="bg-[#F0EEED] w-full rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
               />
             </Link>
             <div className="mt-[16px] flex flex-col items-start">
@@ -69,7 +83,9 @@ const SectionProductList = ({ data }: Props) => {
               </TitleTag>
               <SectionRating rating={items.rating} />
               <div className="flex items-center justify-between w-full">
-                <Paragraph variant="boldPara">${items.price}</Paragraph>
+                <Paragraph variant="boldPara">
+                  {CurrencyConverter(items.price, currency)}
+                </Paragraph>
                 <Increment
                   value={getQuantity(items.id)}
                   onChange={(quantity) =>

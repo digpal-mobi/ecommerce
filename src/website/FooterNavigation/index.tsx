@@ -36,7 +36,10 @@ const index = (props: Props) => {
               </div>
 
               {/* Button */}
-              <button className="w-full cursor-pointer rounded-full bg-white py-3 text-[16px] font-medium text-black transition hover:bg-gray-100">
+              <button
+                type="button"
+                className="w-full cursor-pointer rounded-full bg-white py-3 text-[16px] font-medium text-black transition hover:bg-gray-100"
+              >
                 Subscribe To Newsletter
               </button>
             </div>
@@ -131,16 +134,16 @@ const index = (props: Props) => {
 
         <div className="flex w-full flex-col items-center justify-between gap-6 tablet:flex-row">
           <p className="text-center w-full text-[14px] text-[#666666] tablet:text-left">
-            Shop.co © 2000-2023, All Rights Reserved
+            Shop.co © {new Date().getFullYear()}, All Rights Reserved
           </p>
 
-          <div className="flex flex-wrap w-full items-center justify-end gap-[12px]">
+          <div className="flex w-fit items-center justify-end gap-[12px]">
             <Image
               src="/payments/Badge.png"
               alt="Visa"
               width={46}
               height={30}
-              className="h-auto max-h-[30px]"
+              className="h-auto w-full"
             />
 
             <Image
@@ -148,6 +151,7 @@ const index = (props: Props) => {
               alt="MasterCard"
               width={46}
               height={30}
+              className="h-auto w-full max-h-[30px]"
             />
 
             <Image
@@ -155,6 +159,7 @@ const index = (props: Props) => {
               alt="Paypal"
               width={46}
               height={30}
+              className="h-auto w-full max-h-[30px]"
             />
 
             <Image
@@ -162,6 +167,7 @@ const index = (props: Props) => {
               alt="Apple Pay"
               width={46}
               height={30}
+              className="h-auto w-full max-h-[30px]"
             />
 
             <Image
@@ -169,6 +175,7 @@ const index = (props: Props) => {
               alt="Google Pay"
               width={46}
               height={30}
+              className="h-auto w-full max-h-[30px]"
             />
           </div>
         </div>

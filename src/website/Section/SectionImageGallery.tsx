@@ -29,15 +29,17 @@ const SectionImageGallery = ({ images = [] }: Props) => {
               alt={`Image ${index + 1}`}
               width={152}
               height={127}
-              className={`w-[110px] tablet:w-full tablet:max-w-[157px] rounded-[14px] bg-[#F0EEED] object-cover transition-all ${
-                selectedImage === img ? "ring-2 ring-[#000000]/30" : ""
+              className={`w-[110px] tablet:w-full tablet:max-w-[157px] rounded-[14px] bg-[#F0EEED]  object-cover transition-all ${
+                selectedImage === img
+                  ? "border border-solid border-[#000000]/30"
+                  : ""
               }`}
             />
           </button>
         ))}
       </div>
 
-      <div className="flex w-full items-center">
+      <div className="flex w-full items-center justify-center">
         <LazyImage
           src={selectedImage || images[0]}
           alt="Selected Image"
