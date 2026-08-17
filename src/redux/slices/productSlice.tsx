@@ -41,7 +41,23 @@ const productSlice = createSlice({
           action.error.message ||
           "Failed to fetch products";
       })
-        // search Products
+      // search by Category
+      .addCase(fetchProductsByCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload?.data || [];
+      })
+      .addCase(fetchProductsByCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          (action.payload as string) ||
+          action.error.message ||
+          "Failed to fetch products by category";
+      })
+      // search Products
       .addCase(fetchSearchedProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -49,7 +65,7 @@ const productSlice = createSlice({
 
       .addCase(fetchSearchedProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.searchProducts = action.payload?.data || [];
+        state.products = action.payload?.data || [];
       })
 
       .addCase(fetchSearchedProducts.rejected, (state, action) => {
@@ -84,7 +100,7 @@ export const fetchProducts = createAsyncThunk(
 );
 
 export const fetchProductsByCategory = createAsyncThunk(
-  "/products-by-category",
+  "Product/fetchProductsByCategory",
   async (
     categoryName: string,
     { dispatch, fulfillWithValue, rejectWithValue },
@@ -108,25 +124,22 @@ export const fetchProductsByCategory = createAsyncThunk(
 );
 
 export const fetchSearchedProducts = createAsyncThunk(
-  "/search-products",
+  "Product/fetchSearchedProducts",
   async (
     { query }: { query: string },
-    { dispatch, fulfillWithValue, rejectWithValue },
+    { fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const {
-        status,
-        message,
-        products: data,
-      } = await FetchSearchedProducts({ query });
-      if (status === true) {
-        return fulfillWithValue({ data });
+      const response = await FetchSearchedProducts({ query });
+
+      if (response.status && Array.isArray(response.products)) {
+        return fulfillWithValue({ data: response.products });
       } else {
-        return rejectWithValue(message);
+        return rejectWithValue(response.message || "Failed to search products");
       }
     } catch (error: any) {
-      console.error("Error fetching card resources:", error);
-      return rejectWithValue(error?.message);
+      console.error("Error fetching searched products:", error);
+      return rejectWithValue(error?.message || "Something went wrong");
     }
   },
 );
