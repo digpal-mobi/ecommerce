@@ -19,7 +19,6 @@ type Props = {
 };
 
 const SectionProductList = ({ data }: Props) => {
-
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const currency = useSelector((state) => state.currency.currency);
@@ -50,13 +49,21 @@ const SectionProductList = ({ data }: Props) => {
   return (
     <main className="flex-1">
       <div className="mb-[16px] flex items-center justify-between">
-        <TitleTag
-          className="!laptop:text-[32px] !text-[24px]"
-          variant="heading"
-          as="h2"
-        >
-          {data && data.length > 0 ? data[0].category : "Products"}
-        </TitleTag>
+        <div>
+          <TitleTag
+            className="!laptop:text-[32px] !text-[24px]"
+            variant="heading"
+            as="h2"
+          >
+            {data && data.length > 0 ? data[0].category : "Products"}
+          </TitleTag>
+        </div>
+        <div className="flex items-center gap-[15px]">
+          <div>
+            <Paragraph>total product : {data?.length}</Paragraph>
+          </div>
+          <div>sorting</div>
+        </div>
       </div>
       <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
         {data?.map((items: any) => (
@@ -67,7 +74,7 @@ const SectionProductList = ({ data }: Props) => {
                 width={295}
                 height={298}
                 alt="product image"
-                className="bg-[#F0EEED] w-full rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
               />
             </Link>
             <div className="mt-[16px] flex flex-col items-start">

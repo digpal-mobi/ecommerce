@@ -14,9 +14,14 @@ export const currencySlice = createSlice({
   reducers: {
     setCurrency: (state, action: PayloadAction<string>) => {
       state.currency = action.payload;
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("currency", action.payload);
+      }
     },
   },
 });
 
 export const { setCurrency } = currencySlice.actions;
+
 export default currencySlice.reducer;

@@ -56,6 +56,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="w-full flex items-center justify-between mt-[20px]">
       <Button
         variant="secondary"
+        className="gap-[10px]"
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
@@ -85,6 +86,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
         {pages.map((page) => (
           <Button
+            className="!px-[20px] rounded-lg"
             key={page}
             variant={page === currentPage ? "primary" : "secondary"}
             onClick={() => handlePageChange(page)}
@@ -93,12 +95,12 @@ const Pagination: React.FC<PaginationProps> = ({
           </Button>
         ))}
 
-        {/* Trailing ellipsis + last page */}
         {endPage < totalPages && (
           <>
             {endPage < totalPages - 1 && (
               <Button
                 variant="secondary"
+                className="!px-[20px] border-none"
                 onClick={() =>
                   handlePageChange(Math.min(totalPages, endPage + 3))
                 }
@@ -107,6 +109,7 @@ const Pagination: React.FC<PaginationProps> = ({
               </Button>
             )}
             <Button
+              className="!px-[20px] rounded-lg"
               variant={currentPage === totalPages ? "primary" : "secondary"}
               onClick={() => handlePageChange(totalPages)}
             >
@@ -118,6 +121,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <Button
         variant="secondary"
+        className="gap-[10px]"
         disabled={currentPage === totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >

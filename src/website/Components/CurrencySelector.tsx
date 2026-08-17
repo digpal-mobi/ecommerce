@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import TitleTag from "@/website/components/common/TitleTag";
 import CurrencyRates from "@/website/data/CurrencyRates";
@@ -9,55 +11,62 @@ type Props = {};
 
 const CurrencySelector = (props: Props) => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const currency = useSelector((state) => state.currency.currency);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      wrapperRef.current &&
-      !wrapperRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
   useEffect(() => {
+    // Load saved currency after component mounts on client
+    const savedCurrency = localStorage.getItem("currency");
+
+    if (savedCurrency) {
+      dispatch(setCurrency(savedCurrency));
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div ref={wrapperRef} className="relative">
       <button
         type="button"
         className="flex items-center gap-[5px]"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <TitleTag variant="satoshiBold" as="span">
           {currency}
         </TitleTag>
-        {isOpen ? (
-          <ChevronDown className="h-[10px] w-[10px] rotate-180" />
-        ) : (
-          <ChevronDown className="h-[10px] w-[10px] transition-transform duration-200 " />
-        )}
+
+        <ChevronDown
+          className={`h-[10px] w-[10px] transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
       </button>
-      {isOpen ? (
-        <div
-          className="absolute top-[70%] w-[150%] mt-[10px] right-[-16%] px-[10px] py-[10px] rounded-md shadow-2xl border border-[#000000]/10 transition-[grid-template-rows] duration-300"
-          style={{
-            gridTemplateRows: isOpen ? "1fr" : "0fr",
-          }}
-        >
+
+      {isOpen && (
+        <div className="absolute top-[70%] right-[-16%] mt-[10px] w-[150%] rounded-md border border-[#000000]/10 bg-white px-[10px] py-[10px] shadow-2xl">
           {CurrencyRates.map((rate) => (
             <button
-              className="flex w-full items-center justify-center cursor-pointer gap-[20px]"
-              type="button"
               key={rate.label}
+              type="button"
+              className="flex w-full cursor-pointer items-center justify-center gap-[20px]"
               onClick={() => {
                 dispatch(setCurrency(rate.id));
                 setIsOpen(false);
@@ -66,14 +75,14 @@ const CurrencySelector = (props: Props) => {
               <TitleTag
                 as="span"
                 variant="satoshiBold"
-                className="text-[12px] py-[5px] w-full rounded-md hover:bg-[#000000]/30"
+                className="w-full rounded-md py-[5px] text-[12px] hover:bg-[#000000]/30"
               >
                 {rate.id}
               </TitleTag>
             </button>
           ))}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
