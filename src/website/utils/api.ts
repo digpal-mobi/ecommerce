@@ -129,16 +129,10 @@ export const FetchSearchedProducts = async ({ query }: { query: string }) => {
   }
 };
 
-export const FetchProductsByCategory = async (category: string, limit: number): Promise<ApiResponse> => {
+export const FetchProductsByCategory = async (categoryName: string, limit = 4): Promise<ApiResponse> => {
   try {
-    if (!category || !limit) {
-      return { products: [], status: false, message: "Category is required", token: null };
-    }
-
-    const data = await GetData<ApiResponse>(
-      `/products/category/${encodeURIComponent(category)}&limit=${limit}`
-    );
-    return { status: true, ...data };
+    const data = await GetData<ApiResponse>(`/products/category/${categoryName}?limit=${limit}`);
+    return data;
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };
   }

@@ -93,7 +93,7 @@ export const HalfReviewStar = ({
   );
 };
 
-export const CrossIcon = ({ className = "" }: IconProps) => {
+export const CrossIcon = ({ className = "", color = "" }: IconProps) => {
   return (
     <svg
       className={`${className}`}
@@ -105,7 +105,7 @@ export const CrossIcon = ({ className = "" }: IconProps) => {
     >
       <path
         d="M12.8532 11.5274C13.0293 11.7035 13.1283 11.9424 13.1283 12.1915C13.1283 12.4405 13.0293 12.6794 12.8532 12.8555C12.6771 13.0317 12.4382 13.1306 12.1891 13.1306C11.9401 13.1306 11.7012 13.0317 11.5251 12.8555L6.56491 7.89381L1.60319 12.854C1.42707 13.0301 1.1882 13.129 0.939126 13.129C0.690054 13.129 0.451184 13.0301 0.275064 12.854C0.0989435 12.6778 3.71146e-09 12.439 0 12.1899C-3.71146e-09 11.9408 0.0989435 11.702 0.275064 11.5258L5.23678 6.56569L0.276626 1.60397C0.100506 1.42785 0.00156253 1.18898 0.00156254 0.939907C0.00156254 0.690836 0.100506 0.451965 0.276626 0.275845C0.452746 0.0997246 0.691617 0.000781121 0.940688 0.000781119C1.18976 0.000781116 1.42863 0.0997246 1.60475 0.275845L6.56491 5.23756L11.5266 0.275063C11.7027 0.0989432 11.9416 -4.14954e-09 12.1907 0C12.4398 4.14954e-09 12.6786 0.0989432 12.8547 0.275063C13.0309 0.451184 13.1298 0.690054 13.1298 0.939126C13.1298 1.1882 13.0309 1.42707 12.8547 1.60319L7.89303 6.56569L12.8532 11.5274Z"
-        fill="white"
+        fill={color || "white"}
       />
     </svg>
   );
@@ -391,16 +391,40 @@ export const CrumbArrow = () => {
   );
 };
 
-export const WishlistIcon = ({ className }: IconProps) => {
+export const WishlistIcon = ({
+  className = "",
+  filled = false,
+  color,
+}: IconProps) => {
+  if (filled) {
+    return (
+      <svg
+        className={className}
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill={color || "#EF4444"}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      </svg>
+    );
+  }
+
   return (
     <svg
-      className={`${className}`}
-      width="50px"
-      height="50px"
-      viewBox="0 0 50 50"
+      className={className}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color || "currentColor"}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z" />
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </svg>
   );
 };
@@ -441,6 +465,68 @@ export const ArrowLeft = ({ className }: IconProps) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+};
+
+export const TrashIcon = ({ className = "" }: IconProps) => {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <line x1="10" y1="11" x2="10" y2="17" />
+      <line x1="14" y1="11" x2="14" y2="17" />
+    </svg>
+  );
+};
+
+export const PromoTagIcon = ({ className = "" }: IconProps) => {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+      <line x1="7" y1="7" x2="7.01" y2="7" />
+    </svg>
+  );
+};
+
+export const ArrowRightIcon = ({ className = "" }: IconProps) => {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
     </svg>
   );
 };

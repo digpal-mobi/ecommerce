@@ -11,11 +11,13 @@ import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { useEffect, useRef, useState } from "react";
 import { addToCart } from "@/redux/slices/cartSlice";
 import Button from "@/website/components/common/Button";
-import { AddToCartIcon } from "@/website/lib/Icons";
+import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
 import { CurrencyConverter } from "@/website/helpers/helper";
 import SortingComponent from "@/website/components/common/Sorting";
 import { useFilters } from "@/website/hooks/useFilters";
 import { fetchProducts, searchProducts } from "@/redux/slices/productSlice";
+import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
+import { showToast } from "@/redux/slices/toastSlice";
 
 type Props = {
   data?: any[];
@@ -29,6 +31,8 @@ const SectionProductList = ({ data }: Props) => {
   const [hasClientFetched, setHasClientFetched] = useState(false);
 
   const currency = useSelector((state: RootState) => state.currency.currency);
+  const wishlistItems =
+    useSelector((state: RootState) => state.wishlist?.items) || [];
 
   const { total, currentPage, limit } = useSelector(
     (state: RootState) => state.pagination,
@@ -36,6 +40,38 @@ const SectionProductList = ({ data }: Props) => {
 
   const { products } = useSelector((state: RootState) => state.product);
   const { filters, sortBy, sortOrder, changePage } = useFilters();
+
+  const isWishlisted = (id: number) => {
+    return wishlistItems.some((item: WishlistProduct) => item.id === id);
+  };
+
+  const handleToggleWishlist = (e: React.MouseEvent, item: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const wishlisted = isWishlisted(item.id);
+    dispatch(
+      toggleWishlist({
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        thumbnail: item.thumbnail,
+        rating: item.rating,
+        category:
+          typeof item.category === "object"
+            ? item.category?.name || item.category?.id
+            : item.category,
+      }),
+    );
+    dispatch(
+      showToast({
+        title: wishlisted ? "Removed from Wishlist" : "Added to Wishlist",
+        message: wishlisted
+          ? `Removed "${item.title}" from wishlist`
+          : `Added "${item.title}" to wishlist`,
+        type: "success",
+      }),
+    );
+  };
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -109,15 +145,35 @@ const SectionProductList = ({ data }: Props) => {
       <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
         {displayProducts.map((items: any) => (
           <div key={items.id} className="flex flex-col shrink-0">
-            <Link className="w-full" href={`/shop/${items.id}`}>
-              <Image
-                src={items.thumbnail}
-                width={295}
-                height={298}
-                alt="product image"
-                className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
-              />
-            </Link>
+            <div className="relative block">
+              <Link className="w-full block" href={`/shop/${items.id}`}>
+                <Image
+                  src={items.thumbnail}
+                  width={295}
+                  height={298}
+                  alt={items.title || "product image"}
+                  className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                />
+              </Link>
+
+              <div className="absolute top-3 right-3 z-10">
+                <button
+                  type="button"
+                  onClick={(e) => handleToggleWishlist(e, items)}
+                  aria-label={
+                    isWishlisted(items.id)
+                      ? "Remove from Wishlist"
+                      : "Add to Wishlist"
+                  }
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
+                >
+                  <WishlistIcon
+                    filled={isWishlisted(items.id)}
+                    className="h-[18px] w-[18px]"
+                  />
+                </button>
+              </div>
+            </div>
 
             <div className="mt-[16px] flex flex-col items-start">
               <div className="!h-[48px] overflow-hidden">

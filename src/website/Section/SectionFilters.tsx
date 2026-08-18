@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from "react";
 import {
   ChevronDown,
-  SearchIcon,
   FilterIcon,
   ArrowLeft,
-  CrossIcon,
 } from "@/website/lib/Icons";
 import Button from "@/website/components/common/Button";
 import TitleTag from "@/website/components/common/TitleTag";
@@ -16,7 +14,6 @@ import { useFilters } from "@/website/hooks/useFilters";
 import { MAX_PRICE, MIN_PRICE } from "@/redux/slices/filterSlice";
 import { useDispatch, useSelector } from "@/redux/store";
 import { getCategories } from "@/redux/slices/productSlice";
-import Input from "../components/common/Input";
 
 const extraFilters = [
   {
@@ -60,29 +57,6 @@ function formatOption(key: string, option: string) {
   if (key === "discount") return `${option}% & above`;
   return option;
 }
-
-// function FilterSearch({
-//   value,
-//   onChange,
-// }: {
-//   value: string;
-//   onChange: (value: string) => void;
-// }) {
-//   return (
-//     <div className="flex h-[38px] w-full items-center gap-2 rounded-[8px] bg-[#F9F9F9] px-[12px] transition-colors focus-within:border-black">
-//       {value && (
-//         <button
-//           type="button"
-//           onClick={() => onChange("")}
-//           className="cursor-pointer text-[12px] text-[#999999] hover:text-black"
-//           aria-label="Clear search"
-//         >
-//           <CrossIcon />
-//         </button>
-//       )}
-//     </div>
-//   );
-// }
 
 function PriceFilter() {
   const { filters, applyFilters } = useFilters();
@@ -215,7 +189,6 @@ function CategoryOptions({ categories }: { categories: any[] }) {
 
   return (
     <div className="flex flex-col gap-[14px] pt-[14px]">
-      {/* <FilterSearch value={search} onChange={setSearch} /> */}
       <div className="flex max-h-[240px] flex-col gap-[10px] overflow-y-auto pr-1">
         {visible.map((option) => {
           const checked = isChecked(option);

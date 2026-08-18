@@ -12,6 +12,7 @@ import currencySlice from "@/redux/slices/currencySlice";
 import filterSlice from "@/redux/slices/filterSlice";
 import sortingSlice from "@/redux/slices/sortingSlice";
 import productSlice from "@/redux/slices/productSlice";
+import wishlistSlice from "@/redux/slices/wishlistSlice";
 // Custom logger middleware
 const logger: Middleware = (storeApi) => (next) => (action) => {
   const result = next(action);
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   filter: filterSlice,
   sorting: sortingSlice,
   product: productSlice,
+  wishlist: wishlistSlice,
 });
 
 const store = configureStore({
