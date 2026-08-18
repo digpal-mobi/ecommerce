@@ -1,6 +1,6 @@
 import Breadcrumb from "@/website/components/common/Breadcrumb";
 import Container from "@/website/components/common/Container";
-  import SectionProductList from "@/website/section/products/SectionProductList";
+import SectionProductList from "@/website/section/products/SectionProductList";
 import SectionFilter from "@/website/section/SectionFilters";
 import { FetchCategory, FetchProducts } from "@/website/utils/api";
 import { Metadata } from "next";
@@ -40,7 +40,7 @@ export default async function Products({ searchParams }: Props) {
       <div className="py-[24px]">
         <Breadcrumb items={BreadCrumbItems} />
       </div>
-      <div className="flex w-full gap-[20px] tablet:flex-row laptop:pb-[80px] pb-[50px]">
+      <div className="flex w-full gap-[20px] flex-col tablet:flex-row laptop:pb-[80px] pb-[50px]">
         <SectionFilter categories={categories} />
         <div className="flex w-full flex-col">
           <SectionProductList data={data?.products} />

@@ -9,6 +9,7 @@ import Increment from "@/website/components/Increment";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slices/cartSlice";
+import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import LazyImage from "./common/LazyImage";
 import { useState } from "react";
 import { showToast } from "@/redux/slices/toastSlice";
@@ -25,6 +26,39 @@ const ProductCard = ({ products }: Props) => {
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   const currency = useSelector((state: any) => state.currency.currency);
+  const wishlistItems = useSelector((state: any) => state.wishlist?.items) || [];
+
+  const isWishlisted = (id: number) => {
+    return wishlistItems.some((item: WishlistProduct) => item.id === id);
+  };
+
+  const handleToggleWishlist = (e: React.MouseEvent, item: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const wishlisted = isWishlisted(item.id);
+    dispatch(
+      toggleWishlist({
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        thumbnail: item.thumbnail,
+        rating: item.rating,
+        category:
+          typeof item.category === "object"
+            ? item.category?.name || item.category?.id
+            : item.category,
+      }),
+    );
+    dispatch(
+      showToast({
+        title: wishlisted ? "Removed from Wishlist" : "Added to Wishlist",
+        message: wishlisted
+          ? `Removed "${item.title}" from wishlist`
+          : `Added "${item.title}" to wishlist`,
+        type: "success",
+      }),
+    );
+  };
 
   const getQuantity = (id: number) => {
     return quantities[id] ?? 1;
@@ -68,18 +102,30 @@ const ProductCard = ({ products }: Props) => {
       <div className="flex gap-[20px] laptop:justify-center justify-start">
         {products?.map((items) => (
           <div key={items.id} className="flex flex-col shrink-0 w-[295px]">
-            <Link href={`/shop/${items.id}`} className="relative">
+            <Link href={`/shop/${items.id}`} className="relative block">
               <LazyImage
                 src={items.thumbnail}
                 width={295}
                 height={298}
                 alt="product image"
-                className="bg-[#F0EEED] rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                className="bg-[#F0EEED] rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer w-full h-auto"
               />
 
-              <div className="absolute top-0 right-0">
-                <button type="button">
-                  <WishlistIcon />
+              <div className="absolute top-3 right-3 z-10">
+                <button
+                  type="button"
+                  onClick={(e) => handleToggleWishlist(e, items)}
+                  aria-label={
+                    isWishlisted(items.id)
+                      ? "Remove from Wishlist"
+                      : "Add to Wishlist"
+                  }
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
+                >
+                  <WishlistIcon
+                    filled={isWishlisted(items.id)}
+                    className="h-[18px] w-[18px]"
+                  />
                 </button>
               </div>
             </Link>

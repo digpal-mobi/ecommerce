@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "@/redux/store";
 import { logoutSuccess } from "@/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
 import CartIconComponent from "@/website/components/common/CartIconComponent";
+import WishlistIconComponent from "@/website/components/common/WishlistIconComponent";
 import CurrencySelector from "@/website/components/CurrencySelector";
 
 const Header = () => {
@@ -71,6 +72,7 @@ const Header = () => {
               <SearchBar />
 
               <div className="flex items-center gap-4">
+                <WishlistIconComponent />
                 <CartIconComponent />
                 <div className="relative" ref={menuRef}>
                   <button

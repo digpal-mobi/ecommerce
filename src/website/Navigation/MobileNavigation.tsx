@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { logoutSuccess } from "@/redux/slices/authSlice";
 import CartIconComponent from "@/website/components/common/CartIconComponent";
+import WishlistIconComponent from "@/website/components/common/WishlistIconComponent";
 
 const MobileNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +82,7 @@ const MobileNavigation = () => {
                   </div>
                 )}
               </div>
+              <WishlistIconComponent />
               <CartIconComponent />
               <div className="relative" ref={menuRef}>
                 <button

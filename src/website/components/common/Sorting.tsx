@@ -26,13 +26,13 @@ const SortingComponent = () => {
   };
 
   return (
-    <div className="relative bg-[#dedddd] rounded-md border border-[#000000]/10 px-[10px] py-[10px]">
+    <div className="relative bg-[#dedddd] rounded-md border border-[#efefef] px-[10px] py-[10px]">
       <button
         type="button"
-        className="flex items-center gap-[5px]"
+        className="flex items-center cursor-pointer gap-[5px]"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <TitleTag variant="satoshiBold" as="span">
+        <TitleTag variant="satoshiBold" as="span" className="text-[#000000]/60">
           {sortingLabel}
         </TitleTag>
 

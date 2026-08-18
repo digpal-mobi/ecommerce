@@ -38,21 +38,23 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="w-full flex items-center justify-between mt-[20px]">
+    <div className="w-full mt-[20px] flex items-center justify-between gap-[10px] max-mobile:flex-wrap max-mobile:justify-center">
       <Button
         variant="secondary"
-        className="gap-[10px]"
+        className="gap-[10px] shrink-0 max-mobile:!px-[12px] max-mobile:!py-[8px] max-mobile:text-[13px]"
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
-        <ArrowLeft />
-        Previous
+        <ArrowLeft className="max-mobile:w-[16px] max-mobile:h-[16px]" />
+
+        <span className="max-mobile:hidden">Previous</span>
       </Button>
 
-      <div className="flex items-center gap-x-[10px]">
+      <div className="flex items-center justify-center gap-x-[10px] max-tablet:gap-x-[6px] max-mobile:gap-x-[4px]">
         {startPage > 1 && (
           <>
             <Button
+              className="!px-[16px] rounded-lg max-tablet:!px-[12px] max-mobile:!px-[10px] max-mobile:min-w-[36px]"
               variant={currentPage === 1 ? "primary" : "secondary"}
               onClick={() => handlePageChange(1)}
             >
@@ -61,6 +63,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
             {startPage > 2 && (
               <Button
+                className="!px-[12px] border-none max-mobile:!px-[6px]"
                 variant="secondary"
                 onClick={() => handlePageChange(Math.max(1, startPage - 2))}
               >
@@ -72,7 +75,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
         {pages.map((page) => (
           <Button
-            className="!px-[20px] rounded-lg"
+            className="!px-[20px] rounded-lg max-tablet:!px-[14px] max-mobile:!px-[10px] max-mobile:min-w-[36px]"
             key={page}
             variant={page === currentPage ? "primary" : "secondary"}
             onClick={() => handlePageChange(page)}
@@ -86,7 +89,7 @@ const Pagination: React.FC<PaginationProps> = ({
             {endPage < totalPages - 1 && (
               <Button
                 variant="secondary"
-                className="!px-[20px] border-none"
+                className="!px-[12px] border-none max-mobile:!px-[6px]"
                 onClick={() =>
                   handlePageChange(Math.min(totalPages, endPage + 3))
                 }
@@ -96,7 +99,7 @@ const Pagination: React.FC<PaginationProps> = ({
             )}
 
             <Button
-              className="!px-[20px] rounded-lg"
+              className="!px-[20px] rounded-lg max-tablet:!px-[14px] max-mobile:!px-[10px] max-mobile:min-w-[36px]"
               variant={currentPage === totalPages ? "primary" : "secondary"}
               onClick={() => handlePageChange(totalPages)}
             >
@@ -108,12 +111,13 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <Button
         variant="secondary"
-        className="gap-[10px]"
+        className="gap-[10px] shrink-0 max-mobile:!px-[12px] max-mobile:!py-[8px] max-mobile:text-[13px]"
         disabled={currentPage === totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
-        Next
-        <ArrowLeft className="rotate-180" />
+        <span className="max-mobile:hidden">Next</span>
+
+        <ArrowLeft className="rotate-180 max-mobile:w-[16px] max-mobile:h-[16px]" />
       </Button>
     </div>
   );
