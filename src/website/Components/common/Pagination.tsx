@@ -1,43 +1,28 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "./Button";
 import { ArrowLeft } from "@/website/lib/Icons";
-import { useDispatch, useSelector } from "@/redux/store";
-import {
-  setCurrentPage,
-  setTotalProductCount,
-} from "@/redux/slices/paginationSlice";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { GetPaginationPages } from "@/website/helpers/helper";
 
 interface PaginationProps {
-  currentPage?: number;
-  total?: number;
-  limit?: number;
-  onPageChange?: (page: number) => void;
+  currentPage: number;
+  total: number;
+  limit: number;
+  onPageChange: (page: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
-  currentPage: propCurrentPage,
-  total: propTotal,
-  limit: propLimit,
+  currentPage,
+  total,
+  limit,
   onPageChange,
 }) => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const reduxPagination = useSelector((state) => state.pagination);
-
-  const currentPage = propCurrentPage ?? reduxPagination.currentPage;
-  const total = propTotal ?? reduxPagination.total;
-  const limit = propLimit ?? reduxPagination.limit;
-
   const totalPages = Math.ceil(total / limit);
 
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1) {
+    return null;
+  }
 
   const { startPage, endPage, pages } = GetPaginationPages(
     totalPages,
@@ -45,19 +30,12 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 
   const handlePageChange = (page: number) => {
-    dispatch(setCurrentPage(page));
-    if (onPageChange) {
-      onPageChange(page);
-    } else if (searchParams && pathname) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("page", page.toString());
-      router.push(`${pathname}?${params.toString()}`);
+    if (page < 1 || page > totalPages || page === currentPage) {
+      return;
     }
-  };
 
-  useEffect(() => {
-    dispatch(setTotalProductCount(total));
-  }, [total]);
+    onPageChange(page);
+  };
 
   return (
     <div className="w-full flex items-center justify-between mt-[20px]">
@@ -80,6 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({
             >
               1
             </Button>
+
             {startPage > 2 && (
               <Button
                 variant="secondary"
@@ -115,6 +94,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 ...
               </Button>
             )}
+
             <Button
               className="!px-[20px] rounded-lg"
               variant={currentPage === totalPages ? "primary" : "secondary"}

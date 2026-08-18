@@ -1,38 +1,40 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type SortOrder = "asc" | "desc";
+
+export type SortBy = "price";
+
 interface SortingState {
-  sortBy: string;
-  sortOrder: string;
-  sortingLabel: string;
-  searchQuery: string;
+  sortBy: SortBy;
+  sortOrder: SortOrder;
 }
 
 const initialState: SortingState = {
-  sortBy: "priceAsc",
+  sortBy: "price",
   sortOrder: "asc",
-  sortingLabel: "Price: low to high",
-  searchQuery: "",
 };
 
-const SortingSlice = createSlice({
-  name: "Sorting",
+const sortingSlice = createSlice({
+  name: "sorting",
+
   initialState,
+
   reducers: {
-    setSortBy: (state, action: PayloadAction<string>) => {
+    setSortBy: (state, action: PayloadAction<SortBy>) => {
       state.sortBy = action.payload;
     },
-    setSortOrder: (state, action: PayloadAction<string>) => {
+
+    setSortOrder: (state, action: PayloadAction<SortOrder>) => {
       state.sortOrder = action.payload;
     },
-    setSortingLabel: (state, action: PayloadAction<string>) => {
-      state.sortingLabel = action.payload;
-    },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload;
+
+    resetSorting: (state) => {
+      state.sortBy = "price";
+      state.sortOrder = "asc";
     },
   },
 });
 
-export const { setSortBy, setSortOrder, setSortingLabel, setSearchQuery } =
-  SortingSlice.actions;
-export default SortingSlice.reducer;
+export const { setSortBy, setSortOrder, resetSorting } = sortingSlice.actions;
+
+export default sortingSlice.reducer;

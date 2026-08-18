@@ -4,19 +4,22 @@ interface PaginationState {
   currentPage: number;
   total: number;
   limit: number;
-  setTotalProductCount: number;
 }
 
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_LIMIT = 9;
+
 const initialState: PaginationState = {
-  currentPage: 1,
+  currentPage: DEFAULT_PAGE,
   total: 0,
-  limit: 9,
-  setTotalProductCount: 0,
+  limit: DEFAULT_LIMIT,
 };
 
-export const paginationSlice = createSlice({
+const paginationSlice = createSlice({
   name: "pagination",
+
   initialState,
+
   reducers: {
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
@@ -28,25 +31,17 @@ export const paginationSlice = createSlice({
 
     setLimit: (state, action: PayloadAction<number>) => {
       state.limit = action.payload;
-      state.currentPage = 1;
-    },
-    setTotalProductCount: (state, action: PayloadAction<number>) => {
-      state.setTotalProductCount = action.payload;
+      state.currentPage = DEFAULT_PAGE;
     },
 
     resetPagination: (state) => {
-      state.currentPage = 1;
+      state.currentPage = DEFAULT_PAGE;
       state.total = 0;
     },
   },
 });
 
-export const {
-  setCurrentPage,
-  setTotal,
-  setLimit,
-  resetPagination,
-  setTotalProductCount,
-} = paginationSlice.actions;
+export const { setCurrentPage, setTotal, setLimit, resetPagination } =
+  paginationSlice.actions;
 
 export default paginationSlice.reducer;
