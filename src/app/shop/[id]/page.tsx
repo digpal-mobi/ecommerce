@@ -22,7 +22,7 @@ export default async function ProductsDetailPage({
 
   const categoryName =
     typeof data?.category === "object" ? data.category.id : data?.category;
-  const relatedProducts = await FetchProductsByCategory(categoryName);
+  const relatedProducts = await FetchProductsByCategory(categoryName, 5);
 
   return (
     <div>

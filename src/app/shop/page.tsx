@@ -1,7 +1,6 @@
 import Breadcrumb from "@/website/components/common/Breadcrumb";
 import Container from "@/website/components/common/Container";
-import Pagination from "@/website/components/common/Pagination";
-import SectionProductList from "@/website/section/products/SectionProductList";
+  import SectionProductList from "@/website/section/products/SectionProductList";
 import SectionFilter from "@/website/section/SectionFilters";
 import { FetchCategory, FetchProducts } from "@/website/utils/api";
 import { Metadata } from "next";
@@ -45,11 +44,6 @@ export default async function Products({ searchParams }: Props) {
         <SectionFilter categories={categories} />
         <div className="flex w-full flex-col">
           <SectionProductList data={data?.products} />
-          <Pagination
-            currentPage={currentPage}
-            total={data?.total ?? 0}
-            limit={limit}
-          />
         </div>
       </div>
     </Container>

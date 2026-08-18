@@ -1,36 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchIcon } from "@/website/lib/Icons";
 import Input from "@/website/components/common/Input";
-import { useDispatch } from "@/redux/store";
-import { fetchSearchedProducts } from "@/redux/slices/productSlice";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useFilters } from "@/website/hooks/useFilters";
 
 const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const { filters, applyFilters } = useFilters();
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    setSearchQuery(filters.q);
+  }, [filters.q]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const params = new URLSearchParams(searchParams.toString());
-    if (searchQuery.trim()) {
-      params.set("search", searchQuery.trim());
-    } else {
-      params.delete("search");
-    }
-
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-
-    if (!searchQuery.trim()) return;
-
-    dispatch(fetchSearchedProducts({ query: searchQuery.trim() }));
+    applyFilters({
+      q: searchQuery.trim(),
+    });
   };
 
   return (

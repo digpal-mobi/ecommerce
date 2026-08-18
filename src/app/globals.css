@@ -35,3 +35,41 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Dual Range Price Slider */
+.price-slider {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  pointer-events: none;
+  appearance: none;
+  background: transparent;
+  outline: none;
+  z-index: 10;
+  height: 24px;
+}
+
+.price-slider::-webkit-slider-thumb {
+  pointer-events: auto;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.price-slider::-moz-range-thumb {
+  pointer-events: auto;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}

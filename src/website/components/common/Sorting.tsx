@@ -1,62 +1,32 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useState } from "react";
+
 import TitleTag from "@/website/components/common/TitleTag";
 import { ChevronDown } from "@/website/lib/Icons";
-import { useDispatch, useSelector } from "@/redux/store";
 import SortingOption from "@/website/data/SortingOptions";
-import {
-  setSortBy,
-  setSortOrder,
-  setSortingLabel,
-} from "@/redux/slices/sortingSlice";
+
+import { useFilters } from "@/website/hooks/useFilters";
 
 const SortingComponent = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
   const [isOpen, setIsOpen] = useState(false);
 
-  const { sortingLabel } = useSelector((state) => state.sorting);
+  const { sortBy, sortOrder, applySorting } = useFilters();
+
+  const selectedSorting = SortingOption.find(
+    (option) => option.sortBy === sortBy && option.sortOrder === sortOrder,
+  );
+
+  const sortingLabel = selectedSorting?.label ?? "Price: low to high";
 
   const handleSelect = (sorting: (typeof SortingOption)[number]) => {
-    dispatch(setSortBy(sorting.sortBy));
-    dispatch(setSortOrder(sorting.sortOrder));
-    dispatch(setSortingLabel(sorting.label));
+    applySorting(sorting.sortBy, sorting.sortOrder);
 
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sortBy", sorting.sortBy);
-    if (sorting.sortOrder) {
-      params.set("sortOrder", sorting.sortOrder);
-    } else {
-      params.delete("sortOrder");
-    }
-
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    const urlSortBy = searchParams.get("sortBy");
-    const urlSortOrder = searchParams.get("sortOrder") ?? "";
-
-    if (urlSortBy) {
-      const match = SortingOption.find(
-        (o) => o.sortBy === urlSortBy && o.sortOrder === urlSortOrder,
-      );
-      if (match) {
-        dispatch(setSortBy(match.sortBy));
-        dispatch(setSortOrder(match.sortOrder));
-        dispatch(setSortingLabel(match.label));
-      }
-    }
-  }, []);
-
   return (
-    <div className="relative">
+    <div className="relative bg-[#dedddd] rounded-md border border-[#000000]/10 px-[10px] py-[10px]">
       <button
         type="button"
         className="flex items-center gap-[5px]"
@@ -65,6 +35,7 @@ const SortingComponent = () => {
         <TitleTag variant="satoshiBold" as="span">
           {sortingLabel}
         </TitleTag>
+
         <ChevronDown
           className={`h-[10px] w-[10px] transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
@@ -81,7 +52,7 @@ const SortingComponent = () => {
       >
         {SortingOption.map((sorting) => (
           <button
-            key={sorting.id}
+            key={sorting.label}
             type="button"
             className="flex w-full cursor-pointer items-center justify-center gap-[20px]"
             onClick={() => handleSelect(sorting)}

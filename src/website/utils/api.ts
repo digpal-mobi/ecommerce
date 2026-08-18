@@ -1,5 +1,4 @@
 import { GetData, PostData } from "@/website/utils/ApiHandlers";
-import { stringify } from "node:querystring";
 
 export interface ApiResponse<T = any> { 
   products?: T;
@@ -12,22 +11,57 @@ export interface ApiResponse<T = any> {
 export interface FetchProductsParams {
   limit?: number;
   skip?: number;
+  q?: string;
+  category?: string | string[];
+  brand?: string | string[];
+  sortBy?: string;
+  order?: string;
   [key: string]: any;
 }
+
+const toQuery = (params: Record<string, unknown>) => {
+  const searchParams = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== "") {
+      searchParams.set(key, String(value));
+    }
+  }
+  return searchParams.toString();
+};
 
 export const FetchProducts = async ({
   limit = 9,
   skip = 0,
+  q,
+  category,
+  sortBy,
+  order,
   ...args
 }: FetchProductsParams = {}): Promise<ApiResponse> => {
   try {
-    const query = stringify({
+    const query = toQuery({
       limit,
       skip,
+      q,
+      sortBy: sortBy && sortBy !== "featured" ? sortBy : undefined,
+      order,
       ...args,
     });
 
-    return await GetData<ApiResponse>(`/products?${query}`);
+    const singleCategory = Array.isArray(category)
+      ? category.length === 1
+        ? category[0]
+        : undefined
+      : category;
+
+    const path = q
+      ? `/products/search?${query}`
+      : singleCategory
+        ? `/products/category/${encodeURIComponent(singleCategory)}?${query}`
+        : `/products?${query}`;
+
+    const data = await GetData<ApiResponse>(path);
+    return { status: true, ...data };
   } catch (e: any) {
     return {
       products: [],
@@ -36,15 +70,6 @@ export const FetchProducts = async ({
       message: e.message,
       token: null,
     };
-  }
-};
-
-export const FetchProductsByCategory = async (categoryName: string, limit = 4): Promise<ApiResponse> => {
-  try {
-    const data = await GetData<ApiResponse>(`/products/category/${categoryName}?limit=${limit}`);
-    return data;
-  } catch (e: any) {
-    return { products: [], status: false, message: e.message, token: null };
   }
 };
 
@@ -82,14 +107,14 @@ export const AddToCart = async(product:any)=>{
   }
 };
 
-export const FetchCategory = async () => {
+export const FetchCategory = async (): Promise<ApiResponse> => {
   try {
     const data = await GetData<ApiResponse>(`/products/categories`);
     return data;
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };
   }
-}
+};
 
 export const FetchSearchedProducts = async ({ query }: { query: string }) => {
   try {
@@ -99,6 +124,21 @@ export const FetchSearchedProducts = async ({ query }: { query: string }) => {
       products: data?.products || [],
       message: "Success",
     };
+  } catch (e: any) {
+    return { products: [], status: false, message: e.message, token: null };
+  }
+};
+
+export const FetchProductsByCategory = async (category: string, limit: number): Promise<ApiResponse> => {
+  try {
+    if (!category || !limit) {
+      return { products: [], status: false, message: "Category is required", token: null };
+    }
+
+    const data = await GetData<ApiResponse>(
+      `/products/category/${encodeURIComponent(category)}&limit=${limit}`
+    );
+    return { status: true, ...data };
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };
   }

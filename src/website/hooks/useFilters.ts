@@ -1,200 +1,500 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useDispatch, useSelector } from "@/redux/store";
 import {
-  setCategory,
-  setBrand,
-  setMinPrice,
-  setMaxPrice,
-  setRating,
-  setSort,
-  setColor,
-  setSize,
-  setDressStyle,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
+
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+
+import {
+  useDispatch,
+  useSelector,
+} from "@/redux/store";
+
+import {
   clearAllFilter,
+  DEFAULT_FILTERS,
+  FilterValues,
+  MIN_PRICE,
+  MAX_PRICE,
+  setFilters,
 } from "@/redux/slices/filterSlice";
+
+import {
+  setSortBy,
+  setSortOrder,
+  resetSorting,
+  type SortBy,
+  type SortOrder,
+} from "@/redux/slices/sortingSlice";
+
+
+import { setCurrentPage, setLimit } from "@/redux/slices/paginationSlice";
+import {
+  getFiltersFromSearchParams,
+  getPaginationFromSearchParams,
+  getSortingFromSearchParams,
+} from "@/website/utils/ProductUrl";
+
 
 export const useFilters = () => {
   const dispatch = useDispatch();
+
   const router = useRouter();
+
   const pathname = usePathname();
+
   const searchParams = useSearchParams();
 
-  const filterState = useSelector((state) => state.filter);
+  const storedFilters = useSelector(
+  (state) => state.filter.filters,
+);
+const sorting = useSelector(
+  (state) => state.sorting,
+);
 
-  useEffect(() => {
-    const categoryParam = searchParams.get("category");
-    if (categoryParam !== null) {
-      const categories = categoryParam ? categoryParam.split(",") : [];
-      dispatch(setCategory(categories));
-    }
+const pagination = useSelector(
+  (state) => state.pagination,
+);
 
-    const minPriceParam = searchParams.get("minPrice");
-    if (minPriceParam !== null) {
-      dispatch(setMinPrice(Number(minPriceParam)));
-    }
+useEffect(() => {
+  const urlFilters =
+    getFiltersFromSearchParams(
+      searchParams,
+    );
 
-    const maxPriceParam = searchParams.get("maxPrice");
-    if (maxPriceParam !== null) {
-      dispatch(setMaxPrice(Number(maxPriceParam)));
-    }
+  const urlSorting =
+    getSortingFromSearchParams(
+      searchParams,
+    );
 
-    const colorParam = searchParams.get("color");
-    dispatch(setColor(colorParam || null));
+  const urlPagination =
+    getPaginationFromSearchParams(
+      searchParams,
+    );
 
-    const sizeParam = searchParams.get("size");
-    dispatch(setSize(sizeParam || null));
+  dispatch(setFilters(urlFilters));
 
-    const dressStyleParam = searchParams.get("dressStyle");
-    dispatch(setDressStyle(dressStyleParam || null));
+  dispatch(
+    setSortBy(urlSorting.sortBy),
+  );
 
-    const brandParam = searchParams.get("brand");
-    if (brandParam !== null) {
-      const brands = brandParam ? brandParam.split(",") : [];
-      dispatch(setBrand(brands));
-    }
+  dispatch(
+    setSortOrder(
+      urlSorting.sortOrder,
+    ),
+  );
 
-    const ratingParam = searchParams.get("rating");
-    if (ratingParam !== null) {
-      dispatch(setRating(Number(ratingParam)));
-    }
+  dispatch(
+    setCurrentPage(
+      urlPagination.currentPage,
+    ),
+  );
 
-    const sortParam = searchParams.get("sort");
-    if (sortParam !== null) {
-      dispatch(setSort(sortParam));
-    }
-  }, [searchParams, dispatch]);
+  dispatch(
+    setLimit(
+      urlPagination.limit,
+    ),
+  );
 
-  const updateUrlParams = useCallback(
-    (updates: Record<string, string | number | null | undefined>) => {
-      const params = new URLSearchParams(
-        typeof window !== "undefined" ? window.location.search : searchParams.toString()
-      );
+}, [searchParams, dispatch]);
 
-      // Reset pagination to page 1 whenever filters change
-      params.delete("page");
+  const filters = useMemo(
+    () => ({
+      ...DEFAULT_FILTERS,
+      ...storedFilters,
+    }),
+    [storedFilters],
+  );
+  const replaceUrl = useCallback(
+  (params: URLSearchParams) => {
+    const queryString =
+      params.toString();
 
-      Object.entries(updates).forEach(([key, value]) => {
+    const targetUrl = queryString
+      ? `${pathname}?${queryString}`
+      : pathname;
+
+    router.replace(targetUrl, {
+      scroll: false,
+    });
+  },
+  [pathname, router],
+);
+const updateUrlParams = useCallback(
+  (updates: Partial<FilterValues>) => {
+    const params = new URLSearchParams(
+      searchParams.toString(),
+    );
+
+    params.delete("page");
+
+    dispatch(setCurrentPage(1));
+
+    Object.entries(updates).forEach(
+      ([key, value]) => {
         if (
           value === null ||
           value === undefined ||
           value === "" ||
-          (key === "minPrice" && Number(value) === 0) ||
-          (key === "maxPrice" && Number(value) === 3000)
+          (Array.isArray(value) &&
+            value.length === 0)
         ) {
           params.delete(key);
-        } else {
-          params.set(key, String(value));
+          return;
         }
-      });
 
-      const queryString = params.toString();
-      const targetUrl = queryString ? `${pathname}?${queryString}` : pathname;
+        params.set(
+          key,
+          Array.isArray(value)
+            ? value.join(",")
+            : String(value),
+        );
+      },
+    );
 
-      // Immediately update browser URL bar without waiting for RSC roundtrip
-      if (typeof window !== "undefined") {
-        window.history.replaceState(null, "", targetUrl);
-      }
+    replaceUrl(params);
+  },
+  [
+    searchParams,
+    dispatch,
+    replaceUrl,
+  ],
+);
+const applyFilters = useCallback(
+  (updates: Partial<FilterValues>) => {
+    dispatch(setFilters(updates));
 
-      // Trigger Next.js router transition for Server Components
-      router.replace(targetUrl, { scroll: false });
-    },
-    [pathname, router, searchParams]
-  );
+    updateUrlParams(updates);
+  },
+  [
+    dispatch,
+    updateUrlParams,
+  ],
+);
+const toggleCategory = useCallback(
+  (categoryValue: string) => {
+    const current =
+      filters.category;
 
-  const toggleCategory = useCallback(
-    (categoryValue: string) => {
-      const isSelected = filterState.category.includes(categoryValue);
-      const updatedCategories = isSelected
-        ? filterState.category.filter((cat) => cat !== categoryValue)
-        : [...filterState.category, categoryValue];
+    const isSelected =
+      current.includes(categoryValue);
 
-      dispatch(setCategory(updatedCategories));
-      updateUrlParams({
-        category: updatedCategories.length > 0 ? updatedCategories.join(",") : null,
-      });
-    },
-    [dispatch, filterState.category, updateUrlParams]
-  );
+    const nextCategory = isSelected
+      ? current.filter(
+          (category) =>
+            category !== categoryValue,
+        )
+      : [
+          ...current,
+          categoryValue,
+        ];
 
-  // selecting color
-  const toggleColor = useCallback(
-    (colorName: string) => {
-      const nextColor = filterState.color === colorName ? null : colorName;
-      dispatch(setColor(nextColor));
-      updateUrlParams({ color: nextColor });
-    },
-    [dispatch, filterState.color, updateUrlParams]
-  );
+    applyFilters({
+      category: nextCategory,
+    });
+  },
+  [
+    filters.category,
+    applyFilters,
+  ],
+);
 
-  // selecting size
-  const toggleSize = useCallback(
-    (sizeName: string) => {
-      const nextSize = filterState.size === sizeName ? null : sizeName;
-      dispatch(setSize(nextSize));
-      updateUrlParams({ size: nextSize });
-    },
-    [dispatch, filterState.size, updateUrlParams]
-  );
+const toggleColor = useCallback(
+  (colorName: string) => {
+    const color =
+      filters.color === colorName
+        ? null
+        : colorName;
 
-  // Dress Style selecting
-  const toggleDressStyle = useCallback(
+    applyFilters({
+      color,
+    });
+  },
+  [
+    filters.color,
+    applyFilters,
+  ],
+);
+
+const toggleSize = useCallback(
+  (sizeName: string) => {
+    const size =
+      filters.size === sizeName
+        ? null
+        : sizeName;
+
+    applyFilters({
+      size,
+    });
+  },
+  [
+    filters.size,
+    applyFilters,
+  ],
+);
+
+const toggleDressStyle =
+  useCallback(
     (styleName: string) => {
-      const nextStyle = filterState.dressStyle === styleName ? null : styleName;
-      dispatch(setDressStyle(nextStyle));
-      updateUrlParams({ dressStyle: nextStyle });
-    },
-    [dispatch, filterState.dressStyle, updateUrlParams]
-  );
+      const dressStyle =
+        filters.dressStyle ===
+        styleName
+          ? null
+          : styleName;
 
-  const setMinPriceValue = useCallback(
-    (value: number) => {
-      dispatch(setMinPrice(value));
-    },
-    [dispatch]
-  );
-
-  const setMaxPriceValue = useCallback(
-    (value: number) => {
-      dispatch(setMaxPrice(value));
-    },
-    [dispatch]
-  );
-
-  // Apply Price range to URL (accepts optional explicit values)
-  const applyPriceFilter = useCallback(
-    (customMin?: number, customMax?: number) => {
-      const min = customMin !== undefined ? customMin : filterState.minPrice;
-      const max = customMax !== undefined ? customMax : filterState.maxPrice;
-      updateUrlParams({
-        minPrice: min,
-        maxPrice: max,
+      applyFilters({
+        dressStyle,
       });
     },
-    [filterState.minPrice, filterState.maxPrice, updateUrlParams]
+    [
+      filters.dressStyle,
+      applyFilters,
+    ],
   );
 
-  // Clear all filters
-  const resetFilters = useCallback(() => {
-    dispatch(clearAllFilter());
-    if (typeof window !== "undefined") {
-      window.history.replaceState(null, "", pathname);
-    }
-    router.replace(pathname, { scroll: false });
-  }, [dispatch, pathname, router]);
+ const setMinPriceValue =
+    useCallback(
+      (value: number) => {
+        dispatch(
+          setFilters({
+            minPrice: value,
+          }),
+        );
+      },
+      [dispatch],
+    );
 
-  return {
-    ...filterState,
+  const setMaxPriceValue =
+    useCallback(
+      (value: number) => {
+        dispatch(
+          setFilters({
+            maxPrice: value,
+          }),
+        );
+      },
+      [dispatch],
+    );
+
+  const applyPriceFilter =
+  useCallback(
+    (
+      customMin?: number,
+      customMax?: number,
+    ) => {
+      const minPrice =
+        customMin ??
+        filters.minPrice ??
+        MIN_PRICE;
+
+      const maxPrice =
+        customMax ??
+        filters.maxPrice ??
+        MAX_PRICE;
+
+      applyFilters({
+        minPrice,
+        maxPrice,
+      });
+    },
+    [
+      filters.minPrice,
+      filters.maxPrice,
+      applyFilters,
+    ],
+  );
+
+  const resetFilters = useCallback(() => {
+  dispatch(clearAllFilter());
+
+  dispatch(setCurrentPage(1));
+
+  const params =
+    new URLSearchParams(
+      searchParams.toString(),
+    );
+
+  [
+    "category",
+    "brand",
+    "minPrice",
+    "maxPrice",
+    "rating",
+    "color",
+    "size",
+    "dressStyle",
+    "q",
+  ].forEach((key) => {
+    params.delete(key);
+  });
+
+  params.delete("page");
+
+  replaceUrl(params);
+}, [
+  dispatch,
+  searchParams,
+  replaceUrl,
+]);
+
+const applySorting = useCallback(
+  (
+    sortBy: SortBy,
+    sortOrder: SortOrder,
+  ) => {
+    dispatch(setSortBy(sortBy));
+    dispatch(setSortOrder(sortOrder));
+
+    const params =
+      new URLSearchParams(
+        searchParams.toString(),
+      );
+
+    params.delete("sortBy");
+    params.delete("sortOrder");
+
+    if (sortBy !== "price") {
+      params.set(
+        "sortBy",
+        sortBy,
+      );
+    }
+
+    if (sortOrder !== "asc") {
+      params.set(
+        "sortOrder",
+        sortOrder,
+      );
+    }
+
+    params.delete("page");
+
+    dispatch(setCurrentPage(1));
+
+    replaceUrl(params);
+  },
+  [
+    dispatch,
+    searchParams,
+    replaceUrl,
+  ],
+);
+
+const changePage = useCallback(
+  (page: number) => {
+    dispatch(
+      setCurrentPage(page),
+    );
+
+    const params =
+      new URLSearchParams(
+        searchParams.toString(),
+      );
+
+    if (page === 1) {
+      params.delete("page");
+    } else {
+      params.set(
+        "page",
+        String(page),
+      );
+    }
+
+    replaceUrl(params);
+  },
+  [
+    dispatch,
+    searchParams,
+    replaceUrl,
+  ],
+);
+
+const changeLimit = useCallback(
+  (limit: number) => {
+    dispatch(setLimit(limit));
+
+    const params =
+      new URLSearchParams(
+        searchParams.toString(),
+      );
+
+    params.delete("page");
+
+    if (limit === 9) {
+      params.delete("limit");
+    } else {
+      params.set(
+        "limit",
+        String(limit),
+      );
+    }
+
+    replaceUrl(params);
+  },
+  [
+    dispatch,
+    searchParams,
+    replaceUrl,
+  ],
+);
+
+const resetSortingState =
+  useCallback(() => {
+    dispatch(resetSorting());
+
+    const params =
+      new URLSearchParams(
+        searchParams.toString(),
+      );
+
+    params.delete("sortBy");
+    params.delete("sortOrder");
+
+    params.delete("page");
+
+    dispatch(setCurrentPage(1));
+
+    replaceUrl(params);
+  }, [
+    dispatch,
+    searchParams,
+    replaceUrl,
+  ]);
+
+return {
+    filters,
+
+    applyFilters,
+
     toggleCategory,
     toggleColor,
     toggleSize,
     toggleDressStyle,
+
     setMinPriceValue,
     setMaxPriceValue,
     applyPriceFilter,
-    resetFilters,
-  };
-};
 
+    resetFilters,
+
+   sortBy: sorting.sortBy,
+  sortOrder: sorting.sortOrder,
+  applySorting,
+  resetSorting: resetSortingState,
+
+  // Pagination
+  currentPage: pagination.currentPage,
+  limit: pagination.limit,
+  total: pagination.total,
+  changePage,
+  changeLimit,
+  };
+
+}
