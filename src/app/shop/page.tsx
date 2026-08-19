@@ -4,6 +4,7 @@ import SectionProductList from "@/website/section/products/SectionProductList";
 import SectionFilter from "@/website/section/SectionFilters";
 import { FetchCategory, FetchProducts } from "@/website/utils/api";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Products Page || Ecommerce",
@@ -46,14 +47,19 @@ export default async function Products({ searchParams }: Props) {
         <Breadcrumb items={BreadCrumbItems} />
       </div>
       <div className="flex w-full gap-[20px] flex-col tablet:flex-row laptop:pb-[80px] pb-[50px]">
-        <SectionFilter categories={categories} />
+        <Suspense fallback={null}>
+          <SectionFilter categories={categories} />
+        </Suspense>
         <div className="flex w-full flex-col">
-          <SectionProductList
-            data={data?.products}
-            initialTotal={data?.total}
-          />
+          <Suspense fallback={null}>
+            <SectionProductList
+              data={data?.products}
+              initialTotal={data?.total}
+            />
+          </Suspense>
         </div>
       </div>
     </Container>
   );
 }
+

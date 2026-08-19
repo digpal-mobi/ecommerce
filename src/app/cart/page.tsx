@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import SectionCart from "@/website/section/SectionCart";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Cart || Ecommerce",
@@ -8,8 +9,10 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
   return (
-    <main className="min-h-[70vh]">
-      <SectionCart />
-    </main>
+    <Suspense fallback={<div>Loading cart...</div>}>
+      <main className="min-h-[70vh]">
+        <SectionCart />
+      </main>
+    </Suspense>
   );
 }

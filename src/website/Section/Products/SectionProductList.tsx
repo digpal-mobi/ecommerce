@@ -37,14 +37,16 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
   const wishlistItems =
     useSelector((state: RootState) => state.wishlist?.items) || [];
 
-  const { total: reduxTotal, currentPage, limit } = useSelector(
-    (state: RootState) => state.pagination,
-  );
+  const {
+    total: reduxTotal,
+    currentPage,
+    limit,
+  } = useSelector((state: RootState) => state.pagination);
 
   const total = reduxTotal || initialTotal;
 
   const { products } = useSelector((state: RootState) => state.product);
-  const { filters, sortBy, sortOrder, changePage } = useFilters();
+  const { filters, changePage } = useFilters();
 
   const isWishlisted = (id: number) => {
     return wishlistItems.some((item: WishlistProduct) => item.id === id);

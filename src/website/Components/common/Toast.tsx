@@ -35,7 +35,7 @@ const Toast = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-[100] transition-all duration-300 ease-in-out animate-in fade-in slide-in-from-bottom-5">
+    <div className="fixed top-40 right-5 z-[100] transition-all duration-300 ease-in-out animate-in fade-in slide-in-from-bottom-5">
       <div
         className={`flex items-center gap-3 min-w-[280px] max-w-md p-[20px] rounded-xl border shadow-lg ${
           typeStyles[type as keyof typeof typeStyles] || typeStyles.success
