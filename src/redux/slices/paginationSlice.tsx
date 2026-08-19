@@ -30,8 +30,10 @@ const paginationSlice = createSlice({
     },
 
     setLimit: (state, action: PayloadAction<number>) => {
-      state.limit = action.payload;
-      state.currentPage = DEFAULT_PAGE;
+      if (state.limit !== action.payload) {
+        state.limit = action.payload;
+        state.currentPage = DEFAULT_PAGE;
+      }
     },
 
     resetPagination: (state) => {

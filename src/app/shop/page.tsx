@@ -13,20 +13,25 @@ export const metadata: Metadata = {
 type Props = {
   searchParams: Promise<{
     page?: string;
+    limit?: string;
+    category?: string;
+    brand?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    rating?: string;
+    color?: string;
+    size?: string;
+    dressStyle?: string;
+    sortBy?: string;
+    sortOrder?: string;
+    q?: string;
   }>;
 };
 
 export default async function Products({ searchParams }: Props) {
-  const params = await searchParams;
-
-  const currentPage = Number(params.page) || 1;
-
-  const limit = 9;
-  const skip = (currentPage - 1) * limit;
-
   const data = await FetchProducts({
-    limit,
-    skip,
+    limit: 9,
+    skip: 0,
   });
 
   const categories = await FetchCategory();
@@ -43,7 +48,10 @@ export default async function Products({ searchParams }: Props) {
       <div className="flex w-full gap-[20px] flex-col tablet:flex-row laptop:pb-[80px] pb-[50px]">
         <SectionFilter categories={categories} />
         <div className="flex w-full flex-col">
-          <SectionProductList data={data?.products} />
+          <SectionProductList
+            data={data?.products}
+            initialTotal={data?.total}
+          />
         </div>
       </div>
     </Container>

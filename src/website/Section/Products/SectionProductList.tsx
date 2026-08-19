@@ -7,6 +7,7 @@ import TitleTag from "@/website/components/common/TitleTag";
 import Image from "next/image";
 import Pagination from "@/website/components/common/Pagination";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { useEffect, useRef, useState } from "react";
 import { addToCart } from "@/redux/slices/cartSlice";
@@ -16,16 +17,18 @@ import { CurrencyConverter } from "@/website/helpers/helper";
 import SortingComponent from "@/website/components/common/Sorting";
 import { useFilters } from "@/website/hooks/useFilters";
 import { fetchProducts, searchProducts } from "@/redux/slices/productSlice";
+import { setTotal } from "@/redux/slices/paginationSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { showToast } from "@/redux/slices/toastSlice";
 
 type Props = {
   data?: any[];
+  initialTotal?: number;
 };
 
-const SectionProductList = ({ data }: Props) => {
+const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
   const dispatch = useDispatch();
-  const isFirstRender = useRef(true);
+  const searchParams = useSearchParams();
 
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [hasClientFetched, setHasClientFetched] = useState(false);
@@ -34,9 +37,11 @@ const SectionProductList = ({ data }: Props) => {
   const wishlistItems =
     useSelector((state: RootState) => state.wishlist?.items) || [];
 
-  const { total, currentPage, limit } = useSelector(
+  const { total: reduxTotal, currentPage, limit } = useSelector(
     (state: RootState) => state.pagination,
   );
+
+  const total = reduxTotal || initialTotal;
 
   const { products } = useSelector((state: RootState) => state.product);
   const { filters, sortBy, sortOrder, changePage } = useFilters();
@@ -73,14 +78,33 @@ const SectionProductList = ({ data }: Props) => {
     );
   };
 
+  const searchParamsString = searchParams.toString();
+
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+    const hasUrlFilters = [
+      "category",
+      "brand",
+      "minPrice",
+      "maxPrice",
+      "rating",
+      "color",
+      "size",
+      "dressStyle",
+      "q",
+      "sortBy",
+      "sortOrder",
+      "page",
+    ].some((key) => searchParams.has(key));
+
+    if (!hasUrlFilters && !hasClientFetched) {
+      if (initialTotal > 0 && reduxTotal === 0) {
+        dispatch(setTotal(initialTotal));
+      }
       return;
     }
 
     const fetchData = async () => {
-      if (filters.q.trim()) {
+      if (filters.q?.trim()) {
         await dispatch(searchProducts());
       } else {
         await dispatch(fetchProducts());
@@ -90,7 +114,7 @@ const SectionProductList = ({ data }: Props) => {
     };
 
     fetchData();
-  }, [filters, sortBy, sortOrder, currentPage, limit, dispatch]);
+  }, [searchParamsString, dispatch]);
 
   const displayProducts = hasClientFetched ? products : data || [];
 
