@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  ChevronDown,
-  FilterIcon,
-  ArrowLeft,
-} from "@/website/lib/Icons";
+import { ChevronDown, FilterIcon, ArrowLeft } from "@/website/lib/Icons";
 import Button from "@/website/components/common/Button";
 import TitleTag from "@/website/components/common/TitleTag";
 import Paragraph from "@/website/components/common/Paragraph";
@@ -329,8 +325,20 @@ function useCategories(serverCategories: any = []) {
   const storedCategories = useSelector((state) => state.product.categories);
 
   useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+    const hasServerCategories =
+      (Array.isArray(serverCategories) && serverCategories.length > 0) ||
+      (Array.isArray(serverCategories?.data) &&
+        serverCategories.data.length > 0) ||
+      (Array.isArray(serverCategories?.categories) &&
+        serverCategories.categories.length > 0);
+
+    if (
+      !hasServerCategories &&
+      (!storedCategories || storedCategories.length === 0)
+    ) {
+      dispatch(getCategories());
+    }
+  }, [dispatch, serverCategories, storedCategories]);
 
   let list: any[] = [];
   if (serverCategories) {

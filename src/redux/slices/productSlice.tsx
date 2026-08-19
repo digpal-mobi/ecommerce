@@ -141,57 +141,32 @@ export const fetchProducts = createAsyncThunk(
 
       const { currentPage, limit } = state.pagination;
 
-      const activeFilters = hasActiveFilters(filters);
-
       const skip = (currentPage - 1) * limit;
 
       const response = await FetchProducts({
         category: filters.category.length > 0 ? filters.category : undefined,
-
         brand: filters.brand.length > 0 ? filters.brand : undefined,
-
         color: filters.color || undefined,
-
         size: filters.size || undefined,
-
         dressStyle: filters.dressStyle || undefined,
-
         minPrice: filters.minPrice ?? undefined,
-
         maxPrice: filters.maxPrice ?? undefined,
-
         rating: filters.rating ?? undefined,
-
-        limit: activeFilters ? 0 : limit,
-
-        skip: activeFilters ? 0 : skip,
-
-        sortBy: activeFilters ? undefined : sortBy,
-
-        order: activeFilters ? undefined : sortOrder,
+        limit,
+        skip,
+        sortBy: sortBy || undefined,
+        order: sortOrder,
       });
 
       if (response.status === false) {
         return rejectWithValue(response.message || "Failed to fetch products");
       }
 
-      let products: Product[] = Array.isArray(response.products)
+      const products: Product[] = Array.isArray(response.products)
         ? response.products
         : [];
 
-      if (activeFilters) {
-        products = filterProducts(products, filters);
-
-        products = sortProducts(products, sortBy, sortOrder);
-      }
-
-      const total = activeFilters
-        ? products.length
-        : (response.total ?? products.length);
-
-      if (activeFilters) {
-        products = paginateProducts(products, currentPage, limit);
-      }
+      const total = response.total ?? products.length;
 
       dispatch(setTotal(total));
 
@@ -222,21 +197,26 @@ export const searchProducts = createAsyncThunk(
 
       const response = await FetchSearchedProducts({
         query: filters.q,
+        category: filters.category.length > 0 ? filters.category : undefined,
+        brand: filters.brand.length > 0 ? filters.brand : undefined,
+        color: filters.color || undefined,
+        size: filters.size || undefined,
+        dressStyle: filters.dressStyle || undefined,
+        minPrice: filters.minPrice ?? undefined,
+        maxPrice: filters.maxPrice ?? undefined,
+        rating: filters.rating ?? undefined,
+        limit,
+        skip,
+        sortBy: sortBy || undefined,
+        order: sortOrder,
       });
 
       if (response.status === false || !Array.isArray(response.products)) {
         return rejectWithValue(response.message || "Failed to search products");
       }
 
-      let products: Product[] = response.products;
-
-      products = filterProducts(products, filters);
-
-      products = sortProducts(products, sortBy, sortOrder);
-
-      const total = products.length;
-
-      products = paginateProducts(products, currentPage, limit);
+      const products: Product[] = response.products;
+      const total = response.total ?? products.length;
 
       dispatch(setTotal(total));
 

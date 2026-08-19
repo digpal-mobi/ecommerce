@@ -23,7 +23,13 @@ const toQuery = (params: Record<string, unknown>) => {
   const searchParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== null && value !== "") {
-      searchParams.set(key, String(value));
+      if (Array.isArray(value)) {
+        if (value.length > 0) {
+          searchParams.set(key, value.join(","));
+        }
+      } else {
+        searchParams.set(key, String(value));
+      }
     }
   }
   return searchParams.toString();
@@ -43,6 +49,7 @@ export const FetchProducts = async ({
       limit,
       skip,
       q,
+      category,
       sortBy: sortBy && sortBy !== "featured" ? sortBy : undefined,
       order,
       ...args,
@@ -116,16 +123,24 @@ export const FetchCategory = async (): Promise<ApiResponse> => {
   }
 };
 
-export const FetchSearchedProducts = async ({ query }: { query: string }) => {
+export const FetchSearchedProducts = async ({
+  query,
+  ...params
+}: {
+  query: string;
+  [key: string]: any;
+}) => {
   try {
-    const data = await GetData<ApiResponse>(`/products/search?q=${query}`);
+    const queryString = toQuery({ q: query, ...params });
+    const data = await GetData<ApiResponse>(`/products/search?${queryString}`);
     return {
       status: true,
       products: data?.products || [],
+      total: data?.total ?? (data?.products || []).length,
       message: "Success",
     };
   } catch (e: any) {
-    return { products: [], status: false, message: e.message, token: null };
+    return { products: [], total: 0, status: false, message: e.message, token: null };
   }
 };
 
