@@ -1,9 +1,9 @@
-import SectionBrandLogo from "@/website/section/SectionBrandLogo";
-import SectionBrowseByDressStyle from "@/website/section/SectionBrowseByDressStyle";
-import SectionCustomerTestimonial from "@/website/section/SectionCustomerTestimonial";
-import SectionMainBanner from "@/website/section/SectionMainBanner";
-import SectionNewArrival from "@/website/section/SectionNewArrival";
-import SectionTopSelling from "@/website/section/SectionTopSelling";
+import SectionBrandLogo from "@/website/Section/SectionBrandLogo";
+import SectionBrowseByDressStyle from "@/website/Section/SectionBrowseByDressStyle";
+import SectionCustomerTestimonial from "@/website/Section/SectionCustomerTestimonial";
+import SectionMainBanner from "@/website/Section/SectionMainBanner";
+import SectionNewArrival from "@/website/Section/SectionNewArrival";
+import SectionTopSelling from "@/website/Section/SectionTopSelling";
 import { FetchProductsByCategory } from "@/website/utils/api";
 import { EmblaOptionsType } from "embla-carousel";
 import { Metadata } from "next";

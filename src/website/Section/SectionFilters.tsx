@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { ChevronDown, FilterIcon, ArrowLeft } from "@/website/lib/Icons";
-import Button from "@/website/components/common/Button";
-import TitleTag from "@/website/components/common/TitleTag";
-import Paragraph from "@/website/components/common/Paragraph";
-import CheckBox from "@/website/components/common/CheckBox";
+import Button from "@/website/Components/Common/Button";
+import TitleTag from "@/website/Components/Common/TitleTag";
+import Paragraph from "@/website/Components/Common/Paragraph";
+import CheckBox from "@/website/Components/Common/CheckBox";
 import { useFilters } from "@/website/hooks/useFilters";
 import { MAX_PRICE, MIN_PRICE } from "@/redux/slices/filterSlice";
 import { useDispatch, useSelector } from "@/redux/store";
@@ -278,9 +278,6 @@ function FilterOptions({
 
   return (
     <div className="flex flex-col gap-[14px] pt-[14px]">
-      {/* {options.length > 5 && (
-        <FilterSearch value={search} onChange={setSearch} />
-      )} */}
       <div className="flex max-h-[220px] flex-col gap-[10px] overflow-y-auto pr-1">
         {visible.map((option) => {
           const checked = selected.includes(option);
@@ -457,7 +454,7 @@ export function FilterSectionDesktop({ categories }: { categories?: any }) {
 
   return (
     <aside className="w-full max-w-[295px] max-h-full rounded-[16px] border border-[#E8E8E8] bg-white p-[18px] shadow-xs">
-      <div className="mb-[16px] flex items-center justify-between border-b border-[#EEEEEE] pb-[14px]">
+      <div className="mb-[16px] flex flex-col laptop:flex-row items-center justify-between border-b border-[#EEEEEE] pb-[14px]">
         <TitleTag
           as="h2"
           variant="bold"

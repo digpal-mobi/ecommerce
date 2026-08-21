@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
-import Navigation from "@/website/navigation";
-import Footer from "@/website/footerNavigation";
+import Navigation from "@/website/Navigation";
+import Footer from "@/website/FooterNavigation";
 import { Providers } from "@/redux/Provider";
-import Toast from "@/website/components/common/Toast";
+import NextTopLoader from "nextjs-toploader";
 
 const satoshi = localFont({
   src: [
@@ -86,11 +86,16 @@ export default function RootLayout({
       className={`${satoshi.variable} ${integral.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <NextTopLoader
+          height={5}
+          color="#D9D9D9"
+          showSpinner={false}
+          zIndex={30000}
+        />
         <Providers>
           <Navigation />
           {children}
           <Footer />
-          <Toast />
         </Providers>
       </body>
     </html>

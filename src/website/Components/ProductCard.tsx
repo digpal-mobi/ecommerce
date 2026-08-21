@@ -1,18 +1,17 @@
 "use client";
 
-import SectionRating from "@/website/section/SectionRating";
-import Button from "@/website/components/common/Button";
+import SectionRating from "@/website/Section/SectionRating";
+import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
-import TitleTag from "@/website/components/common/TitleTag";
-import Paragraph from "@/website/components/common/Paragraph";
-import Increment from "@/website/components/Increment";
+import TitleTag from "@/website/Components/Common/TitleTag";
+import Paragraph from "@/website/Components/Common/Paragraph";
+import Increment from "@/website/Components/Increment";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
-import LazyImage from "./common/LazyImage";
+import LazyImage from "./Common/LazyImage";
 import { useState } from "react";
-import { showToast } from "@/redux/slices/toastSlice";
 import { AddToCart } from "../utils/api";
 import { useSelector } from "@/redux/store";
 import { CurrencyConverter } from "../helpers/helper";
@@ -26,7 +25,8 @@ const ProductCard = ({ products }: Props) => {
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   const currency = useSelector((state: any) => state.currency.currency);
-  const wishlistItems = useSelector((state: any) => state.wishlist?.items) || [];
+  const wishlistItems =
+    useSelector((state: any) => state.wishlist?.items) || [];
 
   const isWishlisted = (id: number) => {
     return wishlistItems.some((item: WishlistProduct) => item.id === id);
@@ -47,15 +47,6 @@ const ProductCard = ({ products }: Props) => {
           typeof item.category === "object"
             ? item.category?.name || item.category?.id
             : item.category,
-      }),
-    );
-    dispatch(
-      showToast({
-        title: wishlisted ? "Removed from Wishlist" : "Added to Wishlist",
-        message: wishlisted
-          ? `Removed "${item.title}" from wishlist`
-          : `Added "${item.title}" to wishlist`,
-        type: "success",
       }),
     );
   };
@@ -88,20 +79,16 @@ const ProductCard = ({ products }: Props) => {
 
     dispatch(addToCart(productCart));
     const AddProductToCart = AddToCart(productCart);
-    dispatch(
-      showToast({
-        title: "Success",
-        message: "Item added to cart",
-        variant: "success",
-      }),
-    );
   };
 
   return (
     <section className="w-full py-[32px] laptop:py-[55px]">
-      <div className="flex gap-[20px] laptop:justify-center justify-start">
+      <div className="flex gap-[20px] justify-start">
         {products?.map((items) => (
-          <div key={items.id} className="flex flex-col shrink-0 w-[295px]">
+          <div
+            key={items.id}
+            className="flex flex-col justify-between shrink-0 w-[295px]"
+          >
             <Link href={`/shop/${items.id}`} className="relative block">
               <LazyImage
                 src={items.thumbnail}
@@ -124,7 +111,7 @@ const ProductCard = ({ products }: Props) => {
                 >
                   <WishlistIcon
                     filled={isWishlisted(items.id)}
-                    className="h-[18px] w-[18px]"
+                    className="h-[18px] cursor-pointer w-[18px]"
                   />
                 </button>
               </div>

@@ -1,5 +1,3 @@
-
- 
 export const NAVIGATION_ITEMS = [
   {
     id: 1,
@@ -8,35 +6,34 @@ export const NAVIGATION_ITEMS = [
     children: [
       {
         title: "Men",
-        href: "/shop/men",
+        href: "/shop?category=mens-shirts",
       },
       {
         title: "Women",
-        href: "/shop/women",
+        href: "/shop?category=womens-dresses",
       },
       {
         title: "Kids",
-        href: "/shop/kids",
-      },      
-      
+        href: "/shop",
+      },
       {
         title: "Accessories",
-        href: "/shop/accessories",
+        href: "/shop?category=sunglasses,mens-watches,womens-bags",
       },
       {
         title: "Footwear",
-        href: "/shop/footwear",
+        href: "/shop?category=mens-shoes,womens-shoes",
       },
       {
         title: "Sale Items",
-        href: "/shop/sale",
+        href: "/sale-items",
       },
     ],
   },
   {
     id: 2,
     title: "On Sale",
-    href: "/sale",
+    href: "/on-sale",
   },
   {
     id: 3,

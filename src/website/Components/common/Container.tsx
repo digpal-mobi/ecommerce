@@ -6,16 +6,16 @@ type Props = {
 };
 
 const CONTAINER_CLASS =
-  "mx-auto w-full max-w-[1920px] px-[16px] tablet:px-[50px] laptop:px-12 laptop-lg:px-[80px] desktop:px-[100px] desktop-lg:px-[100px]";
+  "mx-auto w-full max-w-[1920px] px-[20px] tablet-lg:px-[30px] laptop:px-[80px] desktop:px-[100px]";
 
-const Container = ({ children, className = "" }: Props) => {
+export const Container = ({ children, className = "" }: Props) => {
   return (
-    <div
-      className={`${CONTAINER_CLASS} py-[40px] laptop:py-[80px] ${className}`}
-    >
-      {children}
-    </div>
+    <div className={`${CONTAINER_CLASS} ${className}`.trim()}>{children}</div>
   );
 };
-    
+
+export const MainContainer = ({ children, className = "" }: Props) => {
+  return <div className={`max-w-full ${className}`.trim()}>{children}</div>;
+};
+
 export default Container;

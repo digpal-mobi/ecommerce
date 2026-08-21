@@ -1,4 +1,4 @@
-import CurrencyRates from "@/website/data/CurrencyRates";
+import CurrencyRates from "@/website/Data/CurrencyRates";
 
 export const RoundRating = (rating: number) => {
   return Math.round(rating * 2) / 2;

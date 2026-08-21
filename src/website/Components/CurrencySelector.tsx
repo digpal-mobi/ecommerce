@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import TitleTag from "@/website/components/common/TitleTag";
-import CurrencyRates from "@/website/data/CurrencyRates";
+import TitleTag from "@/website/Components/Common/TitleTag";
+import CurrencyRates from "@/website/Data/CurrencyRates";
 import { ChevronDown } from "../lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
 import { setCurrency } from "@/redux/slices/currencySlice";
@@ -19,7 +19,6 @@ const CurrencySelector = (props: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load saved currency after component mounts on client
     const savedCurrency = localStorage.getItem("currency");
 
     if (savedCurrency) {
@@ -46,7 +45,7 @@ const CurrencySelector = (props: Props) => {
     <div ref={wrapperRef} className="relative">
       <button
         type="button"
-        className="flex items-center gap-[5px]"
+        className="flex items-center cursor-pointer gap-[5px]"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <TitleTag variant="satoshiBold" as="span">

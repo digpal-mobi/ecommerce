@@ -6,7 +6,6 @@ import {
 } from "react-redux";
 import authSlice from "@/redux/slices/authSlice";
 import paginationSlice from "@/redux/slices/paginationSlice";
-import toastSlice from "@/redux/slices/toastSlice";
 import cartSlice from "@/redux/slices/cartSlice";
 import currencySlice from "@/redux/slices/currencySlice";
 import filterSlice from "@/redux/slices/filterSlice";
@@ -22,7 +21,6 @@ const logger: Middleware = (storeApi) => (next) => (action) => {
 const rootReducer = combineReducers({
   auth: authSlice,
   pagination: paginationSlice,
-  toast: toastSlice,
   cart: cartSlice,
   currency: currencySlice,
   filter: filterSlice,

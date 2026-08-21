@@ -1,8 +1,8 @@
-import Button from "@/website/components/common/Button";
-import Paragraph from "@/website/components/common/Paragraph";
-import TitleTag from "@/website/components/common/TitleTag";
+import Button from "@/website/Components/Common/Button";
+import Paragraph from "@/website/Components/Common/Paragraph";
+import TitleTag from "@/website/Components/Common/TitleTag";
 import { FormatDate } from "@/website/helpers/helper";
-import SectionRating from "@/website/section/SectionRating";
+import SectionRating from "@/website/Section/SectionRating";
 
 export interface Review {
   rating: number;

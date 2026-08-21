@@ -2,12 +2,14 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import { SearchIcon } from "@/website/lib/Icons";
-import Input from "@/website/components/common/Input";
+import Input from "@/website/Components/Common/Input";
 import { useFilters } from "@/website/hooks/useFilters";
+import { useRouter } from "next/navigation";
 
 const SearchBarContent = () => {
   const { filters, applyFilters } = useFilters();
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     setSearchQuery(filters.q);
@@ -16,9 +18,8 @@ const SearchBarContent = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    applyFilters({
-      q: searchQuery.trim(),
-    });
+    applyFilters({ q: searchQuery.trim() });
+    router.push(`/shop?q=${searchQuery.trim()}`);
   };
 
   return (

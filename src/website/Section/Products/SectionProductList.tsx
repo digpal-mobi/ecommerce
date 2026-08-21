@@ -1,25 +1,24 @@
 "use client";
 
-import Paragraph from "@/website/components/common/Paragraph";
-import Increment from "@/website/components/Increment";
+import Paragraph from "@/website/Components/Common/Paragraph";
+import Increment from "@/website/Components/Increment";
 import SectionRating from "../SectionRating";
-import TitleTag from "@/website/components/common/TitleTag";
+import TitleTag from "@/website/Components/Common/TitleTag";
 import Image from "next/image";
-import Pagination from "@/website/components/common/Pagination";
+import Pagination from "@/website/Components/Common/Pagination";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { useEffect, useRef, useState } from "react";
 import { addToCart } from "@/redux/slices/cartSlice";
-import Button from "@/website/components/common/Button";
+import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
 import { CurrencyConverter } from "@/website/helpers/helper";
-import SortingComponent from "@/website/components/common/Sorting";
+import SortingComponent from "@/website/Components/Common/Sorting";
 import { useFilters } from "@/website/hooks/useFilters";
 import { fetchProducts, searchProducts } from "@/redux/slices/productSlice";
 import { setTotal } from "@/redux/slices/paginationSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
-import { showToast } from "@/redux/slices/toastSlice";
 
 type Props = {
   data?: any[];
@@ -67,15 +66,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
           typeof item.category === "object"
             ? item.category?.name || item.category?.id
             : item.category,
-      }),
-    );
-    dispatch(
-      showToast({
-        title: wishlisted ? "Removed from Wishlist" : "Added to Wishlist",
-        message: wishlisted
-          ? `Removed "${item.title}" from wishlist`
-          : `Added "${item.title}" to wishlist`,
-        type: "success",
       }),
     );
   };
@@ -146,7 +136,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
   };
   return (
     <main className="flex-1">
-      <div className="mb-[16px] flex items-center justify-between">
+      <div className="mb-[16px] flex flex-col laptop:flex-row items-center justify-between">
         <div>
           <TitleTag
             className="!laptop:text-[32px] !text-[24px]"
@@ -170,7 +160,10 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
 
       <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
         {displayProducts.map((items: any) => (
-          <div key={items.id} className="flex flex-col shrink-0">
+          <div
+            key={items.id}
+            className="flex flex-col justify-between shrink-0"
+          >
             <div className="relative block">
               <Link className="w-full block" href={`/shop/${items.id}`}>
                 <Image
@@ -195,7 +188,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
                 >
                   <WishlistIcon
                     filled={isWishlisted(items.id)}
-                    className="h-[18px] w-[18px]"
+                    className="h-[18px] cursor-pointer w-[18px]"
                   />
                 </button>
               </div>
