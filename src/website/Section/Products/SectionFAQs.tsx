@@ -1,5 +1,5 @@
-import Paragraph from "@/website/components/common/Paragraph";
-import TitleTag from "@/website/components/common/TitleTag";
+import Paragraph from "@/website/Components/Common/Paragraph";
+import TitleTag from "@/website/Components/Common/TitleTag";
 import { ChevronDown } from "@/website/lib/Icons";
 import React, { useState } from "react";
 
@@ -74,6 +74,7 @@ const SectionFAQs = (props: Props) => {
               key={index}
             >
               <button
+                type="button"
                 onClick={() => handleToggle(index)}
                 className="flex items-center justify-between gap-[20px] w-full cursor-pointer"
               >

@@ -1,5 +1,8 @@
-import TitleTag from "@/website/components/common/TitleTag";
-import ProductCard from "@/website/components/ProductCard";
+import Container, {
+  MainContainer,
+} from "@/website/Components/Common/Container";
+import ProductCard from "@/website/Components/ProductCard";
+import TitleTag from "@/website/Components/Common/TitleTag";
 
 type Props = {
   products: Array<any>;
@@ -7,16 +10,20 @@ type Props = {
 
 const SectionSimilarProducts = ({ products }: Props) => {
   return (
-    <section className="w-full !pb-[0px]">
-      <div className="flex justify-center items-center w-full">
-        <TitleTag as="h2" variant="heading">
-          You might also like
-        </TitleTag>
-      </div>
-      <div className="overflow-x-auto overflow-y-hidden scrollbar-hide w-full">
-        <ProductCard products={products} />
-      </div>
-    </section>
+    <MainContainer>
+      <Container>
+        <section className="w-full !pb-[0px]">
+          <div className="flex justify-center items-center w-full">
+            <TitleTag as="h2" variant="heading">
+              You might also like
+            </TitleTag>
+          </div>
+          <div className="overflow-x-auto overflow-y-hidden scrollbar-hide w-full">
+            <ProductCard products={products} />
+          </div>
+        </section>
+      </Container>
+    </MainContainer>
   );
 };
 

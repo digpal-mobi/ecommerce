@@ -3,7 +3,10 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { CrossIcon } from "@/website/lib/Icons";
-import Container from "@/website/components/common/Container";
+import {
+  Container,
+  MainContainer,
+} from "@/website/Components/Common/Container";
 
 type Props = {};
 
@@ -19,25 +22,27 @@ const SectionHomeBanner = (props: Props) => {
   }
 
   return (
-    <Container className="bg-[#000000] !py-0">
-      <div className="flex text-[#FFF] w-full py-[10px] h-full">
-        <div className="flex w-full justify-center items-center">
-          <span className="text-[12px] laptop:text-[14px] font-satoshi font-[400] leading-[1em]">
-            Sign up and get 20% off to your first order.{" "}
-            <Link className="font-[500] hover:underline" href={"/signup"}>
-              Sign Up Now
-            </Link>
-          </span>
+    <MainContainer className="bg-[#000000]">
+      <Container>
+        <div className="flex text-[#FFF] w-full py-[10px] h-full">
+          <div className="flex w-full justify-center items-center">
+            <span className="text-[12px] laptop:text-[14px] font-satoshi font-[400] leading-[1em]">
+              Sign up and get 20% off to your first order.
+              <Link className="font-[500] hover:underline" href={"/signup"}>
+                Sign Up Now
+              </Link>
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={handleClick}
+            className="text-[#FFFFFF] flex justify-end cursor-pointer items-center"
+          >
+            <CrossIcon />
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={handleClick}
-          className="text-[#FFFFFF] flex justify-end cursor-pointer items-center"
-        >
-          <CrossIcon />
-        </button>
-      </div>
-    </Container>
+      </Container>
+    </MainContainer>
   );
 };
 

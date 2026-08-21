@@ -1,8 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import Container from "@/website/components/common/Container";
-import Button from "@/website/components/common/Button";
+import {
+  Container,
+  MainContainer,
+} from "@/website/Components/Common/Container";
+import Button from "@/website/Components/Common/Button";
 import { SparkleIcon, SparkleIcon2 } from "@/website/lib/Icons";
+import Link from "next/link";
 
 const Metrics = [
   {
@@ -40,64 +44,68 @@ const SectionMainBanner = () => {
         </div>
       </div>
 
-      <Container className="laptop:!pt-[80px] laptop:!pb-[100px] ">
-        <div className="relative z-10 flex min-h-[50%] items-center">
-          <div className="w-full laptop:max-w-[52%] ">
-            <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
-              FIND CLOTHES THAT MATCHES YOUR STYLE
-            </h1>
+      <MainContainer>
+        <Container className="laptop:!pt-[80px] laptop:!pb-[100px] ">
+          <div className="relative z-10 flex min-h-[50%] items-center">
+            <div className="w-full laptop:max-w-[52%] ">
+              <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
+                FIND CLOTHES THAT MATCHES YOUR STYLE
+              </h1>
 
-            <p className="mt-6 text-[14px] font-satoshi laptop:text-[16px] font-[400] laptop:leading-[28px] text-black/60">
-              Browse through our diverse range of met iculously crafted
-              garments, designed to bring out your individuality and cater to
-              your sense of style.
-            </p>
+              <p className="mt-6 text-[14px] font-satoshi laptop:text-[16px] font-[400] laptop:leading-[28px] text-black/60">
+                Browse through our diverse range of met iculously crafted
+                garments, designed to bring out your individuality and cater to
+                your sense of style.
+              </p>
 
-            <div className="mt-[24px] flex max-w-[210px] tablet:justify-start justify-center desktop:mt-[32px]">
-              <Button className="w-full" variant="primary">
-                Shop Now
-              </Button>
-            </div>
+              <div className="mt-[24px] flex max-w-[210px] tablet:justify-start justify-center desktop:mt-[32px]">
+                <Link href="/shop">
+                  <Button className="w-full" variant="primary">
+                    Shop Now
+                  </Button>
+                </Link>
+              </div>
 
-            {/* Metrics */}
-            <div className="mt-12 flex flex-wrap">
-              {Metrics.map((item, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    className={`${
-                      index === 2
-                        ? "w-full mt-6 flex justify-center items-center laptop:w-auto laptop:mt-0"
-                        : "w-1/2 laptop:w-auto flex justify-center items-center"
-                    }`}
-                  >
+              {/* Metrics */}
+              <div className="mt-12 flex flex-wrap">
+                {Metrics.map((item, index) => (
+                  <React.Fragment key={index}>
                     <div
-                      className={`
-            ${
-              index === 0
-                ? "laptop:pr-[32px]"
-                : index === Metrics.length - 1
-                  ? "laptop:pl-[32px]"
-                  : "laptop:px-[32px]"
-            }
-          `}
+                      className={`${
+                        index === 2
+                          ? "w-full mt-6 flex justify-center items-center laptop:w-auto laptop:mt-0"
+                          : "w-1/2 laptop:w-auto flex justify-center items-center"
+                      }`}
                     >
-                      <h3 className="text-[32px] laptop:text-[40px] font-bold leading-none">
-                        {item.number}
-                      </h3>
+                      <div
+                        className={`
+              ${
+                index === 0
+                  ? "laptop:pr-[32px]"
+                  : index === Metrics.length - 1
+                    ? "laptop:pl-[32px]"
+                    : "laptop:px-[32px]"
+              }
+            `}
+                      >
+                        <h3 className="text-[32px] laptop:text-[40px] font-bold leading-none">
+                          {item.number}
+                        </h3>
 
-                      <p className="mt-2 text-black/60">{item.description}</p>
+                        <p className="mt-2 text-black/60">{item.description}</p>
+                      </div>
                     </div>
-                  </div>
 
-                  {index !== Metrics.length - 1 && (
-                    <div className="hidden laptop:block w-px h-14 bg-black/10" />
-                  )}
-                </React.Fragment>
-              ))}
+                    {index !== Metrics.length - 1 && (
+                      <div className="hidden laptop:block w-px h-14 bg-black/10" />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </MainContainer>
 
       <div className="relative laptop:hidden">
         <Image

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import SectionCart from "@/website/section/SectionCart";
+import SectionCart from "@/website/Section/SectionCart";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {

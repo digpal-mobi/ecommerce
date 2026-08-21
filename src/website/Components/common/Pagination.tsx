@@ -41,13 +41,13 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="w-full mt-[20px] flex items-center justify-between gap-[10px] max-mobile:flex-wrap max-mobile:justify-center">
       <Button
         variant="secondary"
-        className="gap-[10px] shrink-0 max-mobile:!px-[12px] max-mobile:!py-[8px] max-mobile:text-[13px]"
+        className="gap-[10px] shrink-0 max-tablet:!px-[12px] max-tablet:!py-[8px] max-tablet:text-[13px]"
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
-        <ArrowLeft className="max-mobile:w-[16px] max-mobile:h-[16px]" />
+        <ArrowLeft className="tablet:w-[20px] tablet:h-[20px]" />
 
-        <span className="max-mobile:hidden">Previous</span>
+        <span className="max-tablet:hidden">Previous</span>
       </Button>
 
       <div className="flex items-center justify-center gap-x-[10px] max-tablet:gap-x-[6px] max-mobile:gap-x-[4px]">
@@ -111,13 +111,13 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <Button
         variant="secondary"
-        className="gap-[10px] shrink-0 max-mobile:!px-[12px] max-mobile:!py-[8px] max-mobile:text-[13px]"
+        className="gap-[10px] shrink-0 max-tablet:!px-[12px] max-tablet:!py-[8px] max-tablet:text-[13px]"
         disabled={currentPage === totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
-        <span className="max-mobile:hidden">Next</span>
+        <span className="max-tablet:hidden">Next</span>
 
-        <ArrowLeft className="rotate-180 max-mobile:w-[16px] max-mobile:h-[16px]" />
+        <ArrowLeft className="rotate-180 tablet:w-[20px] tablet:h-[20px]" />
       </Button>
     </div>
   );

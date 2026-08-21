@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import TitleTag from "@/website/components/common/TitleTag";
+import TitleTag from "@/website/Components/Common/TitleTag";
 import { ChevronDown } from "@/website/lib/Icons";
-import SortingOption from "@/website/data/SortingOptions";
+import SortingOption from "@/website/Data/SortingOptions";
 
 import { useFilters } from "@/website/hooks/useFilters";
 

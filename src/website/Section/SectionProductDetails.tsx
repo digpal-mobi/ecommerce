@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Container from "@/website/components/common/Container";
-import TitleTag from "@/website/components/common/TitleTag";
-import ProductDetailsContent from "@/website/section/products/SectionProductDetails";
-import SectionRatingAndReviews from "@/website/section/products/SectionRatingAndReviews";
-import SectionFAQs from "@/website/section/products/SectionFAQs";
+import {
+  Container,
+  MainContainer,
+} from "@/website/Components/Common/Container";
+import TitleTag from "@/website/Components/Common/TitleTag";
+import ProductDetailsContent from "@/website/Section/products/SectionProductDetails";
+import SectionRatingAndReviews from "@/website/Section/products/SectionRatingAndReviews";
+import SectionFAQs from "@/website/Section/products/SectionFAQs";
 
 type Tab = "details" | "reviews" | "faqs";
 
@@ -28,44 +31,46 @@ const SectionProductDetails = ({ data }: any) => {
   ];
 
   return (
-    <Container>
-      <div className="flex items-center justify-center border-b border-black/10">
-        {tabs.map((tab) => {
-          const active = activeTab === tab.id;
+    <MainContainer>
+      <Container>
+        <div className="flex items-center justify-center border-b border-black/10">
+          {tabs.map((tab) => {
+            const active = activeTab === tab.id;
 
-          return (
-            <button
-              type="button"
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as Tab)}
-              className={`w-full pb-[24px] flex items-center justify-center border-b-2 transition-all cursor-pointer ${
-                active
-                  ? "border-black text-black"
-                  : "border-transparent text-black/60 hover:border-black/30 hover:text-black"
-              }`}
-            >
-              <TitleTag
-                as="span"
-                variant="satoshiBold"
-                className="font-satoshi text-[16px] laptop:text-[20px]"
+            return (
+              <button
+                type="button"
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as Tab)}
+                className={`w-full pb-[24px] flex items-center justify-center border-b-2 transition-all cursor-pointer ${
+                  active
+                    ? "border-black text-black"
+                    : "border-transparent text-black/60 hover:border-black/30 hover:text-black"
+                }`}
               >
-                {tab.label}
-              </TitleTag>
-            </button>
-          );
-        })}
-      </div>
+                <TitleTag
+                  as="span"
+                  variant="satoshiBold"
+                  className="font-satoshi text-[16px] laptop:text-[20px]"
+                >
+                  {tab.label}
+                </TitleTag>
+              </button>
+            );
+          })}
+        </div>
 
-      <div className="pt-[30px]">
-        {activeTab === "details" && <ProductDetailsContent data={data} />}
+        <div className="pt-[30px]">
+          {activeTab === "details" && <ProductDetailsContent data={data} />}
 
-        {activeTab === "reviews" && (
-          <SectionRatingAndReviews data={data.reviews} />
-        )}
+          {activeTab === "reviews" && (
+            <SectionRatingAndReviews data={data.reviews} />
+          )}
 
-        {activeTab === "faqs" && <SectionFAQs />}
-      </div>
-    </Container>
+          {activeTab === "faqs" && <SectionFAQs />}
+        </div>
+      </Container>
+    </MainContainer>
   );
 };
 

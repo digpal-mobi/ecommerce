@@ -2,20 +2,22 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Container from "../components/common/Container";
-import LazyImage from "../components/common/LazyImage";
-import Input from "../components/common/Input";
-import Button from "../components/common/Button";
-import TitleTag from "../components/common/TitleTag";
+import {
+  Container,
+  MainContainer,
+} from "@/website/Components/Common/Container";
+import LazyImage from "@/website/Components/Common/LazyImage";
+import Input from "@/website/Components/Common/Input";
+import Button from "@/website/Components/Common/Button";
+import TitleTag from "@/website/Components/Common/TitleTag";
 import { useDispatch, useSelector } from "@/redux/store";
 import {
   setLoading,
   setUserDetails,
   loginSuccess,
 } from "@/redux/slices/authSlice";
-import { LoginUser } from "@/website/utils/api";
-import { showToast } from "@/redux/slices/toastSlice";
 import { useRouter } from "next/navigation";
+import { LoginUser } from "@/website/utils/api";
 
 interface LoginFormData {
   username: string;
@@ -55,24 +57,15 @@ const SectionLogin = () => {
       ) {
         dispatch(setUserDetails(response));
         dispatch(loginSuccess(response));
-        dispatch(showToast({ message: "Login Sucessfull", type: "success" }));
         router.push("/");
       } else {
         setApiError(
           response.message || "Login failed. Please check your credentials.",
         );
-        dispatch(
-          showToast({
-            message:
-              response.message ||
-              "Login Failed. Please check your credentials.",
-            type: "error",
-          }),
-        );
       }
     } catch (error: any) {
       console.error("Login Error:", error);
-      setApiError(error?.message || "An unexpected er   ror occurred.");
+      setApiError(error?.message || "An unexpected error occurred.");
     } finally {
       dispatch(setLoading(false));
     }
@@ -81,138 +74,140 @@ const SectionLogin = () => {
   return (
     <main>
       <section>
-        <Container>
-          <div className="flex flex-col laptop:flex-row items-center justify-center w-full gap-[20px]">
-            {/* Image */}
-            <div className="w-full laptop:w-1/2">
-              <LazyImage
-                src="/ecommerce-login.avif"
-                alt="Login Image"
-                width={500}
-                height={500}
-                className="w-full h-auto object-cover rounded-lg"
-              />
-            </div>
+        <MainContainer>
+          <Container>
+            <div className="flex flex-col laptop:flex-row items-center justify-center w-full gap-[20px]">
+              {/* Image */}
+              <div className="w-full laptop:w-1/2">
+                <LazyImage
+                  src="/ecommerce-login.avif"
+                  alt="Login Image"
+                  width={500}
+                  height={500}
+                  className="w-full h-auto object-cover rounded-lg"
+                />
+              </div>
 
-            {/* Login Form */}
-            <div className="w-full laptop:w-1/2 flex items-center justify-center laptop:mt-0 mt-[40px]">
-              <article className="w-full">
-                <header className="mb-[30px] flex flex-col gap-[30px]">
-                  <TitleTag id="login-title" variant="mainHeading" as="h1">
-                    Welcome Back
-                  </TitleTag>
+              {/* Login Form */}
+              <div className="w-full laptop:w-1/2 flex items-center justify-center laptop:mt-0 mt-[40px]">
+                <article className="w-full">
+                  <header className="mb-[30px] flex flex-col gap-[30px]">
+                    <TitleTag id="login-title" variant="mainHeading" as="h1">
+                      Welcome Back
+                    </TitleTag>
 
-                  <TitleTag
-                    as="h2"
-                    variant="satoshiBold"
-                    className="!font-[400]"
-                  >
-                    Sign in to your account to continue shopping.
-                  </TitleTag>
-                </header>
-
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-[24px]"
-                >
-                  {/* Email */}
-                  <div className="flex flex-col gap-[8px]">
-                    <label
-                      htmlFor="username"
-                      className="text-[15px] font-medium"
+                    <TitleTag
+                      as="h2"
+                      variant="satoshiBold"
+                      className="!font-[400]"
                     >
-                      Username
-                    </label>
+                      Sign in to your account to continue shopping.
+                    </TitleTag>
+                  </header>
 
-                    <Input
-                      id="username"
-                      type="text"
-                      className="bg-[#EDEDED] border-none"
-                      placeholder="Enter your username"
-                      autoComplete="username"
-                      {...register("username", {
-                        required: "Username is required",
-                      })}
-                    />
-
-                    {errors.username && (
-                      <span className="form-field-error">
-                        {errors.username.message}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Password */}
-                  <div className="flex flex-col gap-[8px]">
-                    <div className="flex items-center justify-between gap-[10px]">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex flex-col gap-[24px]"
+                  >
+                    {/* Email */}
+                    <div className="flex flex-col gap-[8px]">
                       <label
-                        htmlFor="password"
+                        htmlFor="username"
                         className="text-[15px] font-medium"
                       >
-                        Password
+                        Username
                       </label>
 
-                      <a
-                        href="/forgot-password"
-                        className="text-[14px] underline"
-                      >
-                        Forgot Password?
-                      </a>
+                      <Input
+                        id="username"
+                        type="text"
+                        className="bg-[#EDEDED] border-none"
+                        placeholder="Enter your username"
+                        autoComplete="username"
+                        {...register("username", {
+                          required: "Username is required",
+                        })}
+                      />
+
+                      {errors.username && (
+                        <span className="form-field-error">
+                          {errors.username.message}
+                        </span>
+                      )}
                     </div>
 
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      className="bg-[#EDEDED] border-none"
-                      autoComplete="current-password"
-                      {...register("password", {
-                        required: "Password is required",
-                        minLength: {
-                          value: 6,
-                          message: "Password must be at least 6 characters",
-                        },
-                      })}
-                    />
+                    {/* Password */}
+                    <div className="flex flex-col gap-[8px]">
+                      <div className="flex items-center justify-between gap-[10px]">
+                        <label
+                          htmlFor="password"
+                          className="text-[15px] font-medium"
+                        >
+                          Password
+                        </label>
 
-                    {errors.password && (
-                      <span className="form-field-error">
-                        {errors.password.message}
-                      </span>
+                        <a
+                          href="/forgot-password"
+                          className="text-[14px] underline"
+                        >
+                          Forgot Password?
+                        </a>
+                      </div>
+
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        className="bg-[#EDEDED] border-none"
+                        autoComplete="current-password"
+                        {...register("password", {
+                          required: "Password is required",
+                          minLength: {
+                            value: 6,
+                            message: "Password must be at least 6 characters",
+                          },
+                        })}
+                      />
+
+                      {errors.password && (
+                        <span className="form-field-error">
+                          {errors.password.message}
+                        </span>
+                      )}
+                    </div>
+
+                    {apiError && (
+                      <div className="p-[12px] bg-red-50 border border-red-200 text-red-600 text-[14px] rounded-lg">
+                        {apiError}
+                      </div>
                     )}
-                  </div>
 
-                  {apiError && (
-                    <div className="p-[12px] bg-red-50 border border-red-200 text-red-600 text-[14px] rounded-lg">
-                      {apiError}
-                    </div>
-                  )}
-
-                  {/* Submit */}
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={isSubmitting || isLoading}
-                    className="w-full rounded-lg px-[20px] py-[14px] font-medium transition-opacity hover:opacity-90"
-                  >
-                    {isSubmitting || isLoading ? "Logging in..." : "Login"}
-                  </Button>
-
-                  {/* Register */}
-                  <p className="text-center text-[14px] text-gray-600">
-                    Don't have an account?{" "}
-                    <a
-                      href="/register"
-                      className="font-medium text-black underline"
+                    {/* Submit */}
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={isSubmitting || isLoading}
+                      className="w-full rounded-lg px-[20px] py-[14px] font-medium transition-opacity hover:opacity-90"
                     >
-                      Create an account
-                    </a>
-                  </p>
-                </form>
-              </article>
+                      {isSubmitting || isLoading ? "Logging in..." : "Login"}
+                    </Button>
+
+                    {/* Register */}
+                    <p className="text-center text-[14px] text-gray-600">
+                      Don&apos;t have an account?{" "}
+                      <a
+                        href="/register"
+                        className="font-medium text-black underline"
+                      >
+                        Create an account
+                      </a>
+                    </p>
+                  </form>
+                </article>
+              </div>
             </div>
-          </div>
-        </Container>
+          </Container>
+        </MainContainer>
       </section>
     </main>
   );

@@ -3,7 +3,7 @@ import {
   ConvertToFinalPrice,
   CurrencyConverter,
 } from "@/website/helpers/helper";
-import TitleTag from "@/website/components/common/TitleTag";
+import TitleTag from "@/website/Components/Common/TitleTag";
 import { useSelector } from "@/redux/store";
 
 type Props = {

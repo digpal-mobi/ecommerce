@@ -1,5 +1,5 @@
-import Paragraph from "@/website/components/common/Paragraph";
-import TitleTag from "@/website/components/common/TitleTag";
+import Paragraph from "@/website/Components/Common/Paragraph";
+import TitleTag from "@/website/Components/Common/TitleTag";
 
 type Props = {
   data?: any;

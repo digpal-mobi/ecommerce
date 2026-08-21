@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HamburgerIcon, ProfileIcon, SearchIcon } from "@/website/lib/Icons";
-import { NAVIGATION_ITEMS } from "@/website/navigation/DummyNavigation";
-import SearchBar from "@/website/components/SearchBar";
+import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
+import SearchBar from "@/website/Components/SearchBar";
 import { useDispatch, useSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { logoutSuccess } from "@/redux/slices/authSlice";
-import CartIconComponent from "@/website/components/common/CartIconComponent";
-import WishlistIconComponent from "@/website/components/common/WishlistIconComponent";
+import CartIconComponent from "@/website/Components/Common/CartIconComponent";
+import WishlistIconComponent from "@/website/Components/Common/WishlistIconComponent";
 
 const MobileNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);

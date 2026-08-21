@@ -11,91 +11,91 @@ export interface FooterSection {
 
 export const FOOTER_NAVIGATION: FooterSection[] = [
   {
-    "id": 1,
-    "title": "Company",
-    "items": [
+    id: 1,
+    title: "Company",
+    items: [
       {
-        "title": "About",
-        "href": "/about"
+        title: "About",
+        href: "/about",
       },
       {
-        "title": "Features",
-        "href": "/features"
+        title: "Features",
+        href: "/features",
       },
       {
-        "title": "Works",
-        "href": "/works"
+        title: "Works",
+        href: "/works",
       },
       {
-        "title": "Career",
-        "href": "/career"
-      }
-    ]
+        title: "Career",
+        href: "/career",
+      },
+    ],
   },
   {
-    "id": 2,
-    "title": "Help",
-    "items": [
+    id: 2,
+    title: "Help",
+    items: [
       {
-        "title": "Customer Support",
-        "href": "/support"
+        title: "Customer Support",
+        href: "/support",
       },
       {
-        "title": "Delivery Details",
-        "href": "/delivery-details"
+        title: "Delivery Details",
+        href: "/delivery-details",
       },
       {
-        "title": "Terms & Conditions",
-        "href": "/terms-and-conditions"
+        title: "Terms & Conditions",
+        href: "/terms",
       },
       {
-        "title": "Privacy Policy",
-        "href": "/privacy-policy"
-      }
-    ]
+        title: "Privacy Policy",
+        href: "/privacy",
+      },
+    ],
   },
   {
-    "id": 3,
-    "title": "FAQ",
-    "items": [
+    id: 3,
+    title: "FAQ",
+    items: [
       {
-        "title": "Account",
-        "href": "/account"
+        title: "Account",
+        href: "/account",
       },
       {
-        "title": "Manage Deliveries",
-        "href": "/manage-deliveries"
+        title: "Manage Deliveries",
+        href: "/deliveries",
       },
       {
-        "title": "Orders",
-        "href": "/orders"
+        title: "Orders",
+        href: "/orders",
       },
       {
-        "title": "Payments",
-        "href": "/payments"
-      }
-    ]
+        title: "Payments",
+        href: "/payments",
+      },
+    ],
   },
   {
-    "id": 4,
-    "title": "Resources",
-    "items": [
+    id: 4,
+    title: "Resources",
+    items: [
       {
-        "title": "Free eBooks",
-        "href": "/resources/free-ebooks"
+        title: "Free eBooks",
+        href: "/ebooks",
       },
       {
-        "title": "Development Tutorial",
-        "href": "/resources/tutorials"
+        title: "Development Tutorial",
+        href: "/tutorial",
       },
       {
-        "title": "How To - Blog",
-        "href": "/blog"
+        title: "How To - Blog",
+        href: "/blog",
       },
       {
-        "title": "YouTube Playlist",
-        "href": "/resources/youtube-playlist"
-      }
-    ]
-  }
-]
+        title: "YouTube Playlist",
+        href: "/playlist",
+      },
+    ],
+  },
+];

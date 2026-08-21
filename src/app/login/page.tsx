@@ -1,4 +1,4 @@
-import SectionLogin from "@/website/section/SectionLogin";
+import SectionLogin from "@/website/Section/SectionLogin";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import SectionWishlist from "@/website/section/SectionWishlist";
+import SectionWishlist from "@/website/Section/SectionWishlist";
 
 export const metadata: Metadata = {
   title: "My Wishlist || Ecommerce",
