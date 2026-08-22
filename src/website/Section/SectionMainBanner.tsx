@@ -5,7 +5,7 @@ import {
   MainContainer,
 } from "@/website/Components/Common/Container";
 import Button from "@/website/Components/Common/Button";
-import { SparkleIcon, SparkleIcon2 } from "@/website/lib/Icons";
+import { SparkleIcon, SparkleIcon2 } from "@/website/Lib/Icons";
 import Link from "next/link";
 
 const Metrics = [

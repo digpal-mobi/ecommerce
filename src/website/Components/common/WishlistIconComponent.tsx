@@ -1,6 +1,6 @@
 "use client";
 
-import { WishlistIcon } from "@/website/lib/Icons";
+import { WishlistIcon } from "@/website/Lib/Icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";

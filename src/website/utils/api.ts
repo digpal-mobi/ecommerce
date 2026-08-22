@@ -1,4 +1,4 @@
-import { GetData, PostData, UpdateData } from "@/website/utils/ApiHandlers";
+import { GetData, PostData, UpdateData } from "@/website/Utils/ApiHandlers";
 
 export interface ApiResponse<T = any> { 
   products?: T;

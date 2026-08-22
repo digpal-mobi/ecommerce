@@ -10,7 +10,7 @@ import DesktopHeader from "@/website/Navigation/DesktopNavigation";
 import MobileHeader from "@/website/Navigation/MobileNavigation";
 import SearchBar from "@/website/Components/SearchBar";
 import SectionHomeBanner from "@/website/Section/SectionHomeBanner";
-import { ProfileIcon } from "@/website/lib/Icons";
+import { ProfileIcon } from "@/website/Lib/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "@/redux/store";
 import {
@@ -24,7 +24,7 @@ import CartIconComponent from "@/website/Components/Common/CartIconComponent";
 import WishlistIconComponent from "@/website/Components/Common/WishlistIconComponent";
 import CurrencySelector from "@/website/Components/CurrencySelector";
 import LoginModal from "@/website/Section/SectionLogin";
-import { deleteCookie } from "@/website/helpers/helper";
+import { deleteCookie } from "@/website/Helpers/Helper";
 
 const Header = () => {
   const { isAuthenticated, isLoginModalOpen } = useSelector((state) => state.auth);

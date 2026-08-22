@@ -1,5 +1,5 @@
 import React from "react";
-import { ReviewStar, CheckCircleIcon } from "@/website/lib/Icons";
+import { ReviewStar, CheckCircleIcon } from "@/website/Lib/Icons";
 
 type Props = {
   name: string;

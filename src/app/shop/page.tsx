@@ -5,7 +5,7 @@ import {
 } from "@/website/Components/Common/Container";
 import SectionProductList from "@/website/Section/Products/SectionProductList";
 import SectionFilter from "@/website/Section/SectionFilters";
-import { FetchCategory, FetchProducts } from "@/website/utils/api";
+import { FetchCategory, FetchProducts } from "@/website/Utils/Api";
 import { Metadata } from "next";
 import { Suspense } from "react";
 

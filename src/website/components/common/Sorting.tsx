@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import TitleTag from "@/website/Components/Common/TitleTag";
-import { ChevronDown } from "@/website/lib/Icons";
+import { ChevronDown } from "@/website/Lib/Icons";
 import SortingOption from "@/website/Data/SortingOptions";
 
-import { useFilters } from "@/website/hooks/useFilters";
+import { useFilters } from "@/website/Hooks/UseFilters";
 
 const SortingComponent = () => {
   const [isOpen, setIsOpen] = useState(false);

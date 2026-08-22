@@ -3,7 +3,7 @@ import {
   AddToCartApi,
   UpdateCartApi,
   GetUserCartApi,
-} from "@/website/utils/api";
+} from "@/website/Utils/Api";
 
 export interface CartProduct {
   id: number;

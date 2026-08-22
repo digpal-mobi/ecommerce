@@ -1,4 +1,4 @@
-import { CartIcon, CrossIcon } from "@/website/lib/Icons";
+import { CartIcon, CrossIcon } from "@/website/Lib/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { clearCart, updateCart } from "@/redux/slices/cartSlice";
 import TitleTag from "./TitleTag";
 import Paragraph from "./Paragraph";
 import Increment from "../Increment";
-import { CurrencyConverter } from "@/website/helpers/helper";
+import { CurrencyConverter } from "@/website/Helpers/Helper";
 
 type Props = {};
 

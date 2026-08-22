@@ -4,14 +4,14 @@ import {
   FetchCategory,
   FetchProducts,
   FetchSearchedProducts,
-} from "@/website/utils/api";
+} from "@/website/Utils/Api";
 import { Product } from "@/types/ProductType";
 import {
   filterProducts,
   hasActiveFilters,
   paginateProducts,
   sortProducts,
-} from "@/website/utils/ProductUtils";
+} from "@/website/Utils/ProductUtils";
 import { setTotal } from "@/redux/slices/paginationSlice";
 import { RootState } from "@/redux/store";
 

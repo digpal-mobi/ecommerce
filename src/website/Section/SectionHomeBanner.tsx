@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { CrossIcon } from "@/website/lib/Icons";
+import { CrossIcon } from "@/website/Lib/Icons";
 import {
   Container,
   MainContainer,

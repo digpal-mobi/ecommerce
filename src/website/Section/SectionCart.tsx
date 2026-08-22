@@ -24,8 +24,8 @@ import {
   CartIcon,
   PromoTagIcon,
   TrashIcon,
-} from "@/website/lib/Icons";
-import { CurrencyConverter } from "@/website/helpers/helper";
+} from "@/website/Lib/Icons";
+import { CurrencyConverter } from "@/website/Helpers/Helper";
 import Increment from "@/website/Components/Increment";
 import Input from "../Components/Common/Input";
 

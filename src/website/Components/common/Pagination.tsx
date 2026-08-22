@@ -2,8 +2,8 @@
 
 import React from "react";
 import Button from "./Button";
-import { ArrowLeft } from "@/website/lib/Icons";
-import { GetPaginationPages } from "@/website/helpers/helper";
+import { ArrowLeft } from "@/website/Lib/Icons";
+import { GetPaginationPages } from "@/website/Helpers/Helper";
 
 interface PaginationProps {
   currentPage: number;

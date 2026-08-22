@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CrumbArrow } from "@/website/lib/Icons";
+import { CrumbArrow } from "@/website/Lib/Icons";
 
 export interface BreadcrumbItem {
   name: string;

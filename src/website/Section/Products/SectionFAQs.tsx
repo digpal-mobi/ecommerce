@@ -1,6 +1,6 @@
 import Paragraph from "@/website/Components/Common/Paragraph";
 import TitleTag from "@/website/Components/Common/TitleTag";
-import { ChevronDown } from "@/website/lib/Icons";
+import { ChevronDown } from "@/website/Lib/Icons";
 import React, { useState } from "react";
 
 type Props = {};

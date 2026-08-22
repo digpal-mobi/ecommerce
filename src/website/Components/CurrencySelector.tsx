@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import CurrencyRates from "@/website/Data/CurrencyRates";
-import { ChevronDown } from "../lib/Icons";
+import { ChevronDown } from "@/website/Lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
 import { setCurrency } from "@/redux/slices/currencySlice";
 

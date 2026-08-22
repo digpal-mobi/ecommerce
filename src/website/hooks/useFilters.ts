@@ -40,7 +40,7 @@ import {
   getFiltersFromSearchParams,
   getPaginationFromSearchParams,
   getSortingFromSearchParams,
-} from "@/website/utils/ProductUrl";
+} from "@/website/Utils/ProductUrl";
 
 
 export const useFilters = () => {

@@ -2,7 +2,7 @@
 
 import SectionRating from "@/website/Section/SectionRating";
 import Button from "@/website/Components/Common/Button";
-import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
+import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import Increment from "@/website/Components/Increment";
@@ -13,7 +13,7 @@ import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
 import LazyImage from "./Common/LazyImage";
 import { useState } from "react";
-import { CurrencyConverter } from "../helpers/helper";
+import { CurrencyConverter } from "@/website/Helpers/Helper";
 import ProductCardSkeleton from "./Common/ProductSkeleton";
 
 type Props = {
