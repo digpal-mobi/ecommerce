@@ -3,7 +3,7 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
-import SectionProductList from "@/website/Section/products/SectionProductList";
+import SectionProductList from "@/website/Section/Products/SectionProductList";
 import SectionFilter from "@/website/Section/SectionFilters";
 import { FetchCategory, FetchProducts } from "@/website/utils/api";
 import { Metadata } from "next";
