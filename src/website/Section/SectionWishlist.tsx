@@ -17,10 +17,11 @@ import {
   removeFromWishlist,
   WishlistProduct,
 } from "@/redux/slices/wishlistSlice";
-import { addToCart } from "@/redux/slices/cartSlice";
+import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
 import { AddToCartIcon, TrashIcon, WishlistIcon } from "@/website/lib/Icons";
 import { CurrencyConverter } from "@/website/helpers/helper";
 import SectionRating from "./SectionRating";
+import { openLoginModal } from "@/redux/slices/authSlice";
 
 const BreadCrumbItems = [
   { name: "Home", url: "/" },
@@ -31,6 +32,7 @@ const SectionWishlist = () => {
   const dispatch = useDispatch();
   const [isMounted, setIsMounted] = useState(false);
 
+  const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
   const wishlistItems = useSelector((state) => state.wishlist?.items) || [];
   const currency = useSelector((state) => state.currency.currency);
 
@@ -49,26 +51,42 @@ const SectionWishlist = () => {
   };
 
   const handleAddToCart = (item: WishlistProduct) => {
-    dispatch(
-      addToCart({
-        id: item.id,
-        title: item.title,
-        price: item.price,
-        thumbnail: item.thumbnail,
-        quantity: 1,
-      }),
-    );
-  };
+    if (!isAuthenticated) {
+      dispatch(openLoginModal());
+      return;
+    }
 
-  const handleAddAllToCart = () => {
-    items.forEach((item) => {
-      dispatch(
-        addToCart({
+    dispatch(
+      addToCartAsync({
+        product: {
           id: item.id,
           title: item.title,
           price: item.price,
           thumbnail: item.thumbnail,
           quantity: 1,
+        },
+        userId: Number(userDetails?.id) || 1,
+      }),
+    );
+  };
+
+  const handleAddAllToCart = () => {
+    if (!isAuthenticated) {
+      dispatch(openLoginModal());
+      return;
+    }
+
+    items.forEach((item) => {
+      dispatch(
+        addToCartAsync({
+          product: {
+            id: item.id,
+            title: item.title,
+            price: item.price,
+            thumbnail: item.thumbnail,
+            quantity: 1,
+          },
+          userId: Number(userDetails?.id) || 1,
         }),
       );
     });

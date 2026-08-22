@@ -7,23 +7,25 @@ import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import Increment from "@/website/Components/Increment";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/slices/cartSlice";
+import { useDispatch, useSelector } from "@/redux/store";
+import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
+import { openLoginModal } from "@/redux/slices/authSlice";
 import LazyImage from "./Common/LazyImage";
 import { useState } from "react";
-import { AddToCart } from "../utils/api";
-import { useSelector } from "@/redux/store";
 import { CurrencyConverter } from "../helpers/helper";
+import ProductCardSkeleton from "./Common/ProductSkeleton";
 
 type Props = {
   products?: Array<any>;
+  isLoading?: boolean;
 };
 
-const ProductCard = ({ products }: Props) => {
+const ProductCard = ({ products, isLoading = false }: Props) => {
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
+  const { isAuthenticated, userDetails } = useSelector((state: any) => state.auth);
   const currency = useSelector((state: any) => state.currency.currency);
   const wishlistItems =
     useSelector((state: any) => state.wishlist?.items) || [];
@@ -68,6 +70,11 @@ const ProductCard = ({ products }: Props) => {
   };
 
   const HandleAddToCart = (product: any) => {
+    if (!isAuthenticated) {
+      dispatch(openLoginModal());
+      return;
+    }
+
     const quantity = getQuantity(product.id);
     const productCart = {
       id: product.id,
@@ -77,18 +84,30 @@ const ProductCard = ({ products }: Props) => {
       quantity,
     };
 
-    dispatch(addToCart(productCart));
-    const AddProductToCart = AddToCart(productCart);
+    dispatch(
+      addToCartAsync({
+        product: productCart,
+        userId: Number(userDetails?.id) || 1,
+      }),
+    );
   };
 
   return (
     <section className="w-full py-[32px] laptop:py-[55px]">
       <div className="flex gap-[20px] justify-start">
-        {products?.map((items) => (
-          <div
-            key={items.id}
-            className="flex flex-col justify-between shrink-0 w-[295px]"
-          >
+        {isLoading || !products || products.length === 0 ? (
+          <>
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+          </>
+        ) : (
+          products.map((items) => (
+            <div
+              key={items.id}
+              className="flex flex-col justify-between shrink-0 w-[295px]"
+            >
             <Link href={`/shop/${items.id}`} className="relative block">
               <LazyImage
                 src={items.thumbnail}
@@ -158,10 +177,11 @@ const ProductCard = ({ products }: Props) => {
               </Button>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-  );
+        ))
+      )}
+    </div>
+  </section>
+);
 };
 
 export default ProductCard;

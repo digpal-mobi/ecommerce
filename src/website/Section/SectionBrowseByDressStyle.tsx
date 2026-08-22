@@ -40,10 +40,11 @@ const SectionBrowseByDressStyle = () => {
 
           <div className="mt-[64px] grid grid-cols-1 laptop:grid-cols-3 gap-y-[20px] laptop:gap-[20px]">
             {DRESS_STYLES.map((dress, index) => (
-              <div
+              <Link
                 key={index}
+                href={dress.href}
                 className={`
-                  relative overflow-hidden rounded-[20px]
+                  group relative overflow-hidden rounded-[20px] cursor-pointer block
                   ${index === 0 || index === 3 ? "col-span-1" : ""}
                   ${index === 1 || index === 2 ? "col-span-2" : ""}
                 `}
@@ -53,13 +54,13 @@ const SectionBrowseByDressStyle = () => {
                   alt={dress.title}
                   width={600}
                   height={300}
-                  className="h-[290px] w-full object-cover"
+                  className="h-[290px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
 
                 <h3 className="absolute left-[36px] top-[25px] font-satoshi text-[36px] font-bold text-black">
                   {dress.title}
                 </h3>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,9 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+export interface UserDetails {
+  id?: number | string;
+  username?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  image?: string;
+  token?: string;
+  accessToken?: string;
+  refreshToken?: string;
+  [key: string]: any;
+}
+
+export interface AuthState {
+  userDetails: UserDetails;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  isLoginModalOpen: boolean;
+}
+
+const initialState: AuthState = {
   userDetails: {},
   isAuthenticated: false,
   isLoading: false,
+  isLoginModalOpen: false,
 };
 
 const authSlice = createSlice({
@@ -19,6 +41,7 @@ const authSlice = createSlice({
     loginSuccess: (state, action: PayloadAction<any | void>) => {
       state.isAuthenticated = true;
       state.isLoading = false;
+      state.isLoginModalOpen = false;
       if (action.payload) {
         state.userDetails = action.payload;
       }
@@ -27,10 +50,27 @@ const authSlice = createSlice({
       state.userDetails = {};
       state.isAuthenticated = false;
       state.isLoading = false;
+      state.isLoginModalOpen = false;
+    },
+    openLoginModal: (state) => {
+      state.isLoginModalOpen = true;
+    },
+    closeLoginModal: (state) => {
+      state.isLoginModalOpen = false;
+    },
+    setLoginModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isLoginModalOpen = action.payload;
     },
   },
 });
 
-export const { setLoading, setUserDetails, loginSuccess, logoutSuccess } =
-  authSlice.actions;
+export const {
+  setLoading,
+  setUserDetails,
+  loginSuccess,
+  logoutSuccess,
+  openLoginModal,
+  closeLoginModal,
+  setLoginModalOpen,
+} = authSlice.actions;
 export default authSlice.reducer;

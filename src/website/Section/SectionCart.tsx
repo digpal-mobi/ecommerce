@@ -16,6 +16,7 @@ import {
   clearCart,
   removeFromCart,
   updateCart,
+  updateCartAsync,
   CartProduct,
 } from "@/redux/slices/cartSlice";
 import {
@@ -40,6 +41,7 @@ const SectionCart = () => {
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
 
   const cartProducts = useSelector((state) => state.cart?.products) || [];
+  const cartId = useSelector((state) => state.cart?.cartId) || 1;
   const currency = useSelector((state) => state.currency.currency);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ const SectionCart = () => {
   const totalAmount = Math.max(0, subtotal - discountAmount);
 
   const handleQuantityChange = (id: number, quantity: number) => {
-    dispatch(updateCart({ id, quantity }));
+    dispatch(updateCartAsync({ id, quantity, cartId }));
   };
 
   const handleRemoveProduct = (id: number, title: string) => {

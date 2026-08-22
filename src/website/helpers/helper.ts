@@ -1,5 +1,35 @@
 import CurrencyRates from "@/website/Data/CurrencyRates";
 
+export const setCookie = (name: string, value: string, days?: number) => {
+  if (typeof document === "undefined") return;
+
+  const expires = days
+    ? new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString()
+    : "";
+
+  document.cookie = `${name}=${encodeURIComponent(
+    value,
+  )}; expires=${expires}; path=/`;
+};
+
+export const getCookie = (name: string): string | null => {
+  if (typeof document === "undefined") return null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    const cookieVal = parts.pop()?.split(";").shift() ?? null;
+    return cookieVal ? decodeURIComponent(cookieVal) : null;
+  }
+  return null;
+};
+
+export const deleteCookie = (name: string) => {
+  if (typeof document === "undefined") return;
+  document.cookie =
+    name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+
 export const RoundRating = (rating: number) => {
   return Math.round(rating * 2) / 2;
 };
@@ -23,12 +53,14 @@ export const FormatDate = (date: string) => {
 
 export const CurrencyConverter = (amount: number, currency: string) => {
   const rates = CurrencyRates.find((rate) => rate.id === currency);
-  if (rates) {
 
-    const convertedAmount = (amount * rates.rate).toFixed(2)
-    return `${rates.label} ${convertedAmount}`
+  if (rates) {
+    const convertedAmount = formatPrice(rates.rate * amount);
+    return `${rates.label} ${convertedAmount}`;
   }
-}
+
+  return `$ ${formatPrice(amount)}`;
+};
 
 
 export const GetPaginationPages = (totalPages: number, currentPage: number) => {
@@ -52,4 +84,12 @@ export const GetPaginationPages = (totalPages: number, currentPage: number) => {
     endPage,
     pages
   }
+}
+
+
+export function formatPrice(number: number): string {
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(number) || 0);
 }

@@ -35,48 +35,12 @@ const CartIconComponent = (props: Props) => {
     setIsIconClicked(false);
   };
 
-  /**
-   * Detect when a NEW product is added to the cart.
-   */
+  /** Keep previous products in sync.*/
   useEffect(() => {
-    const previousProducts = previousProductsRef.current;
-
-    if (products.length > previousProducts.length) {
-      const newProduct = products.find(
-        (product) =>
-          !previousProducts.some(
-            (previousProduct) => previousProduct.id === product.id,
-          ),
-      );
-
-      if (newProduct) {
-        // Open mini cart
-        setIsIconClicked(true);
-
-        // Animate cart icon/count
-        setIsCartAnimating(true);
-
-        // Animate newly added product
-        setNewProductId(newProduct.id);
-
-        // Remove animation class after animation completes
-        const timer = setTimeout(() => {
-          setIsCartAnimating(false);
-          setNewProductId(null);
-        }, 600);
-
-        previousProductsRef.current = products;
-
-        return () => clearTimeout(timer);
-      }
-    }
-
     previousProductsRef.current = products;
   }, [products]);
 
-  /**
-   * Close cart when clicking outside.
-   */
+  /**Close cart when clicking outside.*/
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
