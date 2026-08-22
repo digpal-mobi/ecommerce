@@ -12,7 +12,7 @@ const SectionSimilarProducts = ({ products }: Props) => {
   return (
     <MainContainer>
       <Container>
-        <section className="w-full !pb-[0px]">
+        <section className="w-full laptop:pt-[80px] pt-[50px] !pb-[0px]">
           <div className="flex justify-center items-center w-full">
             <TitleTag as="h2" variant="heading">
               You might also like

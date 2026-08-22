@@ -34,6 +34,7 @@ type Props = {
 
 export default async function Products({ searchParams }: Props) {
   const params = await searchParams;
+  console.log("Params", params);
   const data = await FetchProducts({
     limit: params?.limit ? Number(params.limit) : 9,
     skip: params?.page

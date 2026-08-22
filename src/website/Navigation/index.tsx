@@ -13,14 +13,21 @@ import SectionHomeBanner from "@/website/Section/SectionHomeBanner";
 import { ProfileIcon } from "@/website/lib/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "@/redux/store";
-import { logoutSuccess } from "@/redux/slices/authSlice";
+import {
+  logoutSuccess,
+  openLoginModal,
+  closeLoginModal,
+} from "@/redux/slices/authSlice";
+import { clearCart } from "@/redux/slices/cartSlice";
 import { useRouter } from "next/navigation";
 import CartIconComponent from "@/website/Components/Common/CartIconComponent";
 import WishlistIconComponent from "@/website/Components/Common/WishlistIconComponent";
 import CurrencySelector from "@/website/Components/CurrencySelector";
+import LoginModal from "@/website/Section/SectionLogin";
+import { deleteCookie } from "@/website/helpers/helper";
 
 const Header = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, isLoginModalOpen } = useSelector((state) => state.auth);
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,9 +35,20 @@ const Header = () => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
+    deleteCookie("USER_ACCESS");
+    deleteCookie("USER_RefreshToken");
+    deleteCookie("USER_DATA");
     dispatch(logoutSuccess());
+    dispatch(clearCart());
     setIsMenuOpen(false);
-    router.push("/login");
+  };
+
+  const handleProfileClick = () => {
+    if (isAuthenticated) {
+      setIsMenuOpen((prev) => !prev);
+    } else {
+      dispatch(openLoginModal());
+    }
   };
 
   useEffect(() => {
@@ -81,41 +99,29 @@ const Header = () => {
                   <div className="relative" ref={menuRef}>
                     <button
                       type="button"
-                      onClick={() => setIsMenuOpen((prev) => !prev)}
+                      onClick={handleProfileClick}
                       className="flex items-center cursor-pointer focus:outline-none"
-                      aria-label="User Profile"
+                      aria-label={isAuthenticated ? "User Profile" : "Login"}
                     >
                       <ProfileIcon />
                     </button>
 
-                    {/* Dropdown Menu */}
-                    {isMenuOpen && (
+                    {/* Dropdown Menu — only relevant once authenticated */}
+                    {isAuthenticated && isMenuOpen && (
                       <div className="absolute right-0 top-full mt-[10px] w-[150px] rounded-md bg-white py-[8px] shadow-lg ring-1 ring-black/5 z-50">
-                        {isAuthenticated ? (
-                          <div>
-                            <Link
-                              href="/profile"
-                              className="block px-[16px] py-[8px] text-[16px] text-[#000000]/60 hover:bg-[#000000]/20"
-                            >
-                              Profile
-                            </Link>
-                            <button
-                              type="button"
-                              onClick={handleLogout}
-                              className="block w-full px-[16px] py-[8px] text-left text-[16px] text-[#000000]/60 hover:bg-[#000000]/20"
-                            >
-                              Logout
-                            </button>
-                          </div>
-                        ) : (
-                          <Link
-                            href="/login"
-                            onClick={() => setIsMenuOpen(false)}
-                            className="block px-[16px] py-[8px] text-left text-[16px] text-[#000000]/60 hover:bg-[#000000]/20"
-                          >
-                            Login
-                          </Link>
-                        )}
+                        <Link
+                          href="/profile"
+                          className="block px-[16px] py-[8px] text-[16px] text-[#000000]/60 hover:bg-[#000000]/20"
+                        >
+                          Profile
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="block w-full px-[16px] py-[8px] text-left text-[16px] text-[#000000]/60 hover:bg-[#000000]/20"
+                        >
+                          Logout
+                        </button>
                       </div>
                     )}
                   </div>
@@ -133,6 +139,11 @@ const Header = () => {
       <div className="block laptop:hidden">
         <MobileHeader />
       </div>
+
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => dispatch(closeLoginModal())}
+      />
     </header>
   );
 };

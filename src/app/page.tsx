@@ -28,8 +28,14 @@ export default async function Home() {
     <div>
       <SectionMainBanner />
       <SectionBrandLogo />
-      <SectionNewArrival products={NewArrivalResult?.products || []} />
-      <SectionTopSelling products={topSellingResult?.products || []} />
+      <SectionNewArrival
+        products={NewArrivalResult?.products || []}
+        viewAllHref="/shop?category=tops"
+      />
+      <SectionTopSelling
+        products={topSellingResult?.products || []}
+        viewAllHref="/shop?category=womens-dresses"
+      />
       <SectionBrowseByDressStyle />
       <SectionCustomerTestimonial />
     </div>

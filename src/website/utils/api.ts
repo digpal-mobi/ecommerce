@@ -1,4 +1,4 @@
-import { GetData, PostData } from "@/website/utils/ApiHandlers";
+import { GetData, PostData, UpdateData } from "@/website/utils/ApiHandlers";
 
 export interface ApiResponse<T = any> { 
   products?: T;
@@ -45,24 +45,24 @@ export const FetchProducts = async ({
   ...args
 }: FetchProductsParams = {}): Promise<ApiResponse> => {
   try {
+    const singleCategory = Array.isArray(category)
+      ? category.length > 0
+        ? category[0]
+        : undefined
+      : typeof category === "string" && category.trim()
+        ? category.split(",")[0]
+        : undefined;
+
     const query = toQuery({
       limit,
       skip,
-      q,
-      category,
       sortBy: sortBy && sortBy !== "featured" ? sortBy : undefined,
       order,
       ...args,
     });
 
-    const singleCategory = Array.isArray(category)
-      ? category.length === 1
-        ? category[0]
-        : undefined
-      : category;
-
     const path = q
-      ? `/products/search?${query}`
+      ? `/products/search?q=${encodeURIComponent(q)}&${query}`
       : singleCategory
         ? `/products/category/${encodeURIComponent(singleCategory)}?${query}`
         : `/products?${query}`;
@@ -101,8 +101,76 @@ export const LoginUser = async (credentials: any): Promise<ApiResponse> => {
   }
 };
 
+export const GetCurrentUserApi = async (token: string): Promise<ApiResponse> => {
+  try {
+    const data = await GetData<ApiResponse>("/auth/me", token);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: e.message || "Failed to fetch user session.",
+    };
+  }
+};
 
-export const AddToCart = async(product:any)=>{
+
+export interface CartItemPayload {
+  id: number;
+  quantity: number;
+}
+
+export interface AddCartPayload {
+  userId: number;
+  products: CartItemPayload[];
+}
+
+export interface UpdateCartPayload {
+  merge?: boolean;
+  products: CartItemPayload[];
+}
+
+export const AddToCartApi = async (payload: AddCartPayload): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/carts/add", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: e.message || e.error || "Failed to add to cart.",
+    };
+  }
+};
+
+export const UpdateCartApi = async (
+  cartId: number = 1,
+  payload: UpdateCartPayload,
+): Promise<ApiResponse> => {
+  try {
+    const data = await UpdateData<ApiResponse>(`/carts/${cartId}`, payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: e.message || e.error || "Failed to update cart.",
+    };
+  }
+};
+
+export const GetUserCartApi = async (
+  userId: number = 5,
+): Promise<ApiResponse> => {
+  try {
+    const data = await GetData<ApiResponse>(`/carts/user/${userId}`);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: e.message || e.error || "Failed to get user cart.",
+    };
+  }
+};
+
+export const AddToCart = async (product: any) => {
   try {
     const data = await PostData<ApiResponse>("/carts/add", product);
     return { status: true, ...data };

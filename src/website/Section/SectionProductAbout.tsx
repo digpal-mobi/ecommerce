@@ -17,8 +17,9 @@ import Increment from "@/website/Components/Increment";
 import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
-import { addToCart } from "@/redux/slices/cartSlice";
+import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
+import { openLoginModal } from "@/redux/slices/authSlice";
 
 type Props = {
   data?: ApiResponse | any;
@@ -29,6 +30,7 @@ const SectionProductAbout = ({ data }: Props) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
+  const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
   const wishlistItems = useSelector((state) => state.wishlist?.items) || [];
 
   const isWishlisted = Boolean(
@@ -64,6 +66,10 @@ const SectionProductAbout = ({ data }: Props) => {
   ];
 
   const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      dispatch(openLoginModal());
+      return;
+    }
     if (!data) return;
     const productCart = {
       id: data.id,
@@ -73,7 +79,12 @@ const SectionProductAbout = ({ data }: Props) => {
       quantity,
     };
 
-    dispatch(addToCart(productCart));
+    dispatch(
+      addToCartAsync({
+        product: productCart,
+        userId: Number(userDetails?.id) || 1,
+      }),
+    );
   };
 
   const handleToggleWishlist = () => {
@@ -152,35 +163,40 @@ const SectionProductAbout = ({ data }: Props) => {
                   className="w-full flex"
                 />
               </div>
-              <Button
-                onClick={handleAddToCart}
-                variant="primary"
-                className="gap-[10px] w-full"
-              >
-                <AddToCartIcon className="h-[22px] w-[22px]" />
-                <TitleTag as="span" variant="satoshiBold">
-                  Add to Cart
-                </TitleTag>
-              </Button>
-            </div>
-            <div className="flex w-full items-center mt-[20px]">
-              <Button
-                onClick={handleToggleWishlist}
-                variant={isWishlisted ? "primary" : "outline"}
-                className={`flex-1 shrink-0 gap-[10px] transition-all ${
-                  isWishlisted
-                    ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
-                    : ""
-                }`}
-              >
-                <WishlistIcon
-                  filled={isWishlisted}
-                  className="h-[22px] w-[22px]"
-                />
-                <TitleTag as="span" variant="satoshiBold">
-                  {isWishlisted ? "In Wishlist" : "Add to wishlist"}
-                </TitleTag>
-              </Button>
+
+              <div className="flex w-full gap-[12px] items-center">
+                <Button
+                  onClick={handleAddToCart}
+                  variant="primary"
+                  className="gap-[10px] flex-1"
+                >
+                  <AddToCartIcon className="h-[22px] w-[22px]" />
+                  <TitleTag as="span" variant="satoshiBold">
+                    Add to Cart
+                  </TitleTag>
+                </Button>
+
+                <button
+                  type="button"
+                  onClick={handleToggleWishlist}
+                  aria-pressed={isWishlisted}
+                  aria-label={
+                    isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+                  }
+                  className={`flex items-center justify-center shrink-0 w-[52px] h-[52px] rounded-lg border transition-all duration-200 active:scale-90 ${
+                    isWishlisted
+                      ? "border-black bg-black"
+                      : "border-[#000000]/15 bg-white hover:border-[#000000]/40"
+                  }`}
+                >
+                  <WishlistIcon
+                    filled={isWishlisted}
+                    className={`h-[22px] w-[22px] transition-transform duration-200 ${
+                      isWishlisted ? "scale-110 text-white" : "text-black"
+                    }`}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
