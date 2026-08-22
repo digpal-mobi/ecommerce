@@ -16,8 +16,8 @@ import {
 } from "@/redux/slices/authSlice";
 import { fetchUserCart } from "@/redux/slices/cartSlice";
 import { useRouter } from "next/navigation";
-import { LoginUser } from "@/website/utils/api";
-import { setCookie } from "../helpers/helper";
+import { LoginUser } from "@/website/Utils/Api";
+import { setCookie } from "@/website/Helpers/Helper";
 
 interface LoginFormData {
   username: string;

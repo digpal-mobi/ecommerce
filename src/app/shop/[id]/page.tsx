@@ -4,7 +4,7 @@ import SectionSimilarProducts from "@/website/Section/SectionSimilarProducts";
 import {
   FetchProductsByCategory,
   FetchProductsById,
-} from "@/website/utils/api";
+} from "@/website/Utils/Api";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 

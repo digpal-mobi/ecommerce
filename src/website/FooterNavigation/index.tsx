@@ -10,7 +10,7 @@ import {
   InstagramIcon,
   MailIcon,
   TwitterIcon,
-} from "@/website/lib/Icons";
+} from "@/website/Lib/Icons";
 import { FOOTER_NAVIGATION } from "@/website/FooterNavigation/DummyFooter";
 
 type Props = {};

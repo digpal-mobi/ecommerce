@@ -1,9 +1,9 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { SearchIcon } from "@/website/lib/Icons";
+import { SearchIcon } from "@/website/Lib/Icons";
 import Input from "@/website/Components/Common/Input";
-import { useFilters } from "@/website/hooks/useFilters";
+import { useFilters } from "@/website/Hooks/UseFilters";
 import { useRouter } from "next/navigation";
 
 const SearchBarContent = () => {

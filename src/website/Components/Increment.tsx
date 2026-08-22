@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MinusIcon, PlusIcon } from "@/website/lib/Icons";
+import { MinusIcon, PlusIcon } from "@/website/Lib/Icons";
 
 type Props = {
   value?: number;

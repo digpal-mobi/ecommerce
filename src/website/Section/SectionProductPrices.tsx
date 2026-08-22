@@ -2,7 +2,7 @@
 import {
   ConvertToFinalPrice,
   CurrencyConverter,
-} from "@/website/helpers/helper";
+} from "@/website/Helpers/Helper";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import { useSelector } from "@/redux/store";
 

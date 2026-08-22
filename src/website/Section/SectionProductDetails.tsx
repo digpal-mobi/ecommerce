@@ -6,9 +6,9 @@ import {
   MainContainer,
 } from "@/website/Components/Common/Container";
 import TitleTag from "@/website/Components/Common/TitleTag";
-import ProductDetailsContent from "@/website/Section/products/SectionProductDetails";
-import SectionRatingAndReviews from "@/website/Section/products/SectionRatingAndReviews";
-import SectionFAQs from "@/website/Section/products/SectionFAQs";
+import ProductDetailsContent from "@/website/Section/Products/SectionProductDetails";
+import SectionRatingAndReviews from "@/website/Section/Products/SectionRatingAndReviews";
+import SectionFAQs from "@/website/Section/Products/SectionFAQs";
 
 type Tab = "details" | "reviews" | "faqs";
 

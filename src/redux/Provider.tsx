@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import { store, useDispatch } from "@/redux/store";
 import { loginSuccess, setUserDetails, logoutSuccess } from "@/redux/slices/authSlice";
 import { fetchUserCart, clearCart } from "@/redux/slices/cartSlice";
-import { getCookie, deleteCookie } from "@/website/helpers/helper";
-import { GetCurrentUserApi } from "@/website/utils/api";
+import { getCookie, deleteCookie } from "@/website/Helpers/Helper";
+import { GetCurrentUserApi } from "@/website/Utils/Api";
 
 function AuthInitializer({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();

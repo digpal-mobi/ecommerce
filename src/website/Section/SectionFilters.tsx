@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ChevronDown, FilterIcon, ArrowLeft } from "@/website/lib/Icons";
+import { ChevronDown, FilterIcon, ArrowLeft } from "@/website/Lib/Icons";
 import Button from "@/website/Components/Common/Button";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import CheckBox from "@/website/Components/Common/CheckBox";
-import { useFilters } from "@/website/hooks/useFilters";
+import { useFilters } from "@/website/Hooks/UseFilters";
 import { MAX_PRICE, MIN_PRICE } from "@/redux/slices/filterSlice";
 import { useDispatch, useSelector } from "@/redux/store";
 import { getCategories } from "@/redux/slices/productSlice";

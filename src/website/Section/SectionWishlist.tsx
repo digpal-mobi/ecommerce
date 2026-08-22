@@ -18,8 +18,8 @@ import {
   WishlistProduct,
 } from "@/redux/slices/wishlistSlice";
 import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
-import { AddToCartIcon, TrashIcon, WishlistIcon } from "@/website/lib/Icons";
-import { CurrencyConverter } from "@/website/helpers/helper";
+import { AddToCartIcon, TrashIcon, WishlistIcon } from "@/website/Lib/Icons";
+import { CurrencyConverter } from "@/website/Helpers/Helper";
 import SectionRating from "./SectionRating";
 import { openLoginModal } from "@/redux/slices/authSlice";
 

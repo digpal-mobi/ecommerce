@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HamburgerIcon, ProfileIcon, SearchIcon } from "@/website/lib/Icons";
+import { HamburgerIcon, ProfileIcon, SearchIcon } from "@/website/Lib/Icons";
 import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
 import SearchBar from "@/website/Components/SearchBar";
 import { useDispatch, useSelector } from "@/redux/store";
@@ -12,7 +12,7 @@ import { logoutSuccess, openLoginModal } from "@/redux/slices/authSlice";
 import { clearCart } from "@/redux/slices/cartSlice";
 import CartIconComponent from "@/website/Components/Common/CartIconComponent";
 import WishlistIconComponent from "@/website/Components/Common/WishlistIconComponent";
-import { deleteCookie } from "@/website/helpers/helper";
+import { deleteCookie } from "@/website/Helpers/Helper";
 
 const MobileNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);

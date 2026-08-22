@@ -9,13 +9,13 @@ import Breadcrumb from "@/website/Components/Common/Breadcrumb";
 import SectionImageGallery from "@/website/Section/SectionImageGallery";
 import TitleTag from "@/website/Components/Common/TitleTag";
 
-import { ApiResponse } from "@/website/utils/api";
+import { ApiResponse } from "@/website/Utils/Api";
 import SectionRating from "@/website/Section/SectionRating";
 import SectionProductPrices from "@/website/Section/SectionProductPrices";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import Increment from "@/website/Components/Increment";
 import Button from "@/website/Components/Common/Button";
-import { AddToCartIcon, WishlistIcon } from "@/website/lib/Icons";
+import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
 import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
