@@ -18,11 +18,7 @@ const OPTIONS: EmblaOptionsType = { loop: true };
 export default async function Home() {
   const topSellingResult = await FetchProductsByCategory("womens-dresses", 4);
 
-  console.log(topSellingResult);
-
   const NewArrivalResult = await FetchProductsByCategory("tops", 4);
-
-  console.log(NewArrivalResult);
 
   return (
     <div>

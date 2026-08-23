@@ -1,12 +1,6 @@
-import {
-  DEFAULT_FILTERS,
-  FilterValues,
-} from "@/redux/slices/filterSlice";
+import { DEFAULT_FILTERS, FilterValues } from "@/redux/slices/filterSlice";
 import { DEFAULT_LIMIT, DEFAULT_PAGE } from "@/redux/slices/paginationSlice";
-import {
-  SortBy,
-  SortOrder,
-} from "@/redux/slices/sortingSlice";
+import { SortBy, SortOrder } from "@/redux/slices/sortingSlice";
 
 const parseNumberParam = (
   value: string | null,
@@ -18,68 +12,44 @@ const parseNumberParam = (
 
   const parsed = Number(value);
 
-  return Number.isFinite(parsed)
-    ? parsed
-    : fallback;
+  return Number.isFinite(parsed) ? parsed : fallback;
 };
 
 export const getFiltersFromSearchParams = (
   searchParams: URLSearchParams,
 ): FilterValues => {
-  const categoryParam =
-    searchParams.get("category");
+  const categoryParam = searchParams.get("category");
 
-  const brandParam =
-    searchParams.get("brand");
+  const brandParam = searchParams.get("brand");
 
-  const minPriceParam =
-    searchParams.get("minPrice");
+  const minPriceParam = searchParams.get("minPrice");
 
-  const maxPriceParam =
-    searchParams.get("maxPrice");
+  const maxPriceParam = searchParams.get("maxPrice");
 
-  const ratingParam =
-    searchParams.get("rating");
+  const ratingParam = searchParams.get("rating");
 
   return {
     category: categoryParam
-      ? categoryParam
-          .split(",")
-          .filter(Boolean)
+      ? [categoryParam.split(",").filter(Boolean)[0]].filter(Boolean)
       : DEFAULT_FILTERS.category,
 
     brand: brandParam
-      ? brandParam
-          .split(",")
-          .filter(Boolean)
+      ? brandParam.split(",").filter(Boolean)
       : DEFAULT_FILTERS.brand,
 
-    minPrice: parseNumberParam(
-      minPriceParam,
-      DEFAULT_FILTERS.minPrice,
-    ),
+    minPrice: parseNumberParam(minPriceParam, DEFAULT_FILTERS.minPrice),
 
-    maxPrice: parseNumberParam(
-      maxPriceParam,
-      DEFAULT_FILTERS.maxPrice,
-    ),
+    maxPrice: parseNumberParam(maxPriceParam, DEFAULT_FILTERS.maxPrice),
 
-    rating: parseNumberParam(
-      ratingParam,
-      DEFAULT_FILTERS.rating,
-    ),
+    rating: parseNumberParam(ratingParam, DEFAULT_FILTERS.rating),
 
-    color:
-      searchParams.get("color") || null,
+    color: searchParams.get("color") || null,
 
-    size:
-      searchParams.get("size") || null,
+    size: searchParams.get("size") || null,
 
-    dressStyle:
-      searchParams.get("dressStyle") || null,
+    dressStyle: searchParams.get("dressStyle") || null,
 
-    q:
-      searchParams.get("q") || "",
+    q: searchParams.get("q") || "",
   };
 };
 
@@ -89,74 +59,45 @@ export const filtersToSearchParams = (
   const params = new URLSearchParams();
 
   if (filters.category.length > 0) {
-    params.set(
-      "category",
-      filters.category.join(","),
-    );
+    params.set("category", filters.category.join(","));
   }
 
   if (filters.brand.length > 0) {
-    params.set(
-      "brand",
-      filters.brand.join(","),
-    );
+    params.set("brand", filters.brand.join(","));
   }
 
   if (
     filters.minPrice !== null &&
-    filters.minPrice !==
-      DEFAULT_FILTERS.minPrice
+    filters.minPrice !== DEFAULT_FILTERS.minPrice
   ) {
-    params.set(
-      "minPrice",
-      String(filters.minPrice),
-    );
+    params.set("minPrice", String(filters.minPrice));
   }
 
   if (
     filters.maxPrice !== null &&
-    filters.maxPrice !==
-      DEFAULT_FILTERS.maxPrice
+    filters.maxPrice !== DEFAULT_FILTERS.maxPrice
   ) {
-    params.set(
-      "maxPrice",
-      String(filters.maxPrice),
-    );
+    params.set("maxPrice", String(filters.maxPrice));
   }
 
   if (filters.rating !== null) {
-    params.set(
-      "rating",
-      String(filters.rating),
-    );
+    params.set("rating", String(filters.rating));
   }
 
   if (filters.color !== null) {
-    params.set(
-      "color",
-      filters.color,
-    );
+    params.set("color", filters.color);
   }
 
   if (filters.size !== null) {
-    params.set(
-      "size",
-      filters.size,
-    );
+    params.set("size", filters.size);
   }
 
   if (filters.dressStyle !== null) {
-    params.set(
-      "dressStyle",
-      filters.dressStyle,
-    );
+    params.set("dressStyle", filters.dressStyle);
   }
 
   if (filters.q.trim()) {
-    params.set(
-      "q",
-      filters.q.trim(),
-    );
+    params.set("q", filters.q.trim());
   }
 
   return params;
@@ -168,22 +109,14 @@ export const getSortingFromSearchParams = (
   sortBy: SortBy;
   sortOrder: SortOrder;
 } => {
-  const sortByParam =
-    searchParams.get("sortBy");
+  const sortByParam = searchParams.get("sortBy");
 
-  const sortOrderParam =
-    searchParams.get("sortOrder");
+  const sortOrderParam = searchParams.get("sortOrder");
 
   return {
-    sortBy:
-      sortByParam === "price"
-        ? "price"
-        : "price",
+    sortBy: sortByParam === "price" ? "price" : "price",
 
-    sortOrder:
-      sortOrderParam === "desc"
-        ? "desc"
-        : "asc",
+    sortOrder: sortOrderParam === "desc" ? "desc" : "asc",
   };
 };
 
@@ -202,25 +135,17 @@ export const sortingToSearchParams = (
 export const getPaginationFromSearchParams = (
   searchParams: URLSearchParams,
 ) => {
-  const pageParam =
-    searchParams.get("page");
+  const pageParam = searchParams.get("page");
 
-  const limitParam =
-    searchParams.get("limit");
+  const limitParam = searchParams.get("limit");
 
   const page = Number(pageParam);
   const limit = Number(limitParam);
 
   return {
-    currentPage:
-  Number.isFinite(page) && page > 0
-    ? page
-    : DEFAULT_PAGE,
+    currentPage: Number.isFinite(page) && page > 0 ? page : DEFAULT_PAGE,
 
-limit:
-  Number.isFinite(limit) && limit > 0
-    ? limit
-    : DEFAULT_LIMIT,
+    limit: Number.isFinite(limit) && limit > 0 ? limit : DEFAULT_LIMIT,
   };
 };
 
@@ -231,17 +156,11 @@ export const paginationToSearchParams = (
   const params = new URLSearchParams();
 
   if (currentPage !== DEFAULT_PAGE) {
-    params.set(
-      "page",
-      String(currentPage),
-    );
+    params.set("page", String(currentPage));
   }
 
   if (limit !== DEFAULT_LIMIT) {
-    params.set(
-      "limit",
-      String(limit),
-    );
+    params.set("limit", String(limit));
   }
 
   return params;

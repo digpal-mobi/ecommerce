@@ -1,0 +1,65 @@
+echo "🚀 PRE-COMMIT HOOK RUNNING"
+
+. "$(dirname -- "$0")/common.sh"
+
+if [ -s "$HOME/.asdf/asdf.sh" ]; then
+  . "$HOME/.asdf/asdf.sh" >/dev/null 2>&1
+fi
+
+if [ -d "$HOME/.volta/bin" ]; then
+  export PATH="$HOME/.volta/bin:$PATH"
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "[husky] Node.js is not available in PATH."
+  exit 1
+fi
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "[husky] npm is not available in PATH."
+  exit 1
+fi
+
+echo "[husky] Running pre-commit quality checks..."
+
+echo "[husky] Step 1/3: Running ESLint..."
+npm run lint || {
+  echo "[husky] ESLint failed."
+  exit 1
+}
+
+echo "[husky] Step 2/3: Running TypeScript check..."
+npm exec -- tsc --noEmit || {
+  echo "[husky] TypeScript check failed."
+  exit 1
+}
+
+echo "[husky] Step 3/3: Formatting staged files with Prettier..."
+
+STAGED_PRETTIER_FILES="$(git diff --cached --name-only --diff-filter=ACMR -- '*.js' '*.jsx' '*.ts' '*.tsx' '*.json' '*.css' '*.scss' '*.md' || true)"
+
+if [ -n "$STAGED_PRETTIER_FILES" ]; then
+  OLD_IFS=$IFS
+  IFS='
+'
+
+  for file in $STAGED_PRETTIER_FILES; do
+    npm exec -- prettier --write "$file" || {
+      echo "[husky] Prettier failed: $file"
+      IFS=$OLD_IFS
+      exit 1
+    }
+
+    git add "$file" || {
+      echo "[husky] Failed to re-stage: $file"
+      IFS=$OLD_IFS
+      exit 1
+    }
+  done
+
+  IFS=$OLD_IFS
+else
+  echo "[husky] No staged files require Prettier."
+fi
+
+echo "[husky] ✅ All pre-commit checks passed."

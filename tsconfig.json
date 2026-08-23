@@ -17,9 +17,9 @@
       {
         "name": "next"
       }
-    ],  
+    ],
     "paths": {
-      "@/*": ["./src/*",]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -29,7 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-    
   ],
   "exclude": ["node_modules"]
 }
