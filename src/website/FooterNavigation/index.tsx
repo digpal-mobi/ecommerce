@@ -183,7 +183,7 @@ const index = (props: Props) => {
                   className="h-auto w-full max-h-[30px]"
                 />
               </div>
-              
+
               <div>
                 <Image
                   src="/payments/Badge (4).png"

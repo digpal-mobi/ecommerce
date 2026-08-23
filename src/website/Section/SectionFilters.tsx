@@ -24,18 +24,6 @@ const extraFilters = [
     options: ["4", "3", "2", "1"],
     multiple: false,
   },
-  {
-    key: "availability",
-    label: "Availability",
-    options: ["in-stock", "low-stock"],
-    multiple: false,
-  },
-  {
-    key: "discount",
-    label: "Discount",
-    options: ["10", "20", "30"],
-    multiple: false,
-  },
 ];
 
 function formatCategory(slug: string) {

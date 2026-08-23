@@ -22,7 +22,7 @@ export default function NotFound() {
             <TitleTag
               as="h1"
               variant="mainHeading"
-              className="!text-[80px] tablet:!text-[120px] !leading-none font-bold text-black"
+              className="!text-[80px] !font-satoshi tablet:!text-[120px] !leading-none font-bold text-black"
             >
               404
             </TitleTag>

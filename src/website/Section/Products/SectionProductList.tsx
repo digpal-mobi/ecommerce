@@ -8,7 +8,7 @@ import Image from "next/image";
 import Pagination from "@/website/Components/Common/Pagination";
 import Link from "next/link";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
@@ -18,6 +18,9 @@ import { setTotal } from "@/redux/slices/paginationSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
+import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton";
+import { FetchProducts } from "@/website/Utils/Api";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   data?: any[];
@@ -26,8 +29,14 @@ type Props = {
 
 const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
 
+  const [products, setProducts] = useState<any[]>(data || []);
+  const [totalCount, setTotalCount] = useState<number>(initialTotal);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [quantities, setQuantities] = useState<Record<number, number>>({});
+
+  const isFirstMount = useRef(true);
 
   const currency = useSelector((state: RootState) => state.currency.currency);
   const wishlistItems =
@@ -43,7 +52,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
     limit,
   } = useSelector((state: RootState) => state.pagination);
 
-  const total = reduxTotal || initialTotal;
+  const total = reduxTotal || totalCount;
   const { changePage, resetFilters } = useFilters();
 
   const isWishlisted = (id: number) => {
@@ -69,13 +78,105 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
     );
   };
 
+  // Sync server props when data changes
   useEffect(() => {
+    if (data) {
+      setProducts(data);
+    }
     if (initialTotal !== undefined) {
+      setTotalCount(initialTotal);
       dispatch(setTotal(initialTotal));
     }
-  }, [initialTotal, dispatch]);
+  }, [data, initialTotal, dispatch]);
 
-  const displayProducts = data || [];
+  // Client-side fetch on filter / searchParams change (skips first render)
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+
+    let isMounted = true;
+    const fetchFilteredProducts = async () => {
+      setIsLoading(true);
+      try {
+        const pageParam = searchParams.get("page");
+        const limitParam = searchParams.get("limit");
+        const category = searchParams.get("category");
+        const brand = searchParams.get("brand");
+        const minPrice = searchParams.get("minPrice");
+        const maxPrice = searchParams.get("maxPrice");
+        const rating = searchParams.get("rating");
+        const color = searchParams.get("color");
+        const size = searchParams.get("size");
+        const dressStyle = searchParams.get("dressStyle");
+        const sortBy = searchParams.get("sortBy");
+        const sortOrder = searchParams.get("sortOrder");
+        const q = searchParams.get("q");
+
+        const currLimit = limitParam ? Number(limitParam) : limit || 9;
+        const currPage = pageParam ? Number(pageParam) : 1;
+        const skip = (currPage - 1) * currLimit;
+
+        const response = await FetchProducts({
+          limit: currLimit,
+          skip,
+          category: category || undefined,
+          brand: brand || undefined,
+          minPrice: minPrice ? Number(minPrice) : undefined,
+          maxPrice: maxPrice ? Number(maxPrice) : undefined,
+          rating: rating ? Number(rating) : undefined,
+          color: color || undefined,
+          size: size || undefined,
+          dressStyle: dressStyle || undefined,
+          sortBy: sortBy || undefined,
+          order: sortOrder || undefined,
+          q: q || undefined,
+        });
+
+        if (isMounted) {
+          if (response.status !== false && Array.isArray(response.products)) {
+            setProducts(response.products);
+            const count = response.total ?? response.products.length;
+            setTotalCount(count);
+            dispatch(setTotal(count));
+          } else {
+            setProducts([]);
+            setTotalCount(0);
+            dispatch(setTotal(0));
+          }
+        }
+      } catch (err) {
+        if (isMounted) {
+          setProducts([]);
+          setTotalCount(0);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchFilteredProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [searchParams, dispatch, limit]);
+
+  const displayProducts = products;
+
+  const categoryTitle = useMemo(() => {
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) {
+      return categoryParam.split(",")[0].replace(/-/g, " ");
+    }
+    if (products.length > 0 && products[0]?.category) {
+      return String(products[0].category).replace(/-/g, " ");
+    }
+    return "Products";
+  }, [searchParams, products]);
 
   const getQuantity = (id: number) => {
     return quantities[id] ?? 1;
@@ -111,7 +212,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
         }),
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   return (
@@ -119,11 +220,11 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
       <div className="mb-[16px] flex flex-col laptop:flex-row items-center justify-between">
         <div>
           <TitleTag
-            className="!laptop:text-[32px] !text-[24px]"
+            className="!laptop:text-[32px] !text-[24px] capitalize"
             variant="heading"
             as="h2"
           >
-            {data && data.length > 0 ? data[0].category : "Products"}
+            {categoryTitle}
           </TitleTag>
         </div>
 
@@ -138,7 +239,9 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
         </div>
       </div>
 
-      {displayProducts.length > 0 ? (
+      {isLoading ? (
+        <ProductGridSkeleton count={limit || 9} />
+      ) : displayProducts.length > 0 ? (
         <>
           <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
             {displayProducts.map((items: any) => (
@@ -247,7 +350,8 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
             variant="normalPara"
             className="text-[#000000]/60 max-w-[420px] mb-[24px]"
           >
-            We couldn&apos;t find any products matching your search or active filters. Try adjusting your search keywords or resetting filters.
+            We couldn&apos;t find any products matching your search or active
+            filters. Try adjusting your search keywords or resetting filters.
           </Paragraph>
           <Button
             variant="primary"
