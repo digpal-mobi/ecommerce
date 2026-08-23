@@ -29,6 +29,9 @@ const Input = forwardRef<HTMLInputElement, Readonly<InputProps>>(
     return (
       <div className="w-full">
         {label && <label>{label}</label>}
+        {subLabel && (
+          <span className="text-xs text-gray-500 ml-2">{subLabel}</span>
+        )}
 
         <input
           ref={ref}

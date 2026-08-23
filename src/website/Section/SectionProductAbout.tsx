@@ -17,7 +17,7 @@ import Increment from "@/website/Components/Increment";
 import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
-import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
+import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
 

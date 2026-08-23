@@ -8,7 +8,7 @@ import Paragraph from "@/website/Components/Common/Paragraph";
 import Increment from "@/website/Components/Increment";
 import Link from "next/link";
 import { useDispatch, useSelector } from "@/redux/store";
-import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
+import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
 import LazyImage from "./Common/LazyImage";
@@ -39,7 +39,6 @@ const ProductCard = ({ products, isLoading = false }: Readonly<Props>) => {
   const handleToggleWishlist = (e: React.MouseEvent, item: any) => {
     e.preventDefault();
     e.stopPropagation();
-    const wishlisted = isWishlisted(item.id);
     dispatch(
       toggleWishlist({
         id: item.id,

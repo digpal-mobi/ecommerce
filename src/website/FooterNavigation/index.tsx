@@ -13,9 +13,7 @@ import {
 } from "@/website/Lib/Icons";
 import { FOOTER_NAVIGATION } from "@/website/FooterNavigation/DummyFooter";
 
-type Props = Readonly<Record<string, never>>;
-
-const index = (props: Props) => {
+const index = () => {
   return (
     <footer>
       <MainContainer>

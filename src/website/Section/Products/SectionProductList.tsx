@@ -62,7 +62,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const handleToggleWishlist = (e: React.MouseEvent, item: any) => {
     e.preventDefault();
     e.stopPropagation();
-    const wishlisted = isWishlisted(item.id);
     dispatch(
       toggleWishlist({
         id: item.id,
@@ -72,7 +71,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
         rating: item.rating,
         category:
           typeof item.category === "object"
-            ? item.category?.name || item.category?.id
+            ? (item.category?.name ?? item.category?.id)
             : item.category,
       }),
     );
@@ -146,7 +145,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
             dispatch(setTotal(0));
           }
         }
-      } catch (err) {
+      } catch {
         if (isMounted) {
           setProducts([]);
           setTotalCount(0);

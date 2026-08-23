@@ -42,7 +42,7 @@ const SectionBrowseByDressStyle = () => {
             <div className="mt-[64px] grid grid-cols-1 laptop:grid-cols-3 gap-y-[20px] laptop:gap-[20px]">
               {DRESS_STYLES.map((dress, index) => (
                 <Link
-                  key={index}
+                  key={dress.title}
                   href={dress.href}
                   className={`
                   group relative overflow-hidden rounded-[20px] cursor-pointer block

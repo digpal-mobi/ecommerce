@@ -3,11 +3,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
-import LazyImage from "@/website/Components/Common/LazyImage";
 import Input from "@/website/Components/Common/Input";
 import Button from "@/website/Components/Common/Button";
 import TitleTag from "@/website/Components/Common/TitleTag";
-import { store, useDispatch, useSelector } from "@/redux/store";
+import { useDispatch, useSelector } from "@/redux/store";
 import {
   setLoading,
   setUserDetails,
@@ -15,7 +14,6 @@ import {
   closeLoginModal,
 } from "@/redux/slices/authSlice";
 import { fetchUserCart } from "@/redux/slices/cartSlice";
-import { useRouter } from "next/navigation";
 import { LoginUser } from "@/website/Utils/Api";
 import { setCookie } from "@/website/Helpers/Helper";
 
@@ -42,8 +40,6 @@ const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
     dispatch(closeLoginModal());
     if (onClose) onClose();
   }, [dispatch, onClose]);
-
-  const router = useRouter();
 
   const {
     register,
@@ -118,7 +114,7 @@ const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
 
         dispatch(setUserDetails(response));
         dispatch(loginSuccess(response));
-        dispatch(fetchUserCart(Number(response.id) ?? 5));
+        dispatch(fetchUserCart(Number(response.id ?? 0)));
         handleClose();
       } else {
         setApiError(

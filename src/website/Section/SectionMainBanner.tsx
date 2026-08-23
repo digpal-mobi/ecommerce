@@ -69,7 +69,7 @@ const SectionMainBanner = () => {
               {/* Metrics */}
               <div className="mt-12 flex flex-wrap">
                 {Metrics.map((item, index) => (
-                  <React.Fragment key={index}>
+                  <React.Fragment key={item.description}>
                     <div
                       className={`${
                         index === 2

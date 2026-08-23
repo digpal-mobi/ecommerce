@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { ReviewStar, HalfReviewStar } from "@/website/Lib/Icons";
 import { RoundRating } from "@/website/Helpers/Helper";
 

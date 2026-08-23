@@ -7,9 +7,7 @@ import { ChevronDown } from "@/website/Lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
 import { setCurrency } from "@/redux/slices/currencySlice";
 
-type Props = Readonly<Record<string, never>>;
-
-const CurrencySelector = (props: Props) => {
+const CurrencySelector = () => {
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);

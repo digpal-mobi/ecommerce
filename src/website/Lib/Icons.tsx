@@ -196,6 +196,7 @@ export const SparkleIcon2 = ({ className = "" }: Readonly<IconProps>) => {
       height="104"
       viewBox="0 0 104 104"
       fill="none"
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -345,6 +346,7 @@ export const CheckCircleIcon = ({ className = "" }: Readonly<IconProps>) => {
 export const HamburgerIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
+      className={className}
       width="19"
       height="15"
       viewBox="0 0 19 15"

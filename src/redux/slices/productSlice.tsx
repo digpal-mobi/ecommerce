@@ -6,12 +6,6 @@ import {
   FetchSearchedProducts,
 } from "@/website/Utils/Api";
 import { Product } from "@/types/ProductType";
-import {
-  filterProducts,
-  hasActiveFilters,
-  paginateProducts,
-  sortProducts,
-} from "@/website/Utils/ProductUtils";
 import { setTotal } from "@/redux/slices/paginationSlice";
 import { RootState } from "@/redux/store";
 

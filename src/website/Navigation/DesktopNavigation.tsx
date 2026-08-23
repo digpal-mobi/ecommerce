@@ -4,8 +4,6 @@ import { ChevronDown } from "@/website/Lib/Icons";
 import { useState } from "react";
 import Link from "next/link";
 
-type Props = Readonly<Record<string, never>>;
-
 export interface NavChild {
   title: string;
   href: string;
@@ -18,9 +16,7 @@ export interface NavItem {
   children?: NavChild[];
 }
 
-export type NavigationItems = NavItem;
-
-export const DesktopHeader = (props: Props) => {
+export const DesktopHeader = () => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const handleDropdownClick = (id: number) => {

@@ -8,9 +8,7 @@ import {
   MainContainer,
 } from "@/website/Components/Common/Container";
 
-type Props = Readonly<Record<string, never>>;
-
-const SectionHomeBanner = (props: Props) => {
+const SectionHomeBanner = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = () => {

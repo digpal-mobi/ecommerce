@@ -19,7 +19,7 @@ const SectionImageGallery = ({ images = [] }: Readonly<Props>) => {
       >
         {images.map((img, index) => (
           <button
-            key={index}
+            key={img}
             type="button"
             onClick={() => setSelectedImage(img)}
             className="cursor-pointer flex-shrink-0"

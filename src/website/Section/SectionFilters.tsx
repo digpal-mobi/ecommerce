@@ -151,7 +151,7 @@ function PriceFilter() {
 
 function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
   const { filters, toggleCategory } = useFilters();
-  const [search, setSearch] = useState("");
+  const search = "";
 
   const selectedCategory = Array.isArray(filters.category)
     ? filters.category
@@ -221,7 +221,7 @@ function FilterOptions({
   multiple: boolean;
 }) {
   const { filters, applyFilters } = useFilters();
-  const [search, setSearch] = useState("");
+  const search = "";
 
   const getSelected = (): string[] => {
     if (filterKey === "brand") {

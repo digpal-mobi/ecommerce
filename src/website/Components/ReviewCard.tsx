@@ -11,8 +11,8 @@ const ReviewCard = ({ name, review, rating = 5 }: Readonly<Props>) => {
   return (
     <div className="flex h-[240px] max-w-[400px] flex-col rounded-[20px] border border-[#E5E5E5] bg-white px-[32px] pt-[28px] pb-[50px]">
       <div className="flex items-center gap-[6px]">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <ReviewStar key={index} filled={index < rating} />
+        {[1, 2, 3, 4, 5].map((star) => (
+          <ReviewStar key={`star-${star}`} filled={star <= rating} />
         ))}
       </div>
 

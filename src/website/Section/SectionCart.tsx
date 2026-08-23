@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "@/redux/store";
 import {
   clearCart,
   removeFromCart,
-  updateCart,
   updateCartAsync,
   CartProduct,
 } from "@/redux/slices/cartSlice";
@@ -69,7 +68,7 @@ const SectionCart = () => {
     dispatch(updateCartAsync({ id, quantity, cartId }));
   };
 
-  const handleRemoveProduct = (id: number, title: string) => {
+  const handleRemoveProduct = (id: number) => {
     dispatch(removeFromCart(id));
   };
 
@@ -178,9 +177,7 @@ const SectionCart = () => {
 
                         <button
                           type="button"
-                          onClick={() =>
-                            handleRemoveProduct(item.id, item.title)
-                          }
+                          onClick={() => handleRemoveProduct(item.id)}
                           className="flex h-9 w-9 items-center justify-center rounded-full text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
                           aria-label={`Remove ${item.title} from cart`}
                         >
