@@ -29,7 +29,7 @@ interface LoginModalProps {
   onClose?: () => void;
 }
 
-const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
   const dispatch = useDispatch();
   const { isLoading, isLoginModalOpen } = useSelector(
     (state: any) => state.auth,

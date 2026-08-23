@@ -4,7 +4,7 @@ interface IconProps {
   color?: string;
 }
 
-export const PlusIcon = ({ className = "" }: IconProps) => {
+export const PlusIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className} `}
@@ -22,7 +22,7 @@ export const PlusIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const MinusIcon = ({ className = "" }: IconProps) => {
+export const MinusIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className} `}
@@ -40,7 +40,7 @@ export const MinusIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const DeleteIcon = ({ className = "" }: IconProps) => {
+export const DeleteIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -58,7 +58,10 @@ export const DeleteIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const ReviewStar = ({ className = "", filled = false }: IconProps) => {
+export const ReviewStar = ({
+  className = "",
+  filled = false,
+}: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -77,7 +80,7 @@ export const ReviewStar = ({ className = "", filled = false }: IconProps) => {
 export const HalfReviewStar = ({
   className = "",
   filled = false,
-}: IconProps) => {
+}: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -93,7 +96,10 @@ export const HalfReviewStar = ({
   );
 };
 
-export const CrossIcon = ({ className = "", color = "" }: IconProps) => {
+export const CrossIcon = ({
+  className = "",
+  color = "",
+}: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -111,7 +117,7 @@ export const CrossIcon = ({ className = "", color = "" }: IconProps) => {
   );
 };
 
-export const CartIcon = ({ className = "" }: IconProps) => {
+export const CartIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -129,7 +135,7 @@ export const CartIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const ProfileIcon = ({ className = "" }: IconProps) => {
+export const ProfileIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -147,7 +153,7 @@ export const ProfileIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const SearchIcon = ({ className = "", color }: IconProps) => {
+export const SearchIcon = ({ className = "", color }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -166,7 +172,7 @@ export const SearchIcon = ({ className = "", color }: IconProps) => {
   );
 };
 
-export const SparkleIcon = ({ className = "" }: IconProps) => {
+export const SparkleIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -183,7 +189,7 @@ export const SparkleIcon = ({ className = "" }: IconProps) => {
     </svg>
   );
 };
-export const SparkleIcon2 = ({ className = "" }: IconProps) => {
+export const SparkleIcon2 = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       width="104"
@@ -238,7 +244,7 @@ export const MailIcon = ({ className = " " }) => {
   );
 };
 
-export const TwitterIcon = ({ className = "" }: IconProps) => {
+export const TwitterIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -255,7 +261,7 @@ export const TwitterIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const FacebookIcon = ({ className }: IconProps) => {
+export const FacebookIcon = ({ className }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}
@@ -264,7 +270,6 @@ export const FacebookIcon = ({ className }: IconProps) => {
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
     >
-
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -275,7 +280,7 @@ export const FacebookIcon = ({ className }: IconProps) => {
   );
 };
 
-export const InstagramIcon = ({ className }: IconProps) => {
+export const InstagramIcon = ({ className }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}
@@ -300,7 +305,7 @@ export const InstagramIcon = ({ className }: IconProps) => {
   );
 };
 
-export const GithubIcon = ({ className }: IconProps) => {
+export const GithubIcon = ({ className }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}
@@ -319,7 +324,7 @@ export const GithubIcon = ({ className }: IconProps) => {
   );
 };
 
-export const CheckCircleIcon = ({ className = "" }: IconProps) => {
+export const CheckCircleIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -337,7 +342,7 @@ export const CheckCircleIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const HamburgerIcon = ({ className = "" }: IconProps) => {
+export const HamburgerIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       width="19"
@@ -354,7 +359,7 @@ export const HamburgerIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const AddToCartIcon = ({ className = "" }: IconProps) => {
+export const AddToCartIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -396,7 +401,7 @@ export const WishlistIcon = ({
   className = "",
   filled = false,
   color,
-}: IconProps) => {
+}: Readonly<IconProps>) => {
   if (filled) {
     return (
       <svg
@@ -430,7 +435,7 @@ export const WishlistIcon = ({
   );
 };
 
-export const FilterIcon = ({ className }: IconProps) => {
+export const FilterIcon = ({ className }: Readonly<IconProps>) => {
   return (
     <svg
       className={`${className}`}
@@ -449,7 +454,7 @@ export const FilterIcon = ({ className }: IconProps) => {
   );
 };
 
-export const ArrowLeft = ({ className }: IconProps) => {
+export const ArrowLeft = ({ className }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}
@@ -470,7 +475,7 @@ export const ArrowLeft = ({ className }: IconProps) => {
   );
 };
 
-export const TrashIcon = ({ className = "" }: IconProps) => {
+export const TrashIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}
@@ -492,7 +497,7 @@ export const TrashIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const PromoTagIcon = ({ className = "" }: IconProps) => {
+export const PromoTagIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}
@@ -512,7 +517,7 @@ export const PromoTagIcon = ({ className = "" }: IconProps) => {
   );
 };
 
-export const ArrowRightIcon = ({ className = "" }: IconProps) => {
+export const ArrowRightIcon = ({ className = "" }: Readonly<IconProps>) => {
   return (
     <svg
       className={className}

@@ -1,11 +1,11 @@
 import Paragraph from "@/website/Components/Common/Paragraph";
 import TitleTag from "@/website/Components/Common/TitleTag";
 
-type Props = {
+type Props = Readonly<{
   data?: any;
-};
+}>;
 
-const SectionProductDetails = ({ data }: Props) => {
+const SectionProductDetails = ({ data }: Readonly<Props>) => {
   return (
     <section className="w-full">
       {/* Description */}

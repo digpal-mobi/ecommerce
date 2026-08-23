@@ -3,7 +3,7 @@ import TitleTag from "@/website/Components/Common/TitleTag";
 import { ChevronDown } from "@/website/Lib/Icons";
 import React, { useState } from "react";
 
-type Props = {};
+type Props = Readonly<Record<string, never>>;
 
 export interface FAQItem {
   id: number;

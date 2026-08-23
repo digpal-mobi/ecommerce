@@ -149,7 +149,7 @@ function PriceFilter() {
   );
 }
 
-function CategoryOptions({ categories }: { categories: any[] }) {
+function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
   const { filters, toggleCategory } = useFilters();
   const [search, setSearch] = useState("");
 
@@ -421,7 +421,9 @@ function FilterList({
   );
 }
 
-export function FilterSectionDesktop({ categories }: { categories?: any }) {
+export function FilterSectionDesktop({
+  categories,
+}: Readonly<{ categories?: any }>) {
   const [openFilters, setOpenFilters] = useState<string[]>([
     "Category",
     "Price",
@@ -603,7 +605,7 @@ export function FilterSectionMobile({
   );
 }
 
-const SectionFilter = ({ categories }: { categories?: any }) => {
+const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { filters } = useFilters();
 

@@ -1,13 +1,13 @@
 import React from "react";
 import { ReviewStar, CheckCircleIcon } from "@/website/Lib/Icons";
 
-type Props = {
+type Props = Readonly<{
   name: string;
   review: string;
   rating?: number;
-};
+}>;
 
-const ReviewCard = ({ name, review, rating = 5 }: Props) => {
+const ReviewCard = ({ name, review, rating = 5 }: Readonly<Props>) => {
   return (
     <div className="flex h-[240px] max-w-[400px] flex-col rounded-[20px] border border-[#E5E5E5] bg-white px-[32px] pt-[28px] pb-[50px]">
       <div className="flex items-center gap-[6px]">

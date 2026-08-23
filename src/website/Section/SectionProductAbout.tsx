@@ -26,7 +26,7 @@ type Props = {
   images?: string[];
 };
 
-const SectionProductAbout = ({ data }: Props) => {
+const SectionProductAbout = ({ data }: Readonly<Props>) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 

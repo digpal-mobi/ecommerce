@@ -22,12 +22,12 @@ import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton
 import { FetchProducts } from "@/website/Utils/Api";
 import { useSearchParams } from "next/navigation";
 
-type Props = {
+type Props = Readonly<{
   data?: any[];
   initialTotal?: number;
-};
+}>;
 
-const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
+const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
 

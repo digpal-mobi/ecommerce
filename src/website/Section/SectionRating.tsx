@@ -4,7 +4,9 @@ import { useState } from "react";
 import { ReviewStar, HalfReviewStar } from "@/website/Lib/Icons";
 import { RoundRating } from "@/website/Helpers/Helper";
 
-export default function SectionRating({ rating }: { rating: number }) {
+export default function SectionRating({
+  rating,
+}: Readonly<{ rating: number }>) {
   const roundedRating = RoundRating(rating);
 
   return (

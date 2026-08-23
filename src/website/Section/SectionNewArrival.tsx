@@ -15,7 +15,7 @@ type Props = {
 const SectionNewArrival = ({
   products,
   viewAllHref = "/shop?category=tops",
-}: Props) => {
+}: Readonly<Props>) => {
   return (
     <MainContainer>
       <Container>

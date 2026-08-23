@@ -17,7 +17,7 @@ const LazyImage = ({
   alt = "Image",
   className,
   atr,
-}: Props) => {
+}: Readonly<Props>) => {
   return (
     <Image
       src={src}

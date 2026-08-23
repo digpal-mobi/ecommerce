@@ -8,7 +8,7 @@ type Props = {
   products: Array<any>;
 };
 
-const SectionSimilarProducts = ({ products }: Props) => {
+const SectionSimilarProducts = ({ products }: Readonly<Props>) => {
   return (
     <MainContainer>
       <Container>

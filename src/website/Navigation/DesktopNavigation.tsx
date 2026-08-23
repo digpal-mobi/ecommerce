@@ -4,7 +4,7 @@ import { ChevronDown } from "@/website/Lib/Icons";
 import { useState } from "react";
 import Link from "next/link";
 
-type Props = {};
+type Props = Readonly<Record<string, never>>;
 
 export interface NavChild {
   title: string;

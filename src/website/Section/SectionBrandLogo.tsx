@@ -5,7 +5,7 @@ import {
 } from "@/website/Components/Common/Container";
 import Image from "next/image";
 
-type Props = {};
+type Props = Readonly<Record<string, never>>;
 
 const BrandLogos = [
   { image: "/versace.png", alt: "Versace Image" },

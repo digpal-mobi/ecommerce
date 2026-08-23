@@ -11,7 +11,7 @@ import Paragraph from "./Paragraph";
 import Increment from "../Increment";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
 
-type Props = {};
+type Props = Readonly<Record<string, never>>;
 
 const CartIconComponent = (props: Props) => {
   const quantity = useSelector((state: RootState) => state.cart.quantity);

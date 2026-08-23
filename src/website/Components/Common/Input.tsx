@@ -2,16 +2,18 @@
 
 import React, { forwardRef, type InputHTMLAttributes } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: React.ReactNode;
-  subLabel?: React.ReactNode;
-  error?: {
-    message?: string;
-  };
-  className?: string;
-}
+type InputProps = Readonly<
+  InputHTMLAttributes<HTMLInputElement> & {
+    label?: React.ReactNode;
+    subLabel?: React.ReactNode;
+    error?: {
+      message?: string;
+    };
+    className?: string;
+  }
+>;
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, Readonly<InputProps>>(
   (
     {
       label,

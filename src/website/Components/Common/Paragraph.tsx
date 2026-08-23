@@ -2,11 +2,11 @@ import { JSX, ReactNode } from "react";
 
 type TitleVariant = "boldPara" | "normalPara";
 
-type Props = {
+type Props = Readonly<{
   children?: ReactNode;
   variant?: TitleVariant;
   className?: string;
-};
+}>;
 
 const VARIANT_CLASSES: Record<TitleVariant, string> = {
   boldPara:
@@ -20,7 +20,7 @@ const Paragraph = ({
   children,
   variant = "boldPara",
   className = "",
-}: Props) => {
+}: Readonly<Props>) => {
   return (
     <p className={`${VARIANT_CLASSES[variant]} ${className}`.trim()}>
       {children}

@@ -7,7 +7,7 @@ type Props = {
   images?: string[];
 };
 
-const SectionImageGallery = ({ images = [] }: Props) => {
+const SectionImageGallery = ({ images = [] }: Readonly<Props>) => {
   const [selectedImage, setSelectedImage] = useState<string>(images[0] || "");
 
   return (

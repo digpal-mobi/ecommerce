@@ -16,7 +16,7 @@ type Props = {
   data?: Review[];
 };
 
-const SectionRatingAndReviews = ({ data }: Props) => {
+const SectionRatingAndReviews = ({ data }: Readonly<Props>) => {
   return (
     <section>
       <div className="flex w-full items-center justify-between">

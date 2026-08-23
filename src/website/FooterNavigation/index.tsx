@@ -13,7 +13,7 @@ import {
 } from "@/website/Lib/Icons";
 import { FOOTER_NAVIGATION } from "@/website/FooterNavigation/DummyFooter";
 
-type Props = {};
+type Props = Readonly<Record<string, never>>;
 
 const index = (props: Props) => {
   return (

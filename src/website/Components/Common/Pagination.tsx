@@ -5,12 +5,12 @@ import Button from "./Button";
 import { ArrowLeft } from "@/website/Lib/Icons";
 import { GetPaginationPages } from "@/website/Helpers/Helper";
 
-interface PaginationProps {
+type PaginationProps = Readonly<{
   currentPage: number;
   total: number;
   limit: number;
   onPageChange: (page: number) => void;
-}
+}>;
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
