@@ -5,15 +5,12 @@ import SectionMainBanner from "@/website/Section/SectionMainBanner";
 import SectionNewArrival from "@/website/Section/SectionNewArrival";
 import SectionTopSelling from "@/website/Section/SectionTopSelling";
 import { FetchProductsByCategory } from "@/website/Utils/Api";
-import { EmblaOptionsType } from "embla-carousel";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Home Page || Ecommerce",
   description: "A fully functional ecommerce website.",
 };
-
-const OPTIONS: EmblaOptionsType = { loop: true };
 
 export default async function Home() {
   const topSellingResult = await FetchProductsByCategory("womens-dresses", 4);
