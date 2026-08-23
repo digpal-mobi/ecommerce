@@ -78,7 +78,7 @@ const Specification = ({
       </Paragraph>
     </div>
 
-    <Paragraph variant="normalPara">{value || "-"}</Paragraph>
+    <Paragraph variant="normalPara">{value ?? "-"}</Paragraph>
   </div>
 );
 

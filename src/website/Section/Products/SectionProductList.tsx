@@ -31,7 +31,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
 
-  const [products, setProducts] = useState<any[]>(data || []);
+  const [products, setProducts] = useState<any[]>(data ?? []);
   const [totalCount, setTotalCount] = useState<number>(initialTotal);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [quantities, setQuantities] = useState<Record<number, number>>({});
@@ -40,7 +40,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
   const currency = useSelector((state: RootState) => state.currency.currency);
   const wishlistItems =
-    useSelector((state: RootState) => state.wishlist?.items) || [];
+    useSelector((state: RootState) => state.wishlist?.items) ?? [];
 
   const { isAuthenticated, userDetails } = useSelector(
     (state: RootState) => state.auth,
@@ -114,24 +114,24 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
         const sortOrder = searchParams.get("sortOrder");
         const q = searchParams.get("q");
 
-        const currLimit = limitParam ? Number(limitParam) : limit || 9;
+        const currLimit = limitParam ? Number(limitParam) : (limit ?? 9);
         const currPage = pageParam ? Number(pageParam) : 1;
         const skip = (currPage - 1) * currLimit;
 
         const response = await FetchProducts({
           limit: currLimit,
           skip,
-          category: category || undefined,
-          brand: brand || undefined,
+          category: category ?? undefined,
+          brand: brand ?? undefined,
           minPrice: minPrice ? Number(minPrice) : undefined,
           maxPrice: maxPrice ? Number(maxPrice) : undefined,
           rating: rating ? Number(rating) : undefined,
-          color: color || undefined,
-          size: size || undefined,
-          dressStyle: dressStyle || undefined,
-          sortBy: sortBy || undefined,
-          order: sortOrder || undefined,
-          q: q || undefined,
+          color: color ?? undefined,
+          size: size ?? undefined,
+          dressStyle: dressStyle ?? undefined,
+          sortBy: sortBy ?? undefined,
+          order: sortOrder ?? undefined,
+          q: q ?? undefined,
         });
 
         if (isMounted) {
@@ -240,7 +240,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
       </div>
 
       {isLoading ? (
-        <ProductGridSkeleton count={limit || 9} />
+        <ProductGridSkeleton count={limit ?? 9} />
       ) : displayProducts.length > 0 ? (
         <>
           <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
@@ -255,7 +255,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
                       src={items.thumbnail}
                       width={295}
                       height={298}
-                      alt={items.title || "product image"}
+                      alt={items.title ?? "product image"}
                       className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
                     />
                   </Link>

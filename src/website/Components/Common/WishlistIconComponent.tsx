@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const WishlistIconComponent = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const items = useSelector((state: RootState) => state?.wishlist?.items) || [];
+  const items = useSelector((state: RootState) => state?.wishlist?.items) ?? [];
 
   useEffect(() => {
     setIsMounted(true);

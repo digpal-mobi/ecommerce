@@ -30,7 +30,7 @@ const ProductCard = ({ products, isLoading = false }: Readonly<Props>) => {
   );
   const currency = useSelector((state: any) => state.currency.currency);
   const wishlistItems =
-    useSelector((state: any) => state.wishlist?.items) || [];
+    useSelector((state: any) => state.wishlist?.items) ?? [];
 
   const isWishlisted = (id: number) => {
     return wishlistItems.some((item: WishlistProduct) => item.id === id);

@@ -38,7 +38,7 @@ const Breadcrumb = ({ items = [], className = "" }: Readonly<Props>) => {
         {items.map((item, index) => {
           const isLastItem = index === items.length - 1;
           const formattedName = formatBreadcrumbLabel(item.name);
-          const uniqueKey = `${item.url || "current"}-${item.name}-${index}`;
+          const uniqueKey = `${item.url ?? "current"}-${item.name}-${index}`;
 
           return (
             <div

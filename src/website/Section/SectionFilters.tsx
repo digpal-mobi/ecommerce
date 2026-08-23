@@ -163,7 +163,7 @@ function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
 
   const stringCategories = categories
     .map((item: any) =>
-      typeof item === "string" ? item : item?.slug || item?.name || "",
+      typeof item === "string" ? item : (item?.slug ?? item?.name ?? ""),
     )
     .filter(Boolean);
 

@@ -40,8 +40,8 @@ const SectionCart = () => {
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
 
-  const cartProducts = useSelector((state) => state.cart?.products) || [];
-  const cartId = useSelector((state) => state.cart?.cartId) || 1;
+  const cartProducts = useSelector((state) => state.cart?.products) ?? [];
+  const cartId = useSelector((state) => state.cart?.cartId) ?? 1;
   const currency = useSelector((state) => state.currency.currency);
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const SectionCart = () => {
                         >
                           <Image
                             src={item.thumbnail}
-                            alt={item.title || "Product image"}
+                            alt={item.title ?? "Product image"}
                             fill
                             sizes="(max-width: 640px) 90px, 110px"
                             className="object-cover transition-transform duration-300 hover:scale-105"

@@ -25,11 +25,11 @@ export default async function Home() {
       <SectionMainBanner />
       <SectionBrandLogo />
       <SectionNewArrival
-        products={NewArrivalResult?.products || []}
+        products={NewArrivalResult?.products ?? []}
         viewAllHref="/shop?category=tops"
       />
       <SectionTopSelling
-        products={topSellingResult?.products || []}
+        products={topSellingResult?.products ?? []}
         viewAllHref="/shop?category=womens-dresses"
       />
       <SectionBrowseByDressStyle />

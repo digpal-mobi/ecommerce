@@ -118,16 +118,16 @@ const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
 
         dispatch(setUserDetails(response));
         dispatch(loginSuccess(response));
-        dispatch(fetchUserCart(Number(response.id) || 5));
+        dispatch(fetchUserCart(Number(response.id) ?? 5));
         handleClose();
       } else {
         setApiError(
-          response.message || "Login failed. Please check your credentials.",
+          response.message ?? "Login failed. Please check your credentials.",
         );
       }
     } catch (error: any) {
       console.error("Login Error:", error);
-      setApiError(error?.message || "An unexpected error occurred.");
+      setApiError(error?.message ?? "An unexpected error occurred.");
     } finally {
       dispatch(setLoading(false));
     }

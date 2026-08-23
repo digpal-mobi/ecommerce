@@ -33,7 +33,7 @@ const SectionWishlist = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
-  const wishlistItems = useSelector((state) => state.wishlist?.items) || [];
+  const wishlistItems = useSelector((state) => state.wishlist?.items) ?? [];
   const currency = useSelector((state) => state.currency.currency);
 
   useEffect(() => {
@@ -158,7 +158,7 @@ const SectionWishlist = () => {
                       >
                         <Image
                           src={item.thumbnail}
-                          alt={item.title || "product image"}
+                          alt={item.title ?? "product image"}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"

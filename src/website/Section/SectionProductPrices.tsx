@@ -16,9 +16,9 @@ const SectionProductPrices = ({
   discountPercentage = 0,
 }: Readonly<Props>) => {
   const currency = useSelector((state) => state.currency.currency);
-  const parsedPrice = price || 0;
+  const parsedPrice = price ?? 0;
   const parsedDiscountPercentage = parseFloat(
-    discountPercentage?.toString() || "0",
+    discountPercentage?.toString() ?? "0",
   );
   const finalPrice = ConvertToFinalPrice(parsedPrice, parsedDiscountPercentage);
 

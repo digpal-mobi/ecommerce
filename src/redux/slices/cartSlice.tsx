@@ -45,13 +45,14 @@ export const fetchUserCart = createAsyncThunk(
     try {
       const response = await GetUserCartApi(userId);
       if (response.status === false) {
-        return rejectWithValue(response.message || "Failed to fetch user cart");
+        return rejectWithValue(response.message ?? "Failed to fetch user cart");
       }
       // DummyJSON returns { carts: [ { id, products, total, discountedTotal, userId, totalProducts, totalQuantity } ] }
-      const cart = response.carts && response.carts.length > 0 ? response.carts[0] : null;
+      const cart =
+        response.carts && response.carts.length > 0 ? response.carts[0] : null;
       return cart;
     } catch (error: any) {
-      return rejectWithValue(error.message || "Failed to fetch user cart");
+      return rejectWithValue(error.message ?? "Failed to fetch user cart");
     }
   },
 );
@@ -75,18 +76,18 @@ export const addToCartAsync = createAsyncThunk(
         products: [
           {
             id: product.id,
-            quantity: product.quantity || 1,
+            quantity: product.quantity ?? 1,
           },
         ],
       });
 
       if (response.status === false) {
-        return rejectWithValue(response.message || "Failed to add to cart");
+        return rejectWithValue(response.message ?? "Failed to add to cart");
       }
 
       return { product, response };
     } catch (error: any) {
-      return rejectWithValue(error.message || "Failed to add to cart");
+      return rejectWithValue(error.message ?? "Failed to add to cart");
     }
   },
 );
@@ -118,12 +119,12 @@ export const updateCartAsync = createAsyncThunk(
       });
 
       if (response.status === false) {
-        return rejectWithValue(response.message || "Failed to update cart");
+        return rejectWithValue(response.message ?? "Failed to update cart");
       }
 
       return { id, quantity, response };
     } catch (error: any) {
-      return rejectWithValue(error.message || "Failed to update cart");
+      return rejectWithValue(error.message ?? "Failed to update cart");
     }
   },
 );
@@ -141,11 +142,11 @@ const cartSlice = createSlice({
       );
 
       if (existingProduct) {
-        existingProduct.quantity += product.quantity || 1;
+        existingProduct.quantity += product.quantity ?? 1;
       } else {
         state.products.push({
           ...product,
-          quantity: product.quantity || 1,
+          quantity: product.quantity ?? 1,
         });
       }
 
@@ -223,9 +224,9 @@ const cartSlice = createSlice({
       .addCase(fetchUserCart.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload) {
-          state.cartId = action.payload.id || 1;
-          state.userId = action.payload.userId || null;
-          state.products = (action.payload.products || []).map((item: any) => ({
+          state.cartId = action.payload.id ?? 1;
+          state.userId = action.payload.userId ?? null;
+          state.products = (action.payload.products ?? []).map((item: any) => ({
             id: item.id,
             title: item.title,
             price: item.price,
@@ -235,20 +236,21 @@ const cartSlice = createSlice({
             discountPercentage: item.discountPercentage,
             discountedTotal: item.discountedTotal,
           }));
-          state.quantity = action.payload.totalQuantity || state.products.reduce(
-            (total, item) => total + item.quantity,
-            0,
-          );
-          state.total = action.payload.total || state.products.reduce(
-            (total, item) => total + item.price * item.quantity,
-            0,
-          );
+          state.quantity =
+            action.payload.totalQuantity ||
+            state.products.reduce((total, item) => total + item.quantity, 0);
+          state.total =
+            action.payload.total ||
+            state.products.reduce(
+              (total, item) => total + item.price * item.quantity,
+              0,
+            );
           state.discountedTotal = action.payload.discountedTotal || state.total;
         }
       })
       .addCase(fetchUserCart.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || "Failed to fetch user cart";
+        state.error = (action.payload as string) ?? "Failed to fetch user cart";
       });
 
     // Add To Cart Async
@@ -267,11 +269,11 @@ const cartSlice = createSlice({
 
         const existing = state.products.find((p) => p.id === product.id);
         if (existing) {
-          existing.quantity += product.quantity || 1;
+          existing.quantity += product.quantity ?? 1;
         } else {
           state.products.push({
             ...product,
-            quantity: product.quantity || 1,
+            quantity: product.quantity ?? 1,
           });
         }
 
@@ -286,7 +288,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCartAsync.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || "Failed to add to cart";
+        state.error = (action.payload as string) ?? "Failed to add to cart";
       });
 
     // Update Cart Async
@@ -319,7 +321,7 @@ const cartSlice = createSlice({
       })
       .addCase(updateCartAsync.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || "Failed to update cart";
+        state.error = (action.payload as string) ?? "Failed to update cart";
       });
   },
 });

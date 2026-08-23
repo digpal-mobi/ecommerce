@@ -8,7 +8,7 @@ type Props = {
 };
 
 const SectionImageGallery = ({ images = [] }: Readonly<Props>) => {
-  const [selectedImage, setSelectedImage] = useState<string>(images[0] || "");
+  const [selectedImage, setSelectedImage] = useState<string>(images[0] ?? "");
 
   return (
     <div className="relative flex flex-col-reverse tablet:flex-row w-full items-center tablet:items-start gap-[14px]">
