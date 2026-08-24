@@ -215,11 +215,11 @@ function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
 function FilterOptions({
   filterKey,
   options,
-}: {
+}: Readonly<{
   filterKey: string;
   options: string[];
   multiple: boolean;
-}) {
+}>) {
   const { filters, applyFilters } = useFilters();
   const search = "";
 
@@ -275,7 +275,10 @@ function FilterOptions({
               className="flex cursor-pointer items-center gap-[10px] text-left transition hover:opacity-80"
               onClick={() => handleToggle(option)}
             >
-              <div onClick={(e) => e.stopPropagation()}>
+              <div
+                className="flex items-center"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <CheckBox
                   checked={checked}
                   onChange={() => handleToggle(option)}
@@ -347,12 +350,12 @@ function FilterList({
   openFilters,
   onToggle,
   allowClosePrice = true,
-}: {
+}: Readonly<{
   categories: any;
   openFilters: string[];
   onToggle: (label: string) => void;
   allowClosePrice?: boolean;
-}) {
+}>) {
   const filtersList = [
     { label: "Price", key: "price" },
     { label: "Category", key: "category" },
@@ -497,7 +500,7 @@ export function FilterSectionMobile({
   isOpen,
   onClose,
   categories,
-}: FilterSectionMobileProps) {
+}: Readonly<FilterSectionMobileProps>) {
   const [openFilters, setOpenFilters] = useState<string[]>([
     "Price",
     "Category",

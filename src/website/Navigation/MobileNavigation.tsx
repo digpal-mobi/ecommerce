@@ -139,10 +139,13 @@ const MobileNavigation = () => {
       </div>
 
       {/* Overlay */}
-      <div
+      <button
+        type="button"
+        aria-label="Close menu"
+        tabIndex={-1}
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 cursor-pointer ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        className={`fixed inset-0 z-40 cursor-pointer border-0 bg-black/40 p-0 transition-opacity duration-300 ${
+          isOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       />
 
