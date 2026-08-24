@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import {
   Container,
   MainContainer,
@@ -27,7 +27,7 @@ const SectionMainBanner = () => {
   return (
     <section className="relative overflow-hidden bg-[#F2F0F1]">
       <div className="hidden laptop:block absolute right-[4%] bottom-0 w-[48%] h-full">
-        <Image
+        <LazyImage
           src="/banner-image.png"
           alt="Banner"
           fill
@@ -108,7 +108,7 @@ const SectionMainBanner = () => {
       </MainContainer>
 
       <div className="relative laptop:hidden">
-        <Image
+        <LazyImage
           src="/banner-image.png"
           alt="Banner"
           width={700}

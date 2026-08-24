@@ -1,12 +1,8 @@
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import React from "react";
 
-type Props = {
-  src: string;
-  width?: number;
-  height?: number;
+type Props = Omit<ImageProps, "alt"> & {
   alt?: string;
-  className?: string;
   atr?: any;
 };
 
@@ -16,7 +12,9 @@ const LazyImage = ({
   height,
   alt = "Image",
   className,
-  atr,
+  priority = false,
+  loading,
+  ...rest
 }: Readonly<Props>) => {
   return (
     <Image
@@ -25,7 +23,9 @@ const LazyImage = ({
       height={height}
       alt={alt}
       className={className}
-      {...atr}
+      priority={priority}
+      loading={priority ? undefined : (loading ?? "lazy")}
+      {...rest}
     />
   );
 };

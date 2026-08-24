@@ -9,7 +9,7 @@ import Breadcrumb from "@/website/Components/Common/Breadcrumb";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import Button from "@/website/Components/Common/Button";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Link from "next/link";
 import { useDispatch, useSelector } from "@/redux/store";
 import {
@@ -156,7 +156,7 @@ const SectionWishlist = () => {
                         href={`/shop/${item.id}`}
                         className="block h-full w-full"
                       >
-                        <Image
+                        <LazyImage
                           src={item.thumbnail}
                           alt={item.title ?? "product image"}
                           fill

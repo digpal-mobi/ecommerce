@@ -4,7 +4,7 @@ import Paragraph from "@/website/Components/Common/Paragraph";
 import Increment from "@/website/Components/Increment";
 import SectionRating from "../SectionRating";
 import TitleTag from "@/website/Components/Common/TitleTag";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Pagination from "@/website/Components/Common/Pagination";
 import Link from "next/link";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
@@ -21,6 +21,7 @@ import { openLoginModal } from "@/redux/slices/authSlice";
 import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton";
 import { FetchProducts } from "@/website/Utils/Api";
 import { useSearchParams } from "next/navigation";
+import { getPaginationFromSearchParams } from "@/website/Utils/ProductUrl";
 
 type Props = Readonly<{
   data?: any[];
@@ -49,9 +50,17 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
   const {
     total: reduxTotal,
-    currentPage,
-    limit,
+    currentPage: reduxPage,
+    limit: reduxLimit,
   } = useSelector((state: RootState) => state.pagination);
+
+  const urlPagination = useMemo(
+    () => getPaginationFromSearchParams(searchParams),
+    [searchParams],
+  );
+
+  const currentPage = urlPagination.currentPage || reduxPage;
+  const limit = urlPagination.limit || reduxLimit;
 
   const total = reduxTotal || totalCount;
   const { changePage, resetFilters } = useFilters();
@@ -170,10 +179,10 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const categoryTitle = useMemo(() => {
     const categoryParam = searchParams.get("category");
     if (categoryParam) {
-      return categoryParam.split(",")[0].replaceAll('-', " ");
+      return categoryParam.split(",")[0].replaceAll("-", " ");
     }
     if (products.length > 0 && products[0]?.category) {
-      return String(products[0].category).replaceAll('-', " ");
+      return String(products[0].category).replaceAll("-", " ");
     }
     return "Products";
   }, [searchParams, products]);
@@ -261,7 +270,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
     return (
       <>
-        <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
+        <div className="grid min-desktop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-[16px] gap-y-[30px]">
           {displayProducts.map((items: any) => (
             <div
               key={items.id}
@@ -269,7 +278,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
             >
               <div className="relative block">
                 <Link className="w-full block" href={`/shop/${items.id}`}>
-                  <Image
+                  <LazyImage
                     src={items.thumbnail}
                     width={295}
                     height={298}
@@ -349,10 +358,10 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
   return (
     <main className="flex-1">
-      <div className="mb-[16px] flex flex-col laptop:flex-row items-center justify-between">
-        <div>
+      <div className="mb-[16px] flex flex-col laptop:flex-row justify-between">
+        <div className="flex w-full items-start laptop:items-center">
           <TitleTag
-            className="!laptop:text-[32px] !text-[24px] capitalize"
+            className="!laptop:text-[32px] !text-left !text-[24px] capitalize"
             variant="heading"
             as="h2"
           >
@@ -360,7 +369,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
           </TitleTag>
         </div>
 
-        <div className="flex items-center gap-[15px]">
+        <div className="flex items-center laptop:justify-end justify-between w-full gap-[15px]">
           <div>
             <Paragraph variant="normalPara">
               Showing {displayProducts.length} out of {total}

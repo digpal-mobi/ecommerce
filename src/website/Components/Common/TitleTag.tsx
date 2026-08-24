@@ -23,7 +23,7 @@ const VARIANT_CLASSES: Record<TitleVariant, string> = {
   mainHeading:
     "font-integral laptop:text-[64px] text-[36px] leading-[36px] font-[700]",
   satoshiBold:
-    "font-satoshi laptop:text-[16px] text-[20px] leading-[1.3em] font-[500]",
+    "font-satoshi text-[16px] laptop:text-[20px] leading-[1.3em] font-[500]",
 };
 
 const TitleTag = ({

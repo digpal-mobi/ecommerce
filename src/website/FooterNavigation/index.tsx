@@ -2,7 +2,7 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Link from "next/link";
 import {
   FacebookIcon,
@@ -143,7 +143,7 @@ const index = () => {
 
             <div className="flex items-center justify-end gap-[12px]">
               <div>
-                <Image
+                <LazyImage
                   src="/payments/Badge.png"
                   alt="Visa"
                   width={46}
@@ -153,7 +153,7 @@ const index = () => {
               </div>
 
               <div>
-                <Image
+                <LazyImage
                   src="/payments/Badge (1).png"
                   alt="MasterCard"
                   width={46}
@@ -163,8 +163,7 @@ const index = () => {
               </div>
 
               <div>
-                {" "}
-                <Image
+                <LazyImage
                   src="/payments/Badge (2).png"
                   alt="Paypal"
                   width={46}
@@ -173,7 +172,7 @@ const index = () => {
                 />
               </div>
               <div>
-                <Image
+                <LazyImage
                   src="/payments/Badge (3).png"
                   alt="Apple Pay"
                   width={46}
@@ -183,7 +182,7 @@ const index = () => {
               </div>
 
               <div>
-                <Image
+                <LazyImage
                   src="/payments/Badge (4).png"
                   alt="Google Pay"
                   width={46}

@@ -44,7 +44,7 @@ const SortingComponent = () => {
       </button>
 
       <div
-        className={`absolute right-[-16%] top-[70%] z-50 mt-[10px] w-[200%] rounded-md border border-[#000000]/10 bg-white px-[10px] py-[10px] shadow-2xl transition-all duration-200 ease-out origin-top-right ${
+        className={`absolute right-[-16%] top-[70%] z-50 mt-[10px] w-[100%] laptop:w-[200%] rounded-md border border-[#000000]/10 bg-white px-[10px] py-[10px] shadow-2xl transition-all duration-200 ease-out origin-top-right ${
           isOpen
             ? "scale-115 opacity-100 pointer-events-auto"
             : "scale-95 opacity-0 pointer-events-none"

@@ -4,7 +4,7 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Link from "next/link";
 import DesktopHeader from "@/website/Navigation/DesktopNavigation";
 import MobileHeader from "@/website/Navigation/MobileNavigation";
@@ -78,12 +78,11 @@ const Header = () => {
             <div className="flex items-center justify-between py-6">
               <div className="flex items-center gap-10 w-1/2 desktop:w-[50%] laptop:w-[65%]">
                 <Link href="/">
-                  <Image
+                  <LazyImage
                     src="/shop-logo.png"
                     alt="SHOP.CO"
                     width={160}
                     height={22}
-                    priority
                     className="h-auto w-auto"
                   />
                 </Link>

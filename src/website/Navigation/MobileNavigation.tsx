@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Link from "next/link";
 import { HamburgerIcon, ProfileIcon, SearchIcon } from "@/website/Lib/Icons";
 import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
@@ -73,18 +73,18 @@ const MobileNavigation = () => {
               </button>
 
               <Link href="/" className="cursor-pointer">
-                <Image
+                <LazyImage
                   src="/shop-logo.png"
                   alt="SHOP.CO"
                   width={120}
                   height={18}
-                  priority
+                  className="h-auto w-auto"
                 />
               </Link>
             </div>
 
             <div className="flex items-center gap-[12px]">
-              <div className="relative">
+              <div className="relative flex items-center">
                 <button
                   type="button"
                   onClick={() => setIsSearchOpen((prev) => !prev)}
@@ -95,7 +95,7 @@ const MobileNavigation = () => {
                 </button>
 
                 {isSearchOpen && (
-                  <div className="absolute top-0 w-full right-0 mt-2">
+                  <div className="absolute top-[100%] w-[250px] right-[50%] translate-x-[-50%] -left-1/2 mt-2">
                     <SearchBar />
                   </div>
                 )}
@@ -152,7 +152,7 @@ const MobileNavigation = () => {
         }`}
       >
         <div className="flex items-center justify-between border-b p-5">
-          <Image src="/logo.png" alt="logo" width={120} height={18} />
+          <LazyImage src="/logo.png" alt="logo" width={120} height={18} />
 
           <button
             type="button"
