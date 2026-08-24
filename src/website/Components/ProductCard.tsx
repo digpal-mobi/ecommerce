@@ -151,7 +151,7 @@ const ProductCard = ({ products, isLoading = false }: Readonly<Props>) => {
                 <SectionRating rating={items.rating} />
 
                 <div className="flex items-center justify-between w-full">
-                  <Paragraph variant="boldPara">
+                  <Paragraph variant="boldPara" suppressHydrationWarning>
                     {handlePrice(items.price)}
                   </Paragraph>
 

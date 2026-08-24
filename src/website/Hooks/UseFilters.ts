@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo } from "react";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import { useDispatch, useSelector } from "@/redux/store";
 
@@ -33,8 +33,6 @@ import {
 export const useFilters = () => {
   const dispatch = useDispatch();
 
-  const router = useRouter();
-
   const pathname = usePathname();
 
   const searchParams = useSearchParams();
@@ -62,25 +60,26 @@ export const useFilters = () => {
     dispatch(setLimit(urlPagination.limit));
   }, [searchParams, dispatch]);
 
-  const filters = useMemo(
-    () => ({
+  const filters = useMemo(() => {
+    const urlFilters = getFiltersFromSearchParams(searchParams);
+    return {
       ...DEFAULT_FILTERS,
       ...storedFilters,
-    }),
-    [storedFilters],
-  );
-  const replaceUrl = useCallback(
-    (params: URLSearchParams) => {
-      const queryString = params.toString();
+      ...urlFilters,
+    };
+  }, [storedFilters, searchParams]);
+const replaceUrl = useCallback(
+  (params: URLSearchParams) => {
+    const queryString = params.toString();
 
-      const targetUrl = queryString ? `${pathname}?${queryString}` : pathname;
+    const targetUrl = queryString
+      ? `${pathname}?${queryString}`
+      : pathname;
 
-      router.replace(targetUrl, {
-        scroll: false,
-      });
-    },
-    [pathname, router],
-  );
+    window.history.replaceState(null, "", targetUrl);
+  },
+  [pathname],
+);
   const updateUrlParams = useCallback(
     (updates: Partial<FilterValues>) => {
       const params = new URLSearchParams(searchParams.toString());

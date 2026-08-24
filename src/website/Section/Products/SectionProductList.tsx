@@ -30,6 +30,7 @@ type Props = Readonly<{
 const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
+  const searchParamsString = searchParams.toString();
 
   const [products, setProducts] = useState<any[]>(data ?? []);
   const [totalCount, setTotalCount] = useState<number>(initialTotal);
@@ -162,7 +163,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, dispatch, limit]);
+  }, [searchParamsString, searchParams, dispatch, limit]);
 
   const displayProducts = products;
 
@@ -263,7 +264,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
                     <button
                       type="button"
                       onClick={(e) => handleToggleWishlist(e, items)}
-                      aria-label={"Add to Wishlist"}
+                      aria-label="Add to Wishlist"
                       className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
                     >
                       <WishlistIcon
@@ -288,7 +289,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
                   <SectionRating rating={items.rating} />
 
                   <div className="flex items-center justify-between w-full">
-                    <Paragraph variant="boldPara">
+                    <Paragraph variant="boldPara" suppressHydrationWarning>
                       {CurrencyConverter(items.price, currency)}
                     </Paragraph>
 

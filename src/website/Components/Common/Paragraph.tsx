@@ -1,12 +1,14 @@
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 type TitleVariant = "boldPara" | "normalPara";
 
-type Props = Readonly<{
-  children?: ReactNode;
-  variant?: TitleVariant;
-  className?: string;
-}>;
+type Props = Readonly<
+  HTMLAttributes<HTMLParagraphElement> & {
+    children?: ReactNode;
+    variant?: TitleVariant;
+    className?: string;
+  }
+>;
 
 const VARIANT_CLASSES: Record<TitleVariant, string> = {
   boldPara:
@@ -20,9 +22,10 @@ const Paragraph = ({
   children,
   variant = "boldPara",
   className = "",
+  ...props
 }: Readonly<Props>) => {
   return (
-    <p className={`${VARIANT_CLASSES[variant]} ${className}`.trim()}>
+    <p className={`${VARIANT_CLASSES[variant]} ${className}`.trim()} {...props}>
       {children}
     </p>
   );
