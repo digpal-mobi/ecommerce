@@ -35,7 +35,7 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch;  
 
 // Extract the dispatch function from the store for convenience
 const { dispatch } = store;

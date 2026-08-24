@@ -14,21 +14,21 @@ export const NAVIGATION_ITEMS = [
       },
       {
         title: "Kids",
-        href: "/shop",
+        href: "/shop?category=kids",
       },
       {
         title: "Accessories",
-        href: "/shop?category=sunglasses,mens-watches,womens-bags",
+        href: "/shop?category=sunglasses",
       },
       {
         title: "Footwear",
-        href: "/shop?category=mens-shoes,womens-shoes",
+        href: "/shop?category=mens-shoes",
       },
       {
         title: "Sale Items",
         href: "/sale-items",
       },
-    ],
+    ],  
   },
   {
     id: 2,
