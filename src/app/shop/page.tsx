@@ -3,6 +3,7 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
+import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton";
 import SectionProductList from "@/website/Section/Products/SectionProductList";
 import SectionFilter from "@/website/Section/SectionFilters";
 import { FetchCategory, FetchProducts } from "@/website/Utils/Api";
@@ -65,12 +66,12 @@ export default async function Products({ searchParams }: Readonly<Props>) {
         <div className="py-[24px]">
           <Breadcrumb items={BreadCrumbItems} />
         </div>
-        <div className="flex w-full gap-[20px] flex-col tablet:flex-row laptop:pb-[80px] pb-[50px]">
+        <div className="flex w-full gap-[20px] flex-col tablet-lg:flex-row laptop:pb-[80px] pb-[50px]">
           <Suspense fallback={null}>
             <SectionFilter categories={categories} />
           </Suspense>
           <div className="flex w-full flex-col">
-            <Suspense fallback={null}>
+            <Suspense fallback={<ProductGridSkeleton />}>
               <SectionProductList
                 data={data?.products}
                 initialTotal={data?.total}

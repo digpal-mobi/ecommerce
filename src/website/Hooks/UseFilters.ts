@@ -42,12 +42,15 @@ export const useFilters = () => {
 
   const pagination = useSelector((state) => state.pagination);
 
+  const urlPagination = useMemo(
+    () => getPaginationFromSearchParams(searchParams),
+    [searchParams],
+  );
+
   useEffect(() => {
     const urlFilters = getFiltersFromSearchParams(searchParams);
 
     const urlSorting = getSortingFromSearchParams(searchParams);
-
-    const urlPagination = getPaginationFromSearchParams(searchParams);
 
     dispatch(setFilters(urlFilters));
 
@@ -58,7 +61,7 @@ export const useFilters = () => {
     dispatch(setCurrentPage(urlPagination.currentPage));
 
     dispatch(setLimit(urlPagination.limit));
-  }, [searchParams, dispatch]);
+  }, [searchParams, dispatch, urlPagination]);
 
   const filters = useMemo(() => {
     const urlFilters = getFiltersFromSearchParams(searchParams);
@@ -322,8 +325,8 @@ const replaceUrl = useCallback(
     resetSorting: resetSortingState,
 
     // Pagination
-    currentPage: pagination.currentPage,
-    limit: pagination.limit,
+    currentPage: urlPagination.currentPage || pagination.currentPage,
+    limit: urlPagination.limit || pagination.limit,
     total: pagination.total,
     changePage,
     changeLimit,

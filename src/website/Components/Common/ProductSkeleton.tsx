@@ -43,7 +43,7 @@ export const ProductGridSkeleton = ({
   );
 
   return (
-    <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px] w-full">
+    <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-[16px] gap-y-[30px] w-full">
       {skeletonIds.map((id) => (
         <div
           key={id}

@@ -3,7 +3,7 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 
 const BrandLogos = [
   { image: "/versace.png", alt: "Versace Image" },
@@ -19,7 +19,7 @@ const SectionBrandLogo = () => {
       <Container className="bg-[#000] !py-0">
         <div className="flex flex-wrap gap-x-[30px] gap-y-[20px] desktop:gap-x-[106px] py-[44px]">
           {BrandLogos.map((img) => (
-            <Image
+            <LazyImage
               key={img.image}
               src={img.image}
               alt={img.alt}

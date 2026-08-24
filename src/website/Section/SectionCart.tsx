@@ -9,7 +9,7 @@ import Breadcrumb from "@/website/Components/Common/Breadcrumb";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import Button from "@/website/Components/Common/Button";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Link from "next/link";
 import { useDispatch, useSelector } from "@/redux/store";
 import {
@@ -139,7 +139,7 @@ const SectionCart = () => {
                           href={`/shop/${item.id}`}
                           className="relative h-[90px] w-[90px] sm:h-[110px] sm:w-[110px] shrink-0 overflow-hidden rounded-[16px] bg-[#F0EEED]"
                         >
-                          <Image
+                          <LazyImage
                             src={item.thumbnail}
                             alt={item.title ?? "Product image"}
                             fill

@@ -3,7 +3,7 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
-import Image from "next/image";
+import LazyImage from "@/website/Components/Common/LazyImage";
 import Link from "next/link";
 
 const DRESS_STYLES = [
@@ -50,7 +50,7 @@ const SectionBrowseByDressStyle = () => {
                   ${index === 1 || index === 2 ? "col-span-2" : ""}
                 `}
                 >
-                  <Image
+                  <LazyImage
                     src={dress.img}
                     alt={dress.title}
                     width={600}
