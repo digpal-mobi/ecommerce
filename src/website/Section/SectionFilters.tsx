@@ -149,9 +149,9 @@ function PriceFilter() {
   );
 }
 
-function CategoryOptions({ categories }: { categories: any[] }) {
+function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
   const { filters, toggleCategory } = useFilters();
-  const [search, setSearch] = useState("");
+  const search = "";
 
   const selectedCategory = Array.isArray(filters.category)
     ? filters.category
@@ -163,7 +163,7 @@ function CategoryOptions({ categories }: { categories: any[] }) {
 
   const stringCategories = categories
     .map((item: any) =>
-      typeof item === "string" ? item : item?.slug || item?.name || "",
+      typeof item === "string" ? item : (item?.slug ?? item?.name ?? ""),
     )
     .filter(Boolean);
 
@@ -221,7 +221,7 @@ function FilterOptions({
   multiple: boolean;
 }) {
   const { filters, applyFilters } = useFilters();
-  const [search, setSearch] = useState("");
+  const search = "";
 
   const getSelected = (): string[] => {
     if (filterKey === "brand") {
@@ -421,7 +421,9 @@ function FilterList({
   );
 }
 
-export function FilterSectionDesktop({ categories }: { categories?: any }) {
+export function FilterSectionDesktop({
+  categories,
+}: Readonly<{ categories?: any }>) {
   const [openFilters, setOpenFilters] = useState<string[]>([
     "Category",
     "Price",
@@ -603,7 +605,7 @@ export function FilterSectionMobile({
   );
 }
 
-const SectionFilter = ({ categories }: { categories?: any }) => {
+const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { filters } = useFilters();
 

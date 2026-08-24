@@ -1,6 +1,6 @@
 import { GetData, PostData, UpdateData } from "@/website/Utils/ApiHandlers";
 
-export interface ApiResponse<T = any> { 
+export interface ApiResponse<T = any> {
   products?: T;
   status?: boolean;
   message?: string;
@@ -86,7 +86,7 @@ export const FetchProductsById = async (id: number): Promise<ApiResponse> => {
     return data;
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };
-  } 
+  }
 };
 
 export const LoginUser = async (credentials: any): Promise<ApiResponse> => {
@@ -96,23 +96,25 @@ export const LoginUser = async (credentials: any): Promise<ApiResponse> => {
   } catch (e: any) {
     return {
       status: false,
-      message: e.message || e.error || "Login failed. Please check your credentials.",
+      message:
+        e.message ?? e.error ?? "Login failed. Please check your credentials.",
     };
   }
 };
 
-export const GetCurrentUserApi = async (token: string): Promise<ApiResponse> => {
+export const GetCurrentUserApi = async (
+  token: string,
+): Promise<ApiResponse> => {
   try {
     const data = await GetData<ApiResponse>("/auth/me", token);
     return { status: true, ...data };
   } catch (e: any) {
     return {
       status: false,
-      message: e.message || "Failed to fetch user session.",
+      message: e.message ?? "Failed to fetch user session.",
     };
   }
 };
-
 
 export interface CartItemPayload {
   id: number;
@@ -129,14 +131,16 @@ export interface UpdateCartPayload {
   products: CartItemPayload[];
 }
 
-export const AddToCartApi = async (payload: AddCartPayload): Promise<ApiResponse> => {
+export const AddToCartApi = async (
+  payload: AddCartPayload,
+): Promise<ApiResponse> => {
   try {
     const data = await PostData<ApiResponse>("/carts/add", payload);
     return { status: true, ...data };
   } catch (e: any) {
     return {
       status: false,
-      message: e.message || e.error || "Failed to add to cart.",
+      message: e.message ?? e.error ?? "Failed to add to cart.",
     };
   }
 };
@@ -151,7 +155,7 @@ export const UpdateCartApi = async (
   } catch (e: any) {
     return {
       status: false,
-      message: e.message || e.error || "Failed to update cart.",
+      message: e.message ?? e.error ?? "Failed to update cart.",
     };
   }
 };
@@ -165,7 +169,7 @@ export const GetUserCartApi = async (
   } catch (e: any) {
     return {
       status: false,
-      message: e.message || e.error || "Failed to get user cart.",
+      message: e.message ?? e.error ?? "Failed to get user cart.",
     };
   }
 };
@@ -177,7 +181,7 @@ export const AddToCart = async (product: any) => {
   } catch (e: any) {
     return {
       status: false,
-      message: e.message || e.error || "Add to cart failed. Please try again.",
+      message: e.message ?? e.error ?? "Add to cart failed. Please try again.",
     };
   }
 };
@@ -203,18 +207,29 @@ export const FetchSearchedProducts = async ({
     const data = await GetData<ApiResponse>(`/products/search?${queryString}`);
     return {
       status: true,
-      products: data?.products || [],
-      total: data?.total ?? (data?.products || []).length,
+      products: data?.products ?? [],
+      total: data?.total ?? (data?.products ?? []).length,
       message: "Success",
     };
   } catch (e: any) {
-    return { products: [], total: 0, status: false, message: e.message, token: null };
+    return {
+      products: [],
+      total: 0,
+      status: false,
+      message: e.message,
+      token: null,
+    };
   }
 };
 
-export const FetchProductsByCategory = async (categoryName: string, limit = 4): Promise<ApiResponse> => {
+export const FetchProductsByCategory = async (
+  categoryName: string,
+  limit = 4,
+): Promise<ApiResponse> => {
   try {
-    const data = await GetData<ApiResponse>(`/products/category/${categoryName}?limit=${limit}`);
+    const data = await GetData<ApiResponse>(
+      `/products/category/${categoryName}?limit=${limit}`,
+    );
     return data;
   } catch (e: any) {
     return { products: [], status: false, message: e.message, token: null };

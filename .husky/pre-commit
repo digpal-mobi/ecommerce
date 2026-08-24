@@ -44,11 +44,6 @@ if [ -n "$STAGED_PRETTIER_FILES" ]; then
 '
 
   for file in $STAGED_PRETTIER_FILES; do
-    npm exec -- prettier --write "$file" || {
-      echo "[husky] Prettier failed: $file"
-      IFS=$OLD_IFS
-      exit 1
-    }
 
     git add "$file" || {
       echo "[husky] Failed to re-stage: $file"

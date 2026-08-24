@@ -19,7 +19,6 @@ import {
   closeLoginModal,
 } from "@/redux/slices/authSlice";
 import { clearCart } from "@/redux/slices/cartSlice";
-import { useRouter } from "next/navigation";
 import CartIconComponent from "@/website/Components/Common/CartIconComponent";
 import WishlistIconComponent from "@/website/Components/Common/WishlistIconComponent";
 import CurrencySelector from "@/website/Components/CurrencySelector";
@@ -27,8 +26,9 @@ import LoginModal from "@/website/Section/SectionLogin";
 import { deleteCookie } from "@/website/Helpers/Helper";
 
 const Header = () => {
-  const { isAuthenticated, isLoginModalOpen } = useSelector((state) => state.auth);
-  const router = useRouter();
+  const { isAuthenticated, isLoginModalOpen } = useSelector(
+    (state) => state.auth,
+  );
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

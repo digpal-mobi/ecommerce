@@ -6,16 +6,19 @@ import {
 import TitleTag from "@/website/Components/Common/TitleTag";
 import { useSelector } from "@/redux/store";
 
-type Props = {
+type Props = Readonly<{
   price?: number;
   discountPercentage?: number;
-};
+}>;
 
-const SectionProductPrices = ({ price = 0, discountPercentage = 0 }: Props) => {
+const SectionProductPrices = ({
+  price = 0,
+  discountPercentage = 0,
+}: Readonly<Props>) => {
   const currency = useSelector((state) => state.currency.currency);
-  const parsedPrice = price || 0;
+  const parsedPrice = price ?? 0;
   const parsedDiscountPercentage = parseFloat(
-    discountPercentage?.toString() || "0",
+    discountPercentage?.toString() ?? "0",
   );
   const finalPrice = ConvertToFinalPrice(parsedPrice, parsedDiscountPercentage);
 

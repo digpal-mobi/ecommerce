@@ -16,7 +16,7 @@ type Props = {
   data?: Review[];
 };
 
-const SectionRatingAndReviews = ({ data }: Props) => {
+const SectionRatingAndReviews = ({ data }: Readonly<Props>) => {
   return (
     <section>
       <div className="flex w-full items-center justify-between">
@@ -32,10 +32,10 @@ const SectionRatingAndReviews = ({ data }: Props) => {
         </div>
       </div>
       <div className="grid tablet:grid-cols-2 grid-cols-1 mt-[24px] gap-[20px]">
-        {data?.map((rev: Review, index: number) => (
+        {data?.map((rev: Review) => (
           <div
             className="flex border py-[25px] px-[32px] border-[#000000]/20 rounded-[10px]"
-            key={index}
+            key={`${rev?.reviewerName}-${rev?.date}-${rev?.rating}`}
           >
             <div className="flex flex-col gap-[15px] justify-between">
               <SectionRating rating={rev.rating} />

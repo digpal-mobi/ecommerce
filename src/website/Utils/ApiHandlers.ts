@@ -1,17 +1,10 @@
-import axios, {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 type Headers = Record<string, string>;
 
-const buildHeaders = (
-  token?: string,
-  headers: Headers = {}
-): Headers => {
+const buildHeaders = (token?: string, headers: Headers = {}): Headers => {
   const defaultHeaders: Headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -36,7 +29,7 @@ const handleError = (error: AxiosError) => {
     throw new Error("No response received from server.");
   }
 
-  throw new Error(error.message || "Something went wrong.");
+  throw new Error(error.message ?? "Something went wrong.");
 };
 
 const request = async <T>(
@@ -45,7 +38,7 @@ const request = async <T>(
   data?: unknown,
   token?: string,
   headers: Headers = {},
-  responseType?: AxiosRequestConfig["responseType"]
+  responseType?: AxiosRequestConfig["responseType"],
 ): Promise<T> => {
   try {
     const config: AxiosRequestConfig = {
@@ -59,10 +52,7 @@ const request = async <T>(
     const response: AxiosResponse<T> = await axios(config);
 
     // Store login token if required
-    if (
-      url === "/auth/v1/login" &&
-      response.headers.authorization
-    ) {
+    if (url === "/auth/v1/login" && response.headers.authorization) {
       localStorage.setItem("token", response.headers.authorization);
     }
 
@@ -74,18 +64,15 @@ const request = async <T>(
 };
 
 // GET
-export const GetData = <T>(
-  url: string,
-  token?: string,
-  headers?: Headers
-) => request<T>("get", url, undefined, token, headers);
+export const GetData = <T>(url: string, token?: string, headers?: Headers) =>
+  request<T>("get", url, undefined, token, headers);
 
 // POST
 export const PostData = <T>(
   url: string,
   data?: unknown,
   token?: string,
-  headers?: Headers
+  headers?: Headers,
 ) => request<T>("post", url, data, token, headers);
 
 // PUT
@@ -93,7 +80,7 @@ export const UpdateData = <T>(
   url: string,
   data?: unknown,
   token?: string,
-  headers?: Headers
+  headers?: Headers,
 ) => request<T>("put", url, data, token, headers);
 
 // PATCH
@@ -101,7 +88,7 @@ export const PatchData = <T>(
   url: string,
   data?: unknown,
   token?: string,
-  headers?: Headers
+  headers?: Headers,
 ) => request<T>("patch", url, data, token, headers);
 
 // DELETE
@@ -109,5 +96,5 @@ export const DeleteData = <T>(
   url: string,
   data?: unknown,
   token?: string,
-  headers?: Headers
+  headers?: Headers,
 ) => request<T>("delete", url, data, token, headers);

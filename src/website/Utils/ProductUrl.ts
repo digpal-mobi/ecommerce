@@ -43,13 +43,13 @@ export const getFiltersFromSearchParams = (
 
     rating: parseNumberParam(ratingParam, DEFAULT_FILTERS.rating),
 
-    color: searchParams.get("color") || null,
+    color: searchParams.get("color") ?? null,
 
-    size: searchParams.get("size") || null,
+    size: searchParams.get("size") ?? null,
 
-    dressStyle: searchParams.get("dressStyle") || null,
+    dressStyle: searchParams.get("dressStyle") ?? null,
 
-    q: searchParams.get("q") || "",
+    q: searchParams.get("q") ?? "",
   };
 };
 

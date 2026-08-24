@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "@/redux/store";
 import {
   clearCart,
   removeFromCart,
-  updateCart,
   updateCartAsync,
   CartProduct,
 } from "@/redux/slices/cartSlice";
@@ -40,8 +39,8 @@ const SectionCart = () => {
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
 
-  const cartProducts = useSelector((state) => state.cart?.products) || [];
-  const cartId = useSelector((state) => state.cart?.cartId) || 1;
+  const cartProducts = useSelector((state) => state.cart?.products) ?? [];
+  const cartId = useSelector((state) => state.cart?.cartId) ?? 1;
   const currency = useSelector((state) => state.currency.currency);
 
   useEffect(() => {
@@ -69,7 +68,7 @@ const SectionCart = () => {
     dispatch(updateCartAsync({ id, quantity, cartId }));
   };
 
-  const handleRemoveProduct = (id: number, title: string) => {
+  const handleRemoveProduct = (id: number) => {
     dispatch(removeFromCart(id));
   };
 
@@ -142,7 +141,7 @@ const SectionCart = () => {
                         >
                           <Image
                             src={item.thumbnail}
-                            alt={item.title || "Product image"}
+                            alt={item.title ?? "Product image"}
                             fill
                             sizes="(max-width: 640px) 90px, 110px"
                             className="object-cover transition-transform duration-300 hover:scale-105"
@@ -178,9 +177,7 @@ const SectionCart = () => {
 
                         <button
                           type="button"
-                          onClick={() =>
-                            handleRemoveProduct(item.id, item.title)
-                          }
+                          onClick={() => handleRemoveProduct(item.id)}
                           className="flex h-9 w-9 items-center justify-center rounded-full text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
                           aria-label={`Remove ${item.title} from cart`}
                         >

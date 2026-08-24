@@ -2,14 +2,16 @@ import React, { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "outline";
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: ButtonVariant;
-  className?: string;
-  children: ReactNode;
-  icon?: ReactNode;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-};
+type Props = Readonly<
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    variant?: ButtonVariant;
+    className?: string;
+    children: ReactNode;
+    icon?: ReactNode;
+    onClick?: () => void;
+    type?: "button" | "submit" | "reset";
+  }
+>;
 
 const BUTTON_VARIANTS: Record<
   ButtonVariant,

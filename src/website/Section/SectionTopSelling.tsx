@@ -16,7 +16,7 @@ type Props = {
 const SectionTopSelling = ({
   products,
   viewAllHref = "/shop?category=womens-dresses",
-}: Props) => {
+}: Readonly<Props>) => {
   return (
     <MainContainer>
       <Container>

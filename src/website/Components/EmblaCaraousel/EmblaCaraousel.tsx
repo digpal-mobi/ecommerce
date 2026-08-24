@@ -16,7 +16,7 @@ type PropType = {
   showButtons?: boolean;
 };
 
-const EmblaCarousel = (props: PropType) => {
+const EmblaCarousel = (props: Readonly<PropType>) => {
   const { options, children, title, showButtons = true } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 

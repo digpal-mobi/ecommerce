@@ -12,7 +12,7 @@ import SectionFAQs from "@/website/Section/Products/SectionFAQs";
 
 type Tab = "details" | "reviews" | "faqs";
 
-const SectionProductDetails = ({ data }: any) => {
+const SectionProductDetails = ({ data }: Readonly<{ data?: any }>) => {
   const [activeTab, setActiveTab] = useState<Tab>("details");
 
   const tabs = [

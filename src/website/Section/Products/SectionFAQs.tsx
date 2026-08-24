@@ -3,8 +3,6 @@ import TitleTag from "@/website/Components/Common/TitleTag";
 import { ChevronDown } from "@/website/Lib/Icons";
 import React, { useState } from "react";
 
-type Props = {};
-
 export interface FAQItem {
   id: number;
   category:
@@ -55,7 +53,7 @@ export const faqs: FAQItem[] = [
   },
 ];
 
-const SectionFAQs = (props: Props) => {
+const SectionFAQs = () => {
   const [isOpen, setIsOpen] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
@@ -71,7 +69,7 @@ const SectionFAQs = (props: Props) => {
           return (
             <div
               className="flex flex-col w-full py-[20px] border-b border-black/10"
-              key={index}
+              key={faq.id}
             >
               <button
                 type="button"

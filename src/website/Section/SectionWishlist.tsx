@@ -17,7 +17,7 @@ import {
   removeFromWishlist,
   WishlistProduct,
 } from "@/redux/slices/wishlistSlice";
-import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
+import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { AddToCartIcon, TrashIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
 import SectionRating from "./SectionRating";
@@ -33,7 +33,7 @@ const SectionWishlist = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
-  const wishlistItems = useSelector((state) => state.wishlist?.items) || [];
+  const wishlistItems = useSelector((state) => state.wishlist?.items) ?? [];
   const currency = useSelector((state) => state.currency.currency);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const SectionWishlist = () => {
 
   const items = isMounted ? wishlistItems : [];
 
-  const handleRemove = (id: number, title: string) => {
+  const handleRemove = (id: number) => {
     dispatch(removeFromWishlist(id));
   };
 
@@ -158,7 +158,7 @@ const SectionWishlist = () => {
                       >
                         <Image
                           src={item.thumbnail}
-                          alt={item.title || "product image"}
+                          alt={item.title ?? "product image"}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -167,7 +167,7 @@ const SectionWishlist = () => {
 
                       <button
                         type="button"
-                        onClick={() => handleRemove(item.id, item.title)}
+                        onClick={() => handleRemove(item.id)}
                         aria-label="Remove from wishlist"
                         className="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white text-red-500"
                       >

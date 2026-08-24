@@ -5,8 +5,6 @@ import {
 } from "@/website/Components/Common/Container";
 import Image from "next/image";
 
-type Props = {};
-
 const BrandLogos = [
   { image: "/versace.png", alt: "Versace Image" },
   { image: "/zara.png", alt: "Zara Image" },
@@ -15,14 +13,14 @@ const BrandLogos = [
   { image: "/calvin_klein.png", alt: "Calvin Klein Image" },
 ];
 
-const SectionBrandLogo = (props: Props) => {
+const SectionBrandLogo = () => {
   return (
     <MainContainer className="bg-[#000]">
       <Container className="bg-[#000] !py-0">
         <div className="flex flex-wrap gap-x-[30px] gap-y-[20px] desktop:gap-x-[106px] py-[44px]">
-          {BrandLogos.map((img, index) => (
+          {BrandLogos.map((img) => (
             <Image
-              key={index}
+              key={img.image}
               src={img.image}
               alt={img.alt}
               width={160}

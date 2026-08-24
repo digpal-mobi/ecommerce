@@ -1,9 +1,4 @@
-import React from "react";
-
-interface ProductSkeletonProps {
-  count?: number;
-  className?: string;
-}
+import React, { useMemo } from "react";
 
 export const ProductCardSkeleton = () => {
   return (
@@ -39,11 +34,21 @@ export const ProductCardSkeleton = () => {
   );
 };
 
-export const ProductGridSkeleton = ({ count = 9 }: { count?: number }) => {
+export const ProductGridSkeleton = ({
+  count = 9,
+}: Readonly<{ count?: number }>) => {
+  const skeletonIds = useMemo(
+    () => Array.from({ length: count }, () => crypto.randomUUID()),
+    [count],
+  );
+
   return (
     <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px] w-full">
-      {Array.from({ length: count }).map((_, index) => (
-        <div key={index} className="flex flex-col justify-between shrink-0 w-full animate-pulse">
+      {skeletonIds.map((id) => (
+        <div
+          key={id}
+          className="flex flex-col justify-between shrink-0 w-full animate-pulse"
+        >
           {/* Image */}
           <div className="relative w-full aspect-square bg-[#E8E8E8] rounded-[20px] overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]" />

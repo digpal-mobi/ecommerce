@@ -6,10 +6,10 @@ export interface BreadcrumbItem {
   url?: string;
 }
 
-interface Props {
+type Props = Readonly<{
   items?: BreadcrumbItem[];
   className?: string;
-}
+}>;
 
 export function formatBreadcrumbLabel(name: string): string {
   if (!name) return "";
@@ -26,7 +26,7 @@ export function formatBreadcrumbLabel(name: string): string {
     .join(" ");
 }
 
-const Breadcrumb = ({ items = [], className = "" }: Props) => {
+const Breadcrumb = ({ items = [], className = "" }: Readonly<Props>) => {
   return (
     <div
       className={`relative flex w-full min-w-0 shrink-0 items-center justify-start ${className}`.trim()}
@@ -38,7 +38,7 @@ const Breadcrumb = ({ items = [], className = "" }: Props) => {
         {items.map((item, index) => {
           const isLastItem = index === items.length - 1;
           const formattedName = formatBreadcrumbLabel(item.name);
-          const uniqueKey = `${item.url || "current"}-${item.name}-${index}`;
+          const uniqueKey = `${item.url ?? "current"}-${item.name}-${index}`;
 
           return (
             <div

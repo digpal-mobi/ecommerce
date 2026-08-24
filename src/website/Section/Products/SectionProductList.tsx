@@ -22,16 +22,17 @@ import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton
 import { FetchProducts } from "@/website/Utils/Api";
 import { useSearchParams } from "next/navigation";
 
-type Props = {
+type Props = Readonly<{
   data?: any[];
   initialTotal?: number;
-};
+}>;
 
-const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
+const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
+  const searchParamsString = searchParams.toString();
 
-  const [products, setProducts] = useState<any[]>(data || []);
+  const [products, setProducts] = useState<any[]>(data ?? []);
   const [totalCount, setTotalCount] = useState<number>(initialTotal);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [quantities, setQuantities] = useState<Record<number, number>>({});
@@ -40,7 +41,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
 
   const currency = useSelector((state: RootState) => state.currency.currency);
   const wishlistItems =
-    useSelector((state: RootState) => state.wishlist?.items) || [];
+    useSelector((state: RootState) => state.wishlist?.items) ?? [];
 
   const { isAuthenticated, userDetails } = useSelector(
     (state: RootState) => state.auth,
@@ -62,7 +63,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
   const handleToggleWishlist = (e: React.MouseEvent, item: any) => {
     e.preventDefault();
     e.stopPropagation();
-    const wishlisted = isWishlisted(item.id);
     dispatch(
       toggleWishlist({
         id: item.id,
@@ -72,7 +72,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
         rating: item.rating,
         category:
           typeof item.category === "object"
-            ? item.category?.name || item.category?.id
+            ? (item.category?.name ?? item.category?.id)
             : item.category,
       }),
     );
@@ -114,24 +114,24 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
         const sortOrder = searchParams.get("sortOrder");
         const q = searchParams.get("q");
 
-        const currLimit = limitParam ? Number(limitParam) : limit || 9;
+        const currLimit = limitParam ? Number(limitParam) : (limit ?? 9);
         const currPage = pageParam ? Number(pageParam) : 1;
         const skip = (currPage - 1) * currLimit;
 
         const response = await FetchProducts({
           limit: currLimit,
           skip,
-          category: category || undefined,
-          brand: brand || undefined,
+          category: category ?? undefined,
+          brand: brand ?? undefined,
           minPrice: minPrice ? Number(minPrice) : undefined,
           maxPrice: maxPrice ? Number(maxPrice) : undefined,
           rating: rating ? Number(rating) : undefined,
-          color: color || undefined,
-          size: size || undefined,
-          dressStyle: dressStyle || undefined,
-          sortBy: sortBy || undefined,
-          order: sortOrder || undefined,
-          q: q || undefined,
+          color: color ?? undefined,
+          size: size ?? undefined,
+          dressStyle: dressStyle ?? undefined,
+          sortBy: sortBy ?? undefined,
+          order: sortOrder ?? undefined,
+          q: q ?? undefined,
         });
 
         if (isMounted) {
@@ -146,7 +146,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
             dispatch(setTotal(0));
           }
         }
-      } catch (err) {
+      } catch {
         if (isMounted) {
           setProducts([]);
           setTotalCount(0);
@@ -163,17 +163,17 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
     return () => {
       isMounted = false;
     };
-  }, [searchParams, dispatch, limit]);
+  }, [searchParamsString, searchParams, dispatch, limit]);
 
   const displayProducts = products;
 
   const categoryTitle = useMemo(() => {
     const categoryParam = searchParams.get("category");
     if (categoryParam) {
-      return categoryParam.split(",")[0].replace(/-/g, " ");
+      return categoryParam.split(",")[0].replaceAll('-', " ");
     }
     if (products.length > 0 && products[0]?.category) {
-      return String(products[0].category).replace(/-/g, " ");
+      return String(products[0].category).replaceAll('-', " ");
     }
     return "Products";
   }, [searchParams, products]);
@@ -215,118 +215,13 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
       console.error(error);
     }
   };
-  return (
-    <main className="flex-1">
-      <div className="mb-[16px] flex flex-col laptop:flex-row items-center justify-between">
-        <div>
-          <TitleTag
-            className="!laptop:text-[32px] !text-[24px] capitalize"
-            variant="heading"
-            as="h2"
-          >
-            {categoryTitle}
-          </TitleTag>
-        </div>
+  const renderProductContent = () => {
+    if (isLoading) {
+      return <ProductGridSkeleton count={limit ?? 9} />;
+    }
 
-        <div className="flex items-center gap-[15px]">
-          <div>
-            <Paragraph variant="normalPara">
-              Showing {displayProducts.length} out of {total}
-            </Paragraph>
-          </div>
-
-          <SortingComponent />
-        </div>
-      </div>
-
-      {isLoading ? (
-        <ProductGridSkeleton count={limit || 9} />
-      ) : displayProducts.length > 0 ? (
-        <>
-          <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
-            {displayProducts.map((items: any) => (
-              <div
-                key={items.id}
-                className="flex flex-col justify-between shrink-0"
-              >
-                <div className="relative block">
-                  <Link className="w-full block" href={`/shop/${items.id}`}>
-                    <Image
-                      src={items.thumbnail}
-                      width={295}
-                      height={298}
-                      alt={items.title || "product image"}
-                      className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
-                    />
-                  </Link>
-
-                  <div className="absolute top-3 right-3 z-10">
-                    <button
-                      type="button"
-                      onClick={(e) => handleToggleWishlist(e, items)}
-                      aria-label={"Add to Wishlist"}
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
-                    >
-                      <WishlistIcon
-                        filled={isWishlisted(items.id)}
-                        className="h-[18px] cursor-pointer w-[18px]"
-                      />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="mt-[16px] flex flex-col items-start">
-                  <div className="!h-[48px] overflow-hidden">
-                    <TitleTag
-                      variant="satoshiBold"
-                      as="h3"
-                      className="line-clamp-2 leading-[24px]"
-                    >
-                      {items.title}
-                    </TitleTag>
-                  </div>
-
-                  <SectionRating rating={items.rating} />
-
-                  <div className="flex items-center justify-between w-full">
-                    <Paragraph variant="boldPara">
-                      {CurrencyConverter(items.price, currency)}
-                    </Paragraph>
-
-                    <Increment
-                      value={getQuantity(items.id)}
-                      onChange={(quantity) =>
-                        handleQuantityChange(items.id, quantity)
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-[16px] flex items-center justify-center w-full">
-                  <Button
-                    onClick={() => handleAddToCart(items)}
-                    variant="primary"
-                    className="w-full gap-[10px]"
-                  >
-                    <AddToCartIcon className="h-[20px] w-[20px]" />
-
-                    <TitleTag as="span" variant="satoshiBold">
-                      Add to Cart
-                    </TitleTag>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Pagination
-            currentPage={currentPage}
-            total={total}
-            limit={limit}
-            onPageChange={changePage}
-          />
-        </>
-      ) : (
+    if (displayProducts.length === 0) {
+      return (
         <div className="flex flex-col items-center justify-center py-[60px] px-[20px] text-center bg-[#F9F9F9] rounded-[20px] border border-[#EEEEEE] my-[10px] w-full">
           <div className="w-[68px] h-[68px] rounded-full bg-white flex items-center justify-center shadow-xs mb-[16px]">
             <svg
@@ -361,7 +256,122 @@ const SectionProductList = ({ data, initialTotal = 0 }: Props) => {
             Clear Filters
           </Button>
         </div>
-      )}
+      );
+    }
+
+    return (
+      <>
+        <div className="grid laptop:grid-cols-3 grid-cols-1 gap-x-[16px] gap-y-[30px]">
+          {displayProducts.map((items: any) => (
+            <div
+              key={items.id}
+              className="flex flex-col justify-between shrink-0"
+            >
+              <div className="relative block">
+                <Link className="w-full block" href={`/shop/${items.id}`}>
+                  <Image
+                    src={items.thumbnail}
+                    width={295}
+                    height={298}
+                    alt={items.title ?? "product image"}
+                    className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
+                  />
+                </Link>
+
+                <div className="absolute top-3 right-3 z-10">
+                  <button
+                    type="button"
+                    onClick={(e) => handleToggleWishlist(e, items)}
+                    aria-label="Add to Wishlist"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
+                  >
+                    <WishlistIcon
+                      filled={isWishlisted(items.id)}
+                      className="h-[18px] cursor-pointer w-[18px]"
+                    />
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-[16px] flex flex-col items-start">
+                <div className="!h-[48px] overflow-hidden">
+                  <TitleTag
+                    variant="satoshiBold"
+                    as="h3"
+                    className="line-clamp-2 leading-[24px]"
+                  >
+                    {items.title}
+                  </TitleTag>
+                </div>
+
+                <SectionRating rating={items.rating} />
+
+                <div className="flex items-center justify-between w-full">
+                  <Paragraph variant="boldPara" suppressHydrationWarning>
+                    {CurrencyConverter(items.price, currency)}
+                  </Paragraph>
+
+                  <Increment
+                    value={getQuantity(items.id)}
+                    onChange={(quantity) =>
+                      handleQuantityChange(items.id, quantity)
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="mt-[16px] flex items-center justify-center w-full">
+                <Button
+                  onClick={() => handleAddToCart(items)}
+                  variant="primary"
+                  className="w-full gap-[10px]"
+                >
+                  <AddToCartIcon className="h-[20px] w-[20px]" />
+
+                  <TitleTag as="span" variant="satoshiBold">
+                    Add to Cart
+                  </TitleTag>
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Pagination
+          currentPage={currentPage}
+          total={total}
+          limit={limit}
+          onPageChange={changePage}
+        />
+      </>
+    );
+  };
+
+  return (
+    <main className="flex-1">
+      <div className="mb-[16px] flex flex-col laptop:flex-row items-center justify-between">
+        <div>
+          <TitleTag
+            className="!laptop:text-[32px] !text-[24px] capitalize"
+            variant="heading"
+            as="h2"
+          >
+            {categoryTitle}
+          </TitleTag>
+        </div>
+
+        <div className="flex items-center gap-[15px]">
+          <div>
+            <Paragraph variant="normalPara">
+              Showing {displayProducts.length} out of {total}
+            </Paragraph>
+          </div>
+
+          <SortingComponent />
+        </div>
+      </div>
+
+      {renderProductContent()}
     </main>
   );
 };

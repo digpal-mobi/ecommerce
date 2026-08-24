@@ -7,8 +7,8 @@ type Props = {
   images?: string[];
 };
 
-const SectionImageGallery = ({ images = [] }: Props) => {
-  const [selectedImage, setSelectedImage] = useState<string>(images[0] || "");
+const SectionImageGallery = ({ images = [] }: Readonly<Props>) => {
+  const [selectedImage, setSelectedImage] = useState<string>(images[0] ?? "");
 
   return (
     <div className="relative flex flex-col-reverse tablet:flex-row w-full items-center tablet:items-start gap-[14px]">
@@ -19,7 +19,7 @@ const SectionImageGallery = ({ images = [] }: Props) => {
       >
         {images.map((img, index) => (
           <button
-            key={index}
+            key={img}
             type="button"
             onClick={() => setSelectedImage(img)}
             className="cursor-pointer flex-shrink-0"

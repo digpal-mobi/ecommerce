@@ -3,11 +3,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
-import LazyImage from "@/website/Components/Common/LazyImage";
 import Input from "@/website/Components/Common/Input";
 import Button from "@/website/Components/Common/Button";
 import TitleTag from "@/website/Components/Common/TitleTag";
-import { store, useDispatch, useSelector } from "@/redux/store";
+import { useDispatch, useSelector } from "@/redux/store";
 import {
   setLoading,
   setUserDetails,
@@ -15,7 +14,6 @@ import {
   closeLoginModal,
 } from "@/redux/slices/authSlice";
 import { fetchUserCart } from "@/redux/slices/cartSlice";
-import { useRouter } from "next/navigation";
 import { LoginUser } from "@/website/Utils/Api";
 import { setCookie } from "@/website/Helpers/Helper";
 
@@ -29,7 +27,7 @@ interface LoginModalProps {
   onClose?: () => void;
 }
 
-const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
   const dispatch = useDispatch();
   const { isLoading, isLoginModalOpen } = useSelector(
     (state: any) => state.auth,
@@ -42,8 +40,6 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     dispatch(closeLoginModal());
     if (onClose) onClose();
   }, [dispatch, onClose]);
-
-  const router = useRouter();
 
   const {
     register,
@@ -118,16 +114,16 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 
         dispatch(setUserDetails(response));
         dispatch(loginSuccess(response));
-        dispatch(fetchUserCart(Number(response.id) || 5));
+        dispatch(fetchUserCart(Number(response.id ?? 0)));
         handleClose();
       } else {
         setApiError(
-          response.message || "Login failed. Please check your credentials.",
+          response.message ?? "Login failed. Please check your credentials.",
         );
       }
     } catch (error: any) {
       console.error("Login Error:", error);
-      setApiError(error?.message || "An unexpected error occurred.");
+      setApiError(error?.message ?? "An unexpected error occurred.");
     } finally {
       dispatch(setLoading(false));
     }

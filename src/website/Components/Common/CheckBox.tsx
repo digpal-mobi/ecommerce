@@ -2,14 +2,16 @@
 
 import React, { InputHTMLAttributes } from "react";
 
-interface CheckBoxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-  id?: string;
-  label?: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  disabled?: boolean;
-  className?: string;
-}
+type CheckBoxProps = Readonly<
+  Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
+    id?: string;
+    label?: string;
+    checked: boolean;
+    onChange: (checked: boolean) => void;
+    disabled?: boolean;
+    className?: string;
+  }
+>;
 
 const CheckBox = ({
   id,
@@ -19,7 +21,7 @@ const CheckBox = ({
   disabled = false,
   className = "",
   ...props
-}: CheckBoxProps) => {
+}: Readonly<CheckBoxProps>) => {
   const inputId =
     id ||
     (label

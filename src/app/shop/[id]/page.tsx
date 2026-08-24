@@ -39,7 +39,7 @@ export default async function ProductsDetailPage({
     <div>
       <SectionProductAbout data={data} />
       <SectionProductDetails data={data} />
-      <SectionSimilarProducts products={relatedProducts?.products || []} />
+      <SectionSimilarProducts products={relatedProducts?.products ?? []} />
     </div>
   );
 }

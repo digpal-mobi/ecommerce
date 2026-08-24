@@ -7,7 +7,6 @@ import { HamburgerIcon, ProfileIcon, SearchIcon } from "@/website/Lib/Icons";
 import { NAVIGATION_ITEMS } from "@/website/Navigation/DummyNavigation";
 import SearchBar from "@/website/Components/SearchBar";
 import { useDispatch, useSelector } from "@/redux/store";
-import { useRouter } from "next/navigation";
 import { logoutSuccess, openLoginModal } from "@/redux/slices/authSlice";
 import { clearCart } from "@/redux/slices/cartSlice";
 import CartIconComponent from "@/website/Components/Common/CartIconComponent";
@@ -19,7 +18,6 @@ const MobileNavigation = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector((state) => state.auth);

@@ -9,7 +9,11 @@ type Props = {
   className?: string;
 };
 
-const Increment = ({ value = 1, onChange, className = "" }: Props) => {
+const Increment = ({
+  value = 1,
+  onChange,
+  className = "",
+}: Readonly<Props>) => {
   const handleDecrease = () => {
     onChange?.(Math.max(1, value - 1));
   };

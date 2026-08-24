@@ -17,7 +17,7 @@ import Increment from "@/website/Components/Increment";
 import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
-import { addToCart, addToCartAsync } from "@/redux/slices/cartSlice";
+import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
 
@@ -26,12 +26,12 @@ type Props = {
   images?: string[];
 };
 
-const SectionProductAbout = ({ data }: Props) => {
+const SectionProductAbout = ({ data }: Readonly<Props>) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
-  const wishlistItems = useSelector((state) => state.wishlist?.items) || [];
+  const wishlistItems = useSelector((state) => state.wishlist?.items) ?? [];
 
   const isWishlisted = Boolean(
     data?.id &&
@@ -39,17 +39,17 @@ const SectionProductAbout = ({ data }: Props) => {
   );
 
   const images: string[] =
-    (data as any)?.images || (data as any)?.products?.images || [];
+    (data as any)?.images ?? (data as any)?.products?.images ?? [];
 
   const categorySlug =
     typeof data?.category === "object"
-      ? data?.category?.slug || data?.category?.id || data?.category?.name
+      ? (data?.category?.slug ?? data?.category?.id ?? data?.category?.name)
       : data?.category;
 
   const categoryName =
     typeof data?.category === "object"
-      ? data?.category?.name || data?.category?.id
-      : data?.category || "Products";
+      ? (data?.category?.name ?? data?.category?.id)
+      : (data?.category ?? "Products");
 
   const BreadCrumbItems = [
     { name: "Home", url: "/" },
@@ -62,7 +62,7 @@ const SectionProductAbout = ({ data }: Props) => {
           },
         ]
       : []),
-    { name: data?.title || "Details", url: "" },
+    { name: data?.title ?? "Details", url: "" },
   ];
 
   const handleAddToCart = () => {
@@ -135,7 +135,7 @@ const SectionProductAbout = ({ data }: Props) => {
                   Brand
                 </TitleTag>
                 <TitleTag variant="satoshiBold" as="h4">
-                  {data?.brand || "Generic"}
+                  {data?.brand ?? "Generic"}
                 </TitleTag>
               </div>
               <div className="flex flex-col gap-[10px]">
@@ -143,7 +143,7 @@ const SectionProductAbout = ({ data }: Props) => {
                   SKU
                 </TitleTag>
                 <TitleTag variant="satoshiBold" as="h4">
-                  {data?.sku || "N/A"}
+                  {data?.sku ?? "N/A"}
                 </TitleTag>
               </div>
               <div className="flex flex-col gap-[10px]">

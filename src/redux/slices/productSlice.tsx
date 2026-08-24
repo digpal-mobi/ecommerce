@@ -6,12 +6,6 @@ import {
   FetchSearchedProducts,
 } from "@/website/Utils/Api";
 import { Product } from "@/types/ProductType";
-import {
-  filterProducts,
-  hasActiveFilters,
-  paginateProducts,
-  sortProducts,
-} from "@/website/Utils/ProductUtils";
 import { setTotal } from "@/redux/slices/paginationSlice";
 import { RootState } from "@/redux/store";
 
@@ -62,8 +56,8 @@ const productSlice = createSlice({
         state.loading = false;
 
         state.error =
-          (action.payload as string) ||
-          action.error.message ||
+          (action.payload as string) ??
+          action.error.message ??
           "Failed to fetch categories";
       })
 
@@ -82,8 +76,8 @@ const productSlice = createSlice({
         state.loading = false;
 
         state.error =
-          (action.payload as string) ||
-          action.error.message ||
+          (action.payload as string) ??
+          action.error.message ??
           "Failed to fetch products";
       })
 
@@ -102,8 +96,8 @@ const productSlice = createSlice({
         state.loading = false;
 
         state.error =
-          (action.payload as string) ||
-          action.error.message ||
+          (action.payload as string) ??
+          action.error.message ??
           "Failed to search products";
       });
   },
@@ -117,13 +111,13 @@ export const getCategories = createAsyncThunk(
 
       if (response.status === false) {
         return rejectWithValue(
-          response.message || "Failed to fetch categories",
+          response.message ?? "Failed to fetch categories",
         );
       }
 
       return response;
     } catch (error: any) {
-      return rejectWithValue(error?.message || "Failed to fetch categories");
+      return rejectWithValue(error?.message ?? "Failed to fetch categories");
     }
   },
 );
@@ -146,20 +140,20 @@ export const fetchProducts = createAsyncThunk(
       const response = await FetchProducts({
         category: filters.category.length > 0 ? filters.category : undefined,
         brand: filters.brand.length > 0 ? filters.brand : undefined,
-        color: filters.color || undefined,
-        size: filters.size || undefined,
-        dressStyle: filters.dressStyle || undefined,
+        color: filters.color ?? undefined,
+        size: filters.size ?? undefined,
+        dressStyle: filters.dressStyle ?? undefined,
         minPrice: filters.minPrice ?? undefined,
         maxPrice: filters.maxPrice ?? undefined,
         rating: filters.rating ?? undefined,
         limit,
         skip,
-        sortBy: sortBy || undefined,
+        sortBy: sortBy ?? undefined,
         order: sortOrder,
       });
 
       if (response.status === false) {
-        return rejectWithValue(response.message || "Failed to fetch products");
+        return rejectWithValue(response.message ?? "Failed to fetch products");
       }
 
       const products: Product[] = Array.isArray(response.products)
@@ -175,7 +169,7 @@ export const fetchProducts = createAsyncThunk(
         total,
       };
     } catch (error: any) {
-      return rejectWithValue(error?.message || "Failed to fetch products");
+      return rejectWithValue(error?.message ?? "Failed to fetch products");
     }
   },
 );
@@ -199,20 +193,20 @@ export const searchProducts = createAsyncThunk(
         query: filters.q,
         category: filters.category.length > 0 ? filters.category : undefined,
         brand: filters.brand.length > 0 ? filters.brand : undefined,
-        color: filters.color || undefined,
-        size: filters.size || undefined,
-        dressStyle: filters.dressStyle || undefined,
+        color: filters.color ?? undefined,
+        size: filters.size ?? undefined,
+        dressStyle: filters.dressStyle ?? undefined,
         minPrice: filters.minPrice ?? undefined,
         maxPrice: filters.maxPrice ?? undefined,
         rating: filters.rating ?? undefined,
         limit,
         skip,
-        sortBy: sortBy || undefined,
+        sortBy: sortBy ?? undefined,
         order: sortOrder,
       });
 
       if (response.status === false || !Array.isArray(response.products)) {
-        return rejectWithValue(response.message || "Failed to search products");
+        return rejectWithValue(response.message ?? "Failed to search products");
       }
 
       const products: Product[] = response.products;
@@ -225,7 +219,7 @@ export const searchProducts = createAsyncThunk(
         total,
       };
     } catch (error: any) {
-      return rejectWithValue(error?.message || "Failed to search products");
+      return rejectWithValue(error?.message ?? "Failed to search products");
     }
   },
 );

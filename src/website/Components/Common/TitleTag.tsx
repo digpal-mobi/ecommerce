@@ -2,15 +2,17 @@ import { HTMLAttributes, JSX, ReactNode } from "react";
 
 type TitleVariant = "bold" | "heading" | "mainHeading" | "satoshiBold";
 
-type Props = HTMLAttributes<HTMLElement> & {
-  children?: ReactNode;
-  as?: keyof Pick<
-    JSX.IntrinsicElements,
-    "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span"
-  >;
-  variant?: TitleVariant;
-  className?: string;
-};
+type Props = Readonly<
+  HTMLAttributes<HTMLElement> & {
+    children?: ReactNode;
+    as?: keyof Pick<
+      JSX.IntrinsicElements,
+      "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span"
+    >;
+    variant?: TitleVariant;
+    className?: string;
+  }
+>;
 
 const VARIANT_CLASSES: Record<TitleVariant, string> = {
   bold: "font-integral text-[16px] font-[700] leading-[1em] laptop:text-[20px]",
@@ -30,7 +32,7 @@ const TitleTag = ({
   variant = "bold",
   className = "",
   ...props
-}: Props) => {
+}: Readonly<Props>) => {
   return (
     <Tag
       className={`${VARIANT_CLASSES[variant]} ${className}`.trim()}

@@ -55,9 +55,9 @@ export const usePrevNextButtons = (
   };
 };
 
-type PropType = ComponentPropsWithRef<"button">;
+type PropType = Readonly<ComponentPropsWithRef<"button">>;
 
-export const PrevButton = (props: PropType) => {
+export const PrevButton = (props: Readonly<PropType>) => {
   const { children, disabled, ...restProps } = props;
 
   return (
@@ -87,7 +87,7 @@ export const PrevButton = (props: PropType) => {
   );
 };
 
-export const NextButton = (props: PropType) => {
+export const NextButton = (props: Readonly<PropType>) => {
   const { children, disabled, ...restProps } = props;
 
   return (

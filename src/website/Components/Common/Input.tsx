@@ -2,16 +2,18 @@
 
 import React, { forwardRef, type InputHTMLAttributes } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: React.ReactNode;
-  subLabel?: React.ReactNode;
-  error?: {
-    message?: string;
-  };
-  className?: string;
-}
+type InputProps = Readonly<
+  InputHTMLAttributes<HTMLInputElement> & {
+    label?: React.ReactNode;
+    subLabel?: React.ReactNode;
+    error?: {
+      message?: string;
+    };
+    className?: string;
+  }
+>;
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, Readonly<InputProps>>(
   (
     {
       label,
@@ -27,6 +29,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && <label>{label}</label>}
+        {subLabel && (
+          <span className="text-xs text-gray-500 ml-2">{subLabel}</span>
+        )}
 
         <input
           ref={ref}

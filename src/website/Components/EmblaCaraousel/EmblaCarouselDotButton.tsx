@@ -44,7 +44,10 @@ export const useDotButton = (
     emblaApi.on("reInit", onInit).on("reInit", onSelect).on("select", onSelect);
 
     return () => {
-      emblaApi.off("reInit", onInit).off("reInit", onSelect).off("select", onSelect);
+      emblaApi
+        .off("reInit", onInit)
+        .off("reInit", onSelect)
+        .off("select", onSelect);
     };
   }, [emblaApi, onInit, onSelect]);
 
@@ -55,9 +58,9 @@ export const useDotButton = (
   };
 };
 
-type PropType = ComponentPropsWithRef<"button">;
+type PropType = Readonly<ComponentPropsWithRef<"button">>;
 
-export const DotButton = (props: PropType) => {
+export const DotButton = (props: Readonly<PropType>) => {
   const { children, ...restProps } = props;
 
   return (

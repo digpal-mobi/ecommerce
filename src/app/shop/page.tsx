@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "A fully functional ecommerce website.",
 };
 
-type Props = {
+type Props = Readonly<{
   searchParams: Promise<{
     page?: string;
     limit?: string;
@@ -30,9 +30,9 @@ type Props = {
     sortOrder?: string;
     q?: string;
   }>;
-};
+}>;
 
-export default async function Products({ searchParams }: Props) {
+export default async function Products({ searchParams }: Readonly<Props>) {
   const params = await searchParams;
   const data = await FetchProducts({
     limit: params?.limit ? Number(params.limit) : 9,
