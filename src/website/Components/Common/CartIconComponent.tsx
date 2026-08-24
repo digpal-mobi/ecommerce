@@ -87,6 +87,8 @@ const CartIconComponent = () => {
         onClick={() => setIsIconClicked((prev) => !prev)}
         className="relative flex items-center justify-center cursor-pointer focus:outline-none"
         aria-label="Toggle Cart Dropdown"
+        aria-expanded={isIconClicked}
+        aria-haspopup="dialog"
       >
         {/* Cart Icon */}
         <div
@@ -108,8 +110,6 @@ const CartIconComponent = () => {
 
       {isIconClicked && (
         <div
-          role="button"
-          onClick={(e) => e.stopPropagation()}
           className="
             absolute right-0 top-full mt-[10px]
             w-[350px] sm:w-[400px]

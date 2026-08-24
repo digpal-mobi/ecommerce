@@ -25,7 +25,7 @@ const ReviewCard = ({ name, review, rating = 5 }: Readonly<Props>) => {
       </div>
 
       <p className="mt-[12px] flex-1 font-satoshi text-[14px] laptop:text-[16px] leading-[22px] text-black/60">
-        "{review}"
+        &quot;{review}&quot;
       </p>
     </div>
   );

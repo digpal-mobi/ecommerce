@@ -58,7 +58,7 @@ const index = () => {
               <h2 className="text-[32px] font-black leading-none">SHOP.CO</h2>
 
               <p className="mt-[14px] laptop:mt-[25px] text-[14px] font-satoshi leading-[22px] font-[400] text-[#0000000]/60">
-                We have clothes that suits your style and which you're proud to
+                We have clothes that suits your style and which you&apos;re proud to
                 wear. From women to men.
               </p>
 
