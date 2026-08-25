@@ -14,6 +14,7 @@ export interface FilterValues {
 
 export interface FilterState {
   filters: FilterValues;
+  isSideFiltersModalOpen: boolean;
 }
 
 export const MIN_PRICE = 0;
@@ -33,6 +34,7 @@ export const DEFAULT_FILTERS: FilterValues = {
 
 const initialState: FilterState = {
   filters: { ...DEFAULT_FILTERS },
+  isSideFiltersModalOpen: false,
 };
 const filterSlice = createSlice({
   name: "filter",
@@ -45,9 +47,20 @@ const filterSlice = createSlice({
     clearAllFilter: (state) => {
       state.filters = { ...DEFAULT_FILTERS };
     },
+    openSideFiltersModal: (state) => {
+      state.isSideFiltersModalOpen = true;
+    },
+    closeSideFiltersModal: (state) => {
+      state.isSideFiltersModalOpen = false;
+    },
   },
 });
 
-export const { setFilters, clearAllFilter } = filterSlice.actions;
+export const {
+  setFilters,
+  clearAllFilter,
+  openSideFiltersModal,
+  closeSideFiltersModal,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -1,21 +1,28 @@
 import { CartIcon, CrossIcon } from "@/website/Lib/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import Link from "next/link";
-import Button from "./Button";
+import { useRouter } from "next/navigation";
 import LazyImage from "./LazyImage";
 import { RootState, useDispatch } from "@/redux/store";
-import { clearCart, updateCart } from "@/redux/slices/cartSlice";
+import {
+  clearCart,
+  updateCart,
+  closeMiniCart,
+  toggleMiniCart,
+} from "@/redux/slices/cartSlice";
 import TitleTag from "./TitleTag";
 import Paragraph from "./Paragraph";
 import Increment from "../Increment";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
 
 const CartIconComponent = () => {
+  const router = useRouter();
   const quantity = useSelector((state: RootState) => state.cart.quantity);
   const products = useSelector((state: RootState) => state.cart.products);
+  const isMiniCartOpen = useSelector(
+    (state: RootState) => state.cart.isMiniCartOpen,
+  );
 
-  const [isIconClicked, setIsIconClicked] = useState(false);
   const [isCartAnimating, setIsCartAnimating] = useState(false);
   const [newProductId, setNewProductId] = useState<string | number | null>(
     null,
@@ -28,9 +35,15 @@ const CartIconComponent = () => {
 
   const currency = useSelector((state: RootState) => state.currency.currency);
 
-  const handleRemoveCart = () => {
+  const handleRemoveCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(clearCart());
-    setIsIconClicked(false);
+  };
+
+  const handleViewCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(closeMiniCart());
+    router.push("/cart");
   };
 
   /** Animate cart icon and highlight newly added product */
@@ -62,32 +75,38 @@ const CartIconComponent = () => {
     previousProductsRef.current = products;
   }, [products, quantity]);
 
-  /**Close cart when clicking outside.*/
+  /** Close cart when clicking outside. */
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
-        setIsIconClicked(false);
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('[data-cart-container="true"]')) {
+        return;
       }
+      dispatch(closeMiniCart());
     };
 
-    if (isIconClicked) {
+    if (isMiniCartOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isIconClicked]);
+  }, [isMiniCartOpen, dispatch]);
 
   return (
-    <div ref={cartRef} className="relative flex items-center justify-center">
+    <div
+      ref={cartRef}
+      data-cart-container="true"
+      className="relative flex items-center justify-center"
+    >
       {/* Trigger Button */}
       <button
         type="button"
-        onClick={() => setIsIconClicked((prev) => !prev)}
+        onClick={() => dispatch(toggleMiniCart())}
         className="relative flex items-center justify-center cursor-pointer focus:outline-none"
         aria-label="Toggle Cart Dropdown"
-        aria-expanded={isIconClicked}
+        aria-expanded={isMiniCartOpen}
         aria-haspopup="dialog"
       >
         {/* Cart Icon */}
@@ -108,7 +127,7 @@ const CartIconComponent = () => {
         </span>
       </button>
 
-      {isIconClicked && (
+      {isMiniCartOpen && (
         <div
           className="
             absolute right-0 top-full mt-[10px]
@@ -127,7 +146,6 @@ const CartIconComponent = () => {
         >
           {products?.length > 0 ? (
             <div className="flex flex-col h-full">
-              {/* Scrollable Products List */}
               <div className="flex flex-col gap-4 overflow-y-auto max-h-[280px] pr-2 scrollbar-thin scrollbar-thumb-gray-200">
                 {products.map((product: any) => {
                   const isNewProduct = newProductId === product.id;
@@ -137,9 +155,7 @@ const CartIconComponent = () => {
                       key={product.id}
                       className={`
                         flex w-full items-center justify-between
-
                         transition-all duration-500 ease-out
-
                         ${
                           isNewProduct
                             ? "translate-y-[-10px] opacity-0 animate-[cartItemIn_500ms_ease-out_forwards]"
@@ -201,25 +217,34 @@ const CartIconComponent = () => {
               </div>
 
               {/* Pinned Action Buttons */}
-              <div className="flex w-full justify-between items-center pt-4 mt-3 border-t border-black/10">
-                <Link href="/cart" onClick={() => setIsIconClicked(false)}>
-                  <Button variant="primary">View Cart</Button>
-                </Link>
+              <div className="flex w-full justify-between items-center pt-4 mt-3 border-t border-black/10 gap-3">
+                <button
+                  type="button"
+                  onClick={handleViewCart}
+                  className="flex-1 rounded-full py-[12px] px-[16px] bg-black text-white hover:opacity-80 font-satoshi text-[14px] font-[500] leading-[1.3em] transition-all text-center cursor-pointer"
+                >
+                  View Cart
+                </button>
 
-                <Button onClick={handleRemoveCart} variant="secondary">
+                <button
+                  type="button"
+                  onClick={handleRemoveCart}
+                  className="flex-1 rounded-full py-[12px] px-[16px] border border-black/10 bg-white text-black hover:opacity-80 font-satoshi text-[14px] font-[500] leading-[1.3em] transition-all text-center cursor-pointer"
+                >
                   Clear Cart
-                </Button>
+                </button>
               </div>
             </div>
           ) : (
-            <div className="relative flex flex-col gap-1 px-[16px] py-4">
-              <Button
-                variant="secondary"
-                className="absolute top-0 right-0 border-none! px-0! py-0! pr-[16px]!"
-                onClick={() => setIsIconClicked(false)}
+            <div className="flex flex-row-reverse gap-1">
+              <button
+                type="button"
+                className="text-[#000000]/60 px-[10px] hover:text-black cursor-pointer"
+                onClick={() => dispatch(closeMiniCart())}
+                aria-label="Close empty cart"
               >
                 <CrossIcon color="#000000" />
-              </Button>
+              </button>
 
               <TitleTag
                 as="span"

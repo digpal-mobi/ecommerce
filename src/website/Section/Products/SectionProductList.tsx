@@ -18,7 +18,6 @@ import { setTotal } from "@/redux/slices/paginationSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
-import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton";
 import { FetchProducts } from "@/website/Utils/Api";
 import { useSearchParams } from "next/navigation";
 import { getPaginationFromSearchParams } from "@/website/Utils/ProductUrl";
@@ -35,7 +34,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
   const [products, setProducts] = useState<any[]>(data ?? []);
   const [totalCount, setTotalCount] = useState<number>(initialTotal);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   const isFirstMount = useRef(true);
@@ -107,7 +105,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
     let isMounted = true;
     const fetchFilteredProducts = async () => {
-      setIsLoading(true);
       try {
         const pageParam = searchParams.get("page");
         const limitParam = searchParams.get("limit");
@@ -162,7 +159,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
         }
       } finally {
         if (isMounted) {
-          setIsLoading(false);
         }
       }
     };
@@ -225,10 +221,6 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
     }
   };
   const renderProductContent = () => {
-    if (isLoading) {
-      return <ProductGridSkeleton count={limit ?? 9} />;
-    }
-
     if (displayProducts.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center py-[60px] px-[20px] text-center bg-[#F9F9F9] rounded-[20px] border border-[#EEEEEE] my-[10px] w-full">

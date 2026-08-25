@@ -5,6 +5,7 @@ import Navigation from "@/website/Navigation";
 import Footer from "@/website/FooterNavigation";
 import { Providers } from "@/redux/Provider";
 import NextTopLoader from "nextjs-toploader";
+import { Suspense } from "react";
 
 const satoshi = localFont({
   src: [
@@ -93,7 +94,9 @@ export default function RootLayout({
           zIndex={30000}
         />
         <Providers>
-          <Navigation />
+          <Suspense fallback={null}>
+            <Navigation />
+          </Suspense>
           {children}
           <Footer />
         </Providers>

@@ -24,10 +24,16 @@ import WishlistIconComponent from "@/website/Components/Common/WishlistIconCompo
 import CurrencySelector from "@/website/Components/CurrencySelector";
 import LoginModal from "@/website/Section/SectionLogin";
 import { deleteCookie } from "@/website/Helpers/Helper";
+import { closeSideFiltersModal } from "@/redux/slices/filterSlice";
+import { FilterSectionMobile } from "@/website/Section/SectionFilters";
 
 const Header = () => {
   const { isAuthenticated, isLoginModalOpen } = useSelector(
     (state) => state.auth,
+  );
+
+  const isSideFiltersOpen = useSelector(
+    (state) => state.filter.isSideFiltersModalOpen,
   );
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -142,6 +148,10 @@ const Header = () => {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => dispatch(closeLoginModal())}
+      />
+      <FilterSectionMobile
+        isOpen={isSideFiltersOpen}
+        onClose={() => dispatch(closeSideFiltersModal())}
       />
     </header>
   );
