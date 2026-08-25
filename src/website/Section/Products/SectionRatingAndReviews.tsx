@@ -40,12 +40,12 @@ const SectionRatingAndReviews = ({ data }: Readonly<Props>) => {
             <div className="flex flex-col gap-[15px] justify-between">
               <SectionRating rating={rev.rating} />
               <div>
-                <TitleTag as="h4" variant="satoshiBold">
+                <TitleTag as="h3" variant="satoshiBold">
                   {rev?.reviewerName}
                 </TitleTag>
-                <TitleTag as="h4" variant="satoshiBold">
+                <Paragraph variant="normalPara" className="mt-1 font-medium text-black/80">
                   {rev?.comment}
-                </TitleTag>
+                </Paragraph>
                 <Paragraph className="mt-[24px]" variant="normalPara">
                   Posted on : {FormatDate(rev.date)}
                 </Paragraph>

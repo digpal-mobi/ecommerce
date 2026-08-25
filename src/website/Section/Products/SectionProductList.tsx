@@ -247,7 +247,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
               />
             </svg>
           </div>
-          <TitleTag as="h3" variant="heading" className="!text-[22px] mb-[8px]">
+          <TitleTag as="h2" variant="heading" className="!text-[22px] mb-[8px]">
             No Products Available
           </TitleTag>
           <Paragraph
@@ -306,7 +306,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
                 <div className="!h-[48px] overflow-hidden">
                   <TitleTag
                     variant="satoshiBold"
-                    as="h3"
+                    as="h2"
                     className="line-clamp-2 leading-[24px]"
                   >
                     {items.title}
@@ -363,7 +363,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
           <TitleTag
             className="!laptop:text-[32px] !text-left !text-[24px] capitalize"
             variant="heading"
-            as="h2"
+            as="h1"
           >
             {categoryTitle}
           </TitleTag>

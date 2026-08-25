@@ -16,7 +16,7 @@ const BrandLogos = [
 const SectionBrandLogo = () => {
   return (
     <MainContainer className="bg-[#000]">
-      <Container className="bg-[#000] !py-0">
+      <Container>
         <div className="flex flex-wrap gap-x-[30px] gap-y-[20px] desktop:gap-x-[106px] py-[44px]">
           {BrandLogos.map((img) => (
             <LazyImage

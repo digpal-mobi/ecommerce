@@ -95,7 +95,7 @@ const ProductCard = ({ products, isLoading = false }: Readonly<Props>) => {
 
   return (
     <section className="w-full py-[32px] laptop:py-[55px]">
-      <div className="flex gap-[20px] justify-start">
+      <div className="flex gap-[20px] justify-start desktop-lg:justify-center">
         {isLoading || !products || products.length === 0 ? (
           <>
             <ProductCardSkeleton />

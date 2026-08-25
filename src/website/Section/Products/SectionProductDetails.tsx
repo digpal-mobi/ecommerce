@@ -10,7 +10,7 @@ const SectionProductDetails = ({ data }: Readonly<Props>) => {
     <section className="w-full">
       {/* Description */}
       <div>
-        <TitleTag as="h3" variant="bold" className="!font-satoshi mb-4">
+        <TitleTag as="h2" variant="bold" className="!font-satoshi mb-4">
           Product Description
         </TitleTag>
 
@@ -19,7 +19,7 @@ const SectionProductDetails = ({ data }: Readonly<Props>) => {
 
       {/* Specifications */}
       <div className="mt-10">
-        <TitleTag as="h3" variant="bold" className="!font-satoshi mb-[36px]">
+        <TitleTag as="h2" variant="bold" className="!font-satoshi mb-[36px]">
           Product Specifications
         </TitleTag>
 

@@ -191,7 +191,7 @@ const SectionWishlist = () => {
                         className="hover:underline text-left"
                       >
                         <TitleTag
-                          as="h3"
+                          as="h2"
                           variant="satoshiBold"
                           className="line-clamp-1 !text-[16px] leading-[22px]"
                         >

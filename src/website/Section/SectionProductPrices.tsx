@@ -25,20 +25,22 @@ const SectionProductPrices = ({
   return (
     <div className="flex items-center tablet:mt-[16px] mt-[10px] gap-[12px]">
       <TitleTag
-        as="h3"
+        as="span"
         variant="bold"
+        suppressHydrationWarning
         className="laptop:text-[32px] font-satoshi text-[24px] font-[700] leading-[1em]"
       >
         {CurrencyConverter(finalPrice, currency)}
       </TitleTag>
       <TitleTag
-        as="h3"
+        as="span"
+        suppressHydrationWarning
         className="laptop:text-[32px] text-[24px] line-through font-satoshi font-[700] leading-[1em] text-[#000000]/20"
       >
         {CurrencyConverter(price, currency)}
       </TitleTag>
       <TitleTag
-        as="h4"
+        as="span"
         className="rounded-full px-[14px] py-[6px] font-[500] leading-[1em] font-satoshi text-[#FF3333] bg-[#FF3333]/10"
       >
         -{discountPercentage}%

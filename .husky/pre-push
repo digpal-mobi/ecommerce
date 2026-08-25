@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Check if build fails or success
+. "$(dirname -- "$0")/common.sh"
+
+npm run lint && npm run build

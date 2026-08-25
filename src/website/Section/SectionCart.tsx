@@ -151,7 +151,7 @@ const SectionCart = () => {
                         <div className="flex flex-col gap-1 flex-1">
                           <Link href={`/shop/${item.id}`}>
                             <TitleTag
-                              as="h3"
+                              as="h2"
                               variant="satoshiBold"
                               className="line-clamp-2 !text-[16px] sm:!text-[18px] hover:underline"
                             >

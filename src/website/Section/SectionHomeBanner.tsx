@@ -12,7 +12,7 @@ const SectionHomeBanner = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = () => {
-    setIsVisible(false);
+    setIsVisible(false);  
   };
 
   if (!isVisible) {
@@ -21,7 +21,7 @@ const SectionHomeBanner = () => {
 
   return (
     <MainContainer className="bg-[#000000]">
-      <Container>
+      <Container> 
         <div className="flex text-[#FFF] w-full py-[10px] h-full">
           <div className="flex w-full justify-center items-center">
             <span className="text-[12px] laptop:text-[14px] font-satoshi font-[400] leading-[1em]">
@@ -36,7 +36,7 @@ const SectionHomeBanner = () => {
             onClick={handleClick}
             className="text-[#FFFFFF] flex justify-end cursor-pointer items-center"
           >
-            <CrossIcon />
+            <CrossIcon color="#FFFFFF" />
           </button>
         </div>
       </Container>

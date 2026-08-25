@@ -7,6 +7,8 @@ import {
 import Button from "@/website/Components/Common/Button";
 import { SparkleIcon, SparkleIcon2 } from "@/website/Lib/Icons";
 import Link from "next/link";
+import Paragraph from "../Components/Common/Paragraph";
+import TitleTag from "../Components/Common/TitleTag";
 
 const Metrics = [
   {
@@ -22,16 +24,18 @@ const Metrics = [
     description: "Happy Customers",
   },
 ];
-
+  
 const SectionMainBanner = () => {
   return (
-    <section className="relative overflow-hidden bg-[#F2F0F1]">
+    <section
+      data-testid="hero-banner"
+      className="relative overflow-hidden bg-[#F2F0F1]"
+    >
       <div className="hidden laptop:block absolute right-[4%] bottom-0 w-[48%] h-full">
         <LazyImage
           src="/banner-image.png"
           alt="Banner"
           fill
-          priority
           className="object-contain object-right-bottom"
         />
 
@@ -47,19 +51,22 @@ const SectionMainBanner = () => {
       <MainContainer>
         <Container className="laptop:!pt-[80px] laptop:!pb-[100px] ">
           <div className="relative z-10 flex min-h-[50%] items-center">
-            <div className="w-full laptop:max-w-[52%] ">
-              <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
+            <div className="w-full laptop:max-w-[52%] pt-[40px] laptop:pt-0">
+              <TitleTag as="h1" variant="heading">
                 FIND CLOTHES THAT MATCHES YOUR STYLE
-              </h1>
+              </TitleTag>
 
-              <p className="mt-6 text-[14px] font-satoshi laptop:text-[16px] font-[400] laptop:leading-[28px] text-black/60">
+              <Paragraph
+                variant="normalPara"
+                className="mt-[20px] desktop:mt-[24px] desktop:w-[85%] w-full"
+              >
                 Browse through our diverse range of met iculously crafted
                 garments, designed to bring out your individuality and cater to
                 your sense of style.
-              </p>
+              </Paragraph>
 
-              <div className="mt-[24px] flex max-w-[210px] tablet:justify-start justify-center desktop:mt-[32px]">
-                <Link href="/shop">
+              <div className="mt-[24px] flex w-full  laptop:max-w-[210px] tablet:justify-start justify-center">
+                <Link href="/shop" className="w-full">
                   <Button className="w-full" variant="primary">
                     Shop Now
                   </Button>
@@ -67,7 +74,7 @@ const SectionMainBanner = () => {
               </div>
 
               {/* Metrics */}
-              <div className="mt-12 flex flex-wrap">
+              <div className="laptop:mt-[48px] mt-[20px] flex flex-wrap">
                 {Metrics.map((item, index) => (
                   <React.Fragment key={item.description}>
                     <div
@@ -88,9 +95,9 @@ const SectionMainBanner = () => {
               }
             `}
                       >
-                        <h3 className="text-[32px] laptop:text-[40px] font-bold leading-none">
+                        <p className="text-[32px] laptop:text-[40px] font-bold leading-none font-satoshi">
                           {item.number}
-                        </h3>
+                        </p>
 
                         <p className="mt-2 text-black/60">{item.description}</p>
                       </div>
@@ -118,11 +125,11 @@ const SectionMainBanner = () => {
         />
 
         <div className="absolute top-[15%] right-[8%]">
-          <SparkleIcon2 />
+          <SparkleIcon2 className="w-[76px] h-auto" />
         </div>
 
         <div className="absolute top-[45%] left-[8%]">
-          <SparkleIcon />
+          <SparkleIcon className="w-[44px] h-auto" />
         </div>
       </div>
     </section>

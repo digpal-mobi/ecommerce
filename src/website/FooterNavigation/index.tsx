@@ -20,9 +20,9 @@ const index = () => {
           <div className={"relative"}>
             <div className="section-sub-footer bg-black laptop:flex-row laptop:items-center laptop:justify-between laptop:text-left laptop:py-[36px] laptop:px-[64px] desktop-lg:mt-[-1px] relative z-[1] flex flex-col rounded-[14px] bg-cover bg-center bg-repeat px-[20px] py-[20px] text-center">
               <div className="subfooter-col laptop:flex-[0_0_528px] desktop:flex-[0_0_628px] desktop-lg:flex-[0_0_728px] laptop:mb-[0] mb-[24px]">
-                <p className="font-integral text-white text-[32px] leading-[38px] tablet:text-[40px] tablet:leading-[46px] font-[700]">
+                <h2 className="font-integral text-white text-[32px] leading-[38px] tablet:text-[40px] tablet:leading-[46px] font-[700]">
                   STAY UPTO DATE ABOUT OUR LATEST OFFERS
-                </p>
+                </h2>
               </div>
               <div className="flex flex-col gap-4 w-full laptop:max-w-[349px]">
                 {/* Input */}
@@ -54,7 +54,7 @@ const index = () => {
           <div className="flex flex-col gap-12 laptop:flex-row laptop:items-start">
             {/* Left */}
             <div className="w-full laptop:max-w-[250px] desktop:max-w-[260px]">
-              <h2 className="text-[32px] font-black leading-none">SHOP.CO</h2>
+              <span className="text-[32px] font-black leading-none block">SHOP.CO</span>
 
               <p className="mt-[14px] laptop:mt-[25px] text-[14px] font-satoshi leading-[22px] font-[400] text-[#0000000]/60">
                 We have clothes that suits your style and which you&apos;re
@@ -108,9 +108,9 @@ const index = () => {
             <div className="grid flex-1 grid-cols-2 gap-y-8 tablet:grid-cols-4 laptop:gap-x-10 desktop:gap-x-16">
               {FOOTER_NAVIGATION.map((section) => (
                 <div key={section.id}>
-                  <h4 className="mb-6 text-[14px] font-semibold uppercase tracking-[3px] text-black">
+                  <h3 className="mb-6 text-[14px] font-semibold uppercase tracking-[3px] text-black">
                     {section.title}
-                  </h4>
+                  </h3>
 
                   <ul className="space-y-4">
                     {section.items.map((item) => (

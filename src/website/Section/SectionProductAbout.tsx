@@ -113,7 +113,7 @@ const SectionProductAbout = ({ data }: Readonly<Props>) => {
           </div>
           <div className="flex w-full tablet-lg:w-[50%] flex-col ">
             <div className=" flex flex-col border-b border-[#000000]/20 pb-[20px]">
-              <TitleTag as="h2" variant="heading">
+              <TitleTag as="h1" variant="heading">
                 {data?.title}
               </TitleTag>
               <div className="tablet:mt-[16px] mt-[10px]">
@@ -129,28 +129,28 @@ const SectionProductAbout = ({ data }: Readonly<Props>) => {
                 {data?.description}
               </Paragraph>
             </div>
-            <div className="flex w-full laptop:flex-row flex-col gap-[20px] laptop:gap-0 justify-between py-[0px] tablet:py-[20px] ">
+            <div className="flex w-full laptop:flex-row flex-col gap-[20px] laptop:gap-0 justify-between py-[20px] ">
               <div className="flex flex-col gap-[10px]">
-                <TitleTag variant="bold" as="h3">
+                <TitleTag variant="bold" as="span">
                   Brand
                 </TitleTag>
-                <TitleTag variant="satoshiBold" as="h4">
+                <TitleTag variant="satoshiBold" as="span">
                   {data?.brand ?? "Generic"}
                 </TitleTag>
               </div>
               <div className="flex flex-col gap-[10px]">
-                <TitleTag variant="bold" as="h3">
+                <TitleTag variant="bold" as="span">
                   SKU
                 </TitleTag>
-                <TitleTag variant="satoshiBold" as="h4">
+                <TitleTag variant="satoshiBold" as="span">
                   {data?.sku ?? "N/A"}
                 </TitleTag>
               </div>
               <div className="flex flex-col gap-[10px]">
-                <TitleTag variant="bold" as="h3">
+                <TitleTag variant="bold" as="span">
                   Category
                 </TitleTag>
-                <TitleTag variant="satoshiBold" as="h4">
+                <TitleTag variant="satoshiBold" as="span">
                   {categoryName}
                 </TitleTag>
               </div>

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Input from "@/website/Components/Common/Input";
 import Button from "@/website/Components/Common/Button";
 import TitleTag from "@/website/Components/Common/TitleTag";
+import Paragraph from "@/website/Components/Common/Paragraph";
 import { useDispatch, useSelector } from "@/redux/store";
 import {
   setLoading,
@@ -16,6 +17,7 @@ import {
 import { fetchUserCart } from "@/redux/slices/cartSlice";
 import { LoginUser } from "@/website/Utils/Api";
 import { setCookie } from "@/website/Helpers/Helper";
+import { CrossIcon } from "../Lib/Icons";
 
 interface LoginFormData {
   username: string;
@@ -153,20 +155,7 @@ const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
           aria-label="Close login modal"
           className="absolute top-[16px] right-[16px] z-10 flex items-center justify-center w-[36px] h-[36px] rounded-full bg-[#EDEDED] hover:bg-[#dedede] transition-colors cursor-pointer"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L15 15M15 1L1 15"
-              stroke="black"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
+          <CrossIcon color="#000000" />
         </button>
 
         <div className="flex flex-col laptop:flex-row items-center w-full gap-[20px] p-[24px] laptop:p-[40px]">
@@ -177,9 +166,9 @@ const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
                   Welcome Back
                 </TitleTag>
 
-                <TitleTag as="h2" variant="satoshiBold" className="!font-[400]">
+                <Paragraph variant="normalPara" className="text-black/60">
                   Sign in to your account to continue shopping.
-                </TitleTag>
+                </Paragraph>
               </header>
 
               <form
