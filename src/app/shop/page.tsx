@@ -3,7 +3,6 @@ import {
   Container,
   MainContainer,
 } from "@/website/Components/Common/Container";
-import { ProductGridSkeleton } from "@/website/Components/Common/ProductSkeleton";
 import SectionProductList from "@/website/Section/Products/SectionProductList";
 import SectionFilter from "@/website/Section/SectionFilters";
 import { FetchCategory, FetchProducts } from "@/website/Utils/Api";
@@ -71,7 +70,7 @@ export default async function Products({ searchParams }: Readonly<Props>) {
             <SectionFilter categories={categories} />
           </Suspense>
           <div className="flex w-full flex-col">
-            <Suspense fallback={<ProductGridSkeleton />}>
+            <Suspense fallback={null}>
               <SectionProductList
                 data={data?.products}
                 initialTotal={data?.total}

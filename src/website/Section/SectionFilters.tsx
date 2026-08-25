@@ -1,14 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { ChevronDown, FilterIcon, ArrowLeft } from "@/website/Lib/Icons";
-import Button from "@/website/Components/Common/Button";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import CheckBox from "@/website/Components/Common/CheckBox";
 import { useFilters } from "@/website/Hooks/UseFilters";
-import { MAX_PRICE, MIN_PRICE } from "@/redux/slices/filterSlice";
-import { useDispatch, useSelector } from "@/redux/store";
+import {
+  closeSideFiltersModal,
+  MAX_PRICE,
+  MIN_PRICE,
+  openSideFiltersModal,
+} from "@/redux/slices/filterSlice";
+import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { getCategories } from "@/redux/slices/productSlice";
 
 const extraFilters = [
@@ -457,7 +462,7 @@ export function FilterSectionDesktop({
         </TitleTag>
 
         <div className="flex items-center gap-2">
-          {hasActiveFilters && (
+          {hasActiveFilters ? (
             <button
               type="button"
               onClick={resetFilters}
@@ -465,13 +470,14 @@ export function FilterSectionDesktop({
             >
               Clear All
             </button>
+          ) : (
+            <div
+              className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#F5F5F5]"
+              aria-label="Filters"
+            >
+              <FilterIcon className="h-[16px] w-[16px] text-[#555555]" />
+            </div>
           )}
-          <div
-            className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#F5F5F5]"
-            aria-label="Filters"
-          >
-            <FilterIcon className="h-[16px] w-[16px] text-[#555555]" />
-          </div>
         </div>
       </div>
 
@@ -501,12 +507,17 @@ export function FilterSectionMobile({
   onClose,
   categories,
 }: Readonly<FilterSectionMobileProps>) {
+  const [mounted, setMounted] = useState(false);
   const [openFilters, setOpenFilters] = useState<string[]>([
     "Price",
     "Category",
   ]);
   const categoryList = useCategories(categories);
   const { filters, resetFilters } = useFilters();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -531,15 +542,18 @@ export function FilterSectionMobile({
     (filters.maxPrice !== null && filters.maxPrice < MAX_PRICE) ||
     Boolean(filters.rating);
 
-  return (
-    <>
+  if (!mounted) return null;
+
+  return createPortal(
+    <div
+      className={`fixed inset-0 z-[100] transition-opacity duration-300 ${
+        isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+      }`}
+    >
       <div
-        className={`fixed inset-0 z-[100] bg-black/50 backdrop-blur-xs transition-opacity duration-300 ${
-          isOpen
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
+        className="fixed inset-0 bg-black/50 backdrop-blur-xs cursor-pointer"
         onClick={onClose}
+        aria-hidden="true"
       />
       <div
         className={`fixed right-0 top-0 z-[110] flex h-full w-full max-w-[340px] flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out ${
@@ -586,30 +600,18 @@ export function FilterSectionMobile({
             }
           />
         </div>
-
-        <div className="flex gap-3 border-t border-[#EEEEEE] bg-white p-[16px]">
-          <Button
-            variant="secondary"
-            className="flex-1 !py-[12px] !text-[14px]"
-            onClick={resetFilters}
-          >
-            Reset
-          </Button>
-          <Button
-            variant="primary"
-            className="flex-1 !py-[12px] !text-[14px]"
-            onClick={onClose}
-          >
-            Apply Filters
-          </Button>
-        </div>
       </div>
-    </>
+    </div>,
+    document.body,
   );
 }
 
 const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const isSideFiltersOpen = useSelector(
+    (state: RootState) => state.filter.isSideFiltersModalOpen,
+  );
   const { filters } = useFilters();
 
   const hasActiveFilters =
@@ -632,22 +634,22 @@ const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
       <div className="w-full laptop:hidden">
         <button
           type="button"
-          onClick={() => setIsMobileOpen(true)}
+          onClick={() => dispatch(openSideFiltersModal())}
           className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-black/15 bg-white py-[10px] px-[16px] font-satoshi text-[14px] font-semibold text-black shadow-xs transition active:bg-[#F5F5F5]"
         >
           <FilterIcon className="h-[16px] w-[16px]" />
           <span>Filters</span>
           {hasActiveFilters && (
-            <span className="h-[7px] w-[7px] rounded-full bg-black" />
+            <span className="h-[7px] w-[7px]  rounded-full bg-black" />
           )}
         </button>
-
-        <FilterSectionMobile
-          isOpen={isMobileOpen}
-          onClose={() => setIsMobileOpen(false)}
-          categories={categories}
-        />
       </div>
+
+      <FilterSectionMobile
+        isOpen={isSideFiltersOpen}
+        onClose={() => dispatch(closeSideFiltersModal())}
+        categories={categories}
+      />
     </>
   );
 };

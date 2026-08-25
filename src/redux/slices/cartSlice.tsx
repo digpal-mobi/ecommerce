@@ -25,6 +25,7 @@ export interface CartState {
   discountedTotal: number;
   isLoading: boolean;
   error: string | null;
+  isMiniCartOpen: boolean;
 }
 
 const initialState: CartState = {
@@ -36,6 +37,7 @@ const initialState: CartState = {
   discountedTotal: 0,
   isLoading: false,
   error: null,
+  isMiniCartOpen: false,
 };
 
 // 1. GET User Cart - https://dummyjson.com/carts/user/{userId}
@@ -134,6 +136,18 @@ const cartSlice = createSlice({
   initialState,
 
   reducers: {
+    openMiniCart: (state) => {
+      state.isMiniCartOpen = true;
+    },
+
+    closeMiniCart: (state) => {
+      state.isMiniCartOpen = false;
+    },
+
+    toggleMiniCart: (state) => {
+      state.isMiniCartOpen = !state.isMiniCartOpen;
+    },
+
     addToCart: (state, action: PayloadAction<CartProduct>) => {
       const product = action.payload;
 
@@ -158,6 +172,7 @@ const cartSlice = createSlice({
         (total, item) => total + item.price * item.quantity,
         0,
       );
+      state.isMiniCartOpen = true;
     },
 
     updateCart: (
@@ -285,6 +300,7 @@ const cartSlice = createSlice({
           (total, item) => total + item.price * item.quantity,
           0,
         );
+        state.isMiniCartOpen = true;
       })
       .addCase(addToCartAsync.rejected, (state, action) => {
         state.isLoading = false;
@@ -326,7 +342,14 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, updateCart, removeFromCart, clearCart } =
-  cartSlice.actions;
+export const {
+  openMiniCart,
+  closeMiniCart,
+  toggleMiniCart,
+  addToCart,
+  updateCart,
+  removeFromCart,
+  clearCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
