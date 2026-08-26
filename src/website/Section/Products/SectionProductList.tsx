@@ -16,7 +16,7 @@ import SortingComponent from "@/website/Components/Common/Sorting";
 import { useFilters } from "@/website/Hooks/UseFilters";
 import { setTotal } from "@/redux/slices/paginationSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
-import { addToCartAsync } from "@/redux/slices/cartSlice";
+import { addToCartAsync, openMiniCart } from "@/redux/slices/cartSlice";
 import { openLoginModal } from "@/redux/slices/authSlice";
 import { FetchProducts } from "@/website/Utils/Api";
 import { useSearchParams } from "next/navigation";
