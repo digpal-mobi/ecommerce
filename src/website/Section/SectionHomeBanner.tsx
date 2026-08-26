@@ -36,7 +36,7 @@ const SectionHomeBanner = () => {
             onClick={handleClick}
             className="text-[#FFFFFF] flex justify-end cursor-pointer items-center"
           >
-            <CrossIcon />
+            <CrossIcon color="#FFFFFF" />
           </button>
         </div>
       </Container>
