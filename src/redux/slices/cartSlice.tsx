@@ -38,7 +38,7 @@ const initialState: CartState = {
   error: null,
 };
 
-// 1. GET User Cart
+// 1. GET User Cart - https://dummyjson.com/carts/user/{userId}
 export const fetchUserCart = createAsyncThunk(
   "cart/fetchUserCart",
   async (userId: number = 5, { rejectWithValue }) => {
@@ -47,6 +47,7 @@ export const fetchUserCart = createAsyncThunk(
       if (response.status === false) {
         return rejectWithValue(response.message ?? "Failed to fetch user cart");
       }
+      // DummyJSON returns { carts: [ { id, products, total, discountedTotal, userId, totalProducts, totalQuantity } ] }
       const cart =
         response.carts && response.carts.length > 0 ? response.carts[0] : null;
       return cart;
@@ -56,7 +57,7 @@ export const fetchUserCart = createAsyncThunk(
   },
 );
 
-// 2. Add to Cart
+// 2. Add to Cart (POST) - https://dummyjson.com/carts/add
 export const addToCartAsync = createAsyncThunk(
   "cart/addToCartAsync",
   async (
@@ -91,7 +92,7 @@ export const addToCartAsync = createAsyncThunk(
   },
 );
 
-// 3. Update Cart
+// 3. Update Cart (PUT) - https://dummyjson.com/carts/{cartId}
 export const updateCartAsync = createAsyncThunk(
   "cart/updateCartAsync",
   async (

@@ -20,7 +20,7 @@ const SectionCustomerTestimonial = () => {
           {TESTIMONIALS.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="embla__slide flex-[0_0_100%] mobile-lg:flex-[0_0_calc((100%-20px)/2)] desktop-lg:flex-[0_0_calc((30%-90px))] desktop:flex-[0_0_calc((100%-40px)/3)] laptop:flex-[0_0_calc((100%-40px)/2.5)] pl-0 mobile-lg:pl-[20px]"
+              className="embla__slide flex-[0_0_100%] mobile-lg:flex-[0_0_calc((100%-20px)/2)] laptop:flex-[0_0_calc((100%-40px)/3)] desktop-lg:flex-[0_0_calc((30%-90px))] pl-[20px]"
             >
               <ReviewCard
                 name={testimonial.name}
