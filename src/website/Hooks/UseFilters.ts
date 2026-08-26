@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -35,6 +35,8 @@ export const useFilters = () => {
 
   const pathname = usePathname();
 
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const searchParams = useSearchParams();
 
   const storedFilters = useSelector((state) => state.filter.filters);
@@ -46,6 +48,15 @@ export const useFilters = () => {
     () => getPaginationFromSearchParams(searchParams),
     [searchParams],
   );
+    // clearing the Timeout when user leaves the page
+    useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
 
   useEffect(() => {
     const urlFilters = getFiltersFromSearchParams(searchParams);
@@ -113,7 +124,13 @@ const replaceUrl = useCallback(
     (updates: Partial<FilterValues>) => {
       dispatch(setFilters(updates));
 
-      updateUrlParams(updates);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      debounceTimerRef.current = setTimeout(() => {
+        updateUrlParams(updates);
+      }, 500);
     },
     [dispatch, updateUrlParams],
   );

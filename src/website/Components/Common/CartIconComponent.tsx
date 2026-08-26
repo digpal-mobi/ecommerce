@@ -139,7 +139,7 @@ const CartIconComponent = () => {
       {isMiniCartOpen && (
         <div
           className="
-            absolute right-0 top-full mt-[10px]
+            absolute right-[-40px] top-full mt-[10px]
             w-[350px] sm:w-[400px]
             max-h-[460px]
             flex flex-col
