@@ -38,6 +38,7 @@ const CartIconComponent = () => {
   const handleRemoveCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(clearCart());
+    dispatch(closeMiniCart());
   };
 
   const handleViewCart = (e: React.MouseEvent) => {
@@ -79,7 +80,15 @@ const CartIconComponent = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
-      if (target?.closest('[data-cart-container="true"]')) {
+      if (
+        target?.closest('[data-cart-container="true"]') ||
+        cartRef.current?.contains(target as Node) ||
+        target
+          ?.closest("button")
+          ?.textContent?.toLowerCase()
+          .includes("cart") ||
+        target?.closest("[data-add-to-cart]")
+      ) {
         return;
       }
       dispatch(closeMiniCart());

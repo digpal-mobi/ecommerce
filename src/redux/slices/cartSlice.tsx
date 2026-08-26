@@ -201,6 +201,10 @@ const cartSlice = createSlice({
         (total, item) => total + item.price * item.quantity,
         0,
       );
+
+      if (state.products.length === 0) {
+        state.isMiniCartOpen = false;
+      }
     },
 
     removeFromCart: (state, action: PayloadAction<number>) => {
@@ -215,6 +219,10 @@ const cartSlice = createSlice({
         (total, item) => total + item.price * item.quantity,
         0,
       );
+
+      if (state.products.length === 0) {
+        state.isMiniCartOpen = false;
+      }
     },
 
     clearCart: (state) => {
@@ -225,6 +233,7 @@ const cartSlice = createSlice({
       state.cartId = null;
       state.userId = null;
       state.error = null;
+      state.isMiniCartOpen = false;
     },
   },
 
@@ -333,6 +342,10 @@ const cartSlice = createSlice({
           (total, item) => total + item.price * item.quantity,
           0,
         );
+
+        if (state.products.length === 0) {
+          state.isMiniCartOpen = false;
+        }
       })
       .addCase(updateCartAsync.rejected, (state, action) => {
         state.isLoading = false;

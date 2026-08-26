@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import {
   clearCart,
   removeFromCart,
+  updateCart,
   updateCartAsync,
   CartProduct,
 } from "@/redux/slices/cartSlice";
@@ -65,6 +66,7 @@ const SectionCart = () => {
   const totalAmount = Math.max(0, subtotal - discountAmount);
 
   const handleQuantityChange = (id: number, quantity: number) => {
+    dispatch(updateCart({ id, quantity }));
     dispatch(updateCartAsync({ id, quantity, cartId }));
   };
 
