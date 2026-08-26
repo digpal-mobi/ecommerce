@@ -13,6 +13,14 @@
   --breakpoint-desktop-lg: 1500px;
 }
 
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 .embla {
   overflow: hidden;
 }
@@ -29,11 +37,6 @@
 .embla__slide {
   transform: translate3d(0, 0, 0);
   min-width: 0;
-}
-
-/* Hide scrollbar for Webkit-based browsers */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
 }
 
 /* Dual Range Price Slider */
