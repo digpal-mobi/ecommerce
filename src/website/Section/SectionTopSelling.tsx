@@ -18,7 +18,7 @@ const SectionTopSelling = ({
   viewAllHref = "/shop?category=womens-dresses",
 }: Readonly<Props>) => {
   return (
-    <MainContainer>
+    <MainContainer data-testid="section-top-selling">
       <Container>
         <div className="laptop:pt-[80px] pt-[50px]">
           <div className="flex justify-center items-center w-full">
@@ -30,7 +30,10 @@ const SectionTopSelling = ({
             <ProductCard products={products} />
           </div>
           <div className="flex items-center justify-center mt-[10px]">
-            <Link href={viewAllHref}>
+            <Link
+              href={viewAllHref}
+              aria-label="View all top selling products"
+            >
               <Button variant="secondary" className="!px-[54px] !py-[16px]">
                 View All
               </Button>

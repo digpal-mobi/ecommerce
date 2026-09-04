@@ -78,7 +78,11 @@ const MobileNavigation = () => {
                 <HamburgerIcon />
               </button>
 
-              <Link href="/" className="cursor-pointer">
+              <Link
+                href="/"
+                className="cursor-pointer"
+                aria-label="SHOP.CO Homepage"
+              >
                 <LazyImage
                   src="/shop-logo.png"
                   alt="SHOP.CO"
@@ -166,6 +170,7 @@ const MobileNavigation = () => {
           <Link
             href="/"
             className="cursor-pointer"
+            aria-label="SHOP.CO Homepage"
             onClick={() => setIsOpen(false)}
           >
             <LazyImage

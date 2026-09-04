@@ -35,6 +35,7 @@ const Header = () => {
   const isSideFiltersOpen = useSelector(
     (state) => state.filter.isSideFiltersModalOpen,
   );
+
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -83,7 +84,7 @@ const Header = () => {
           <Container className="!py-0">
             <div className="flex items-center justify-between py-6">
               <div className="flex items-center gap-10 w-1/2 desktop:w-[50%] laptop:w-[65%]">
-                <Link href="/">
+                <Link href="/" aria-label="SHOP.CO Homepage">
                   <LazyImage
                     src="/shop-logo.png"
                     alt="SHOP.CO"

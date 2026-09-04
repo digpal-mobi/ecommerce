@@ -26,7 +26,11 @@ const SectionHomeBanner = () => {
           <div className="flex w-full justify-center items-center">
             <span className="text-[12px] laptop:text-[14px] font-satoshi font-[400] leading-[1em]">
               Sign up and get 20% off to your first order.
-              <Link className="font-[500] hover:underline" href={"/signup"}>
+              <Link
+                className="font-[500] hover:underline"
+                href={"/signup"}
+                aria-label="Sign up for 20% off your first order"
+              >
                 Sign Up Now
               </Link>
             </span>

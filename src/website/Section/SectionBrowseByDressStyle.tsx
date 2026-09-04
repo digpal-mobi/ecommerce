@@ -31,7 +31,7 @@ const DRESS_STYLES = [
 
 const SectionBrowseByDressStyle = () => {
   return (
-    <MainContainer>
+    <MainContainer data-testid="section-browse-by-dress-style">
       <Container>
         <div className="laptop:pt-[80px] pt-[40px]">
           <div className="rounded-[40px] bg-[#F0F0F0] px-[24px] tablet:px-[50px] laptop:px-[64px] py-[27px] laptop:py-[70px]">
@@ -44,6 +44,7 @@ const SectionBrowseByDressStyle = () => {
                 <Link
                   key={dress.title}
                   href={dress.href}
+                  aria-label={`Browse ${dress.title} dress styles`}
                   className={`
                   group relative overflow-hidden rounded-[20px] cursor-pointer block
                   ${index === 0 || index === 3 ? "col-span-1" : ""}

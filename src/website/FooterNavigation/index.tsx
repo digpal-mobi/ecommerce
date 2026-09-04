@@ -108,9 +108,9 @@ const index = () => {
             <div className="grid flex-1 grid-cols-2 gap-y-8 tablet:grid-cols-4 laptop:gap-x-10 desktop:gap-x-16">
               {FOOTER_NAVIGATION.map((section) => (
                 <div key={section.id}>
-                  <h4 className="mb-6 text-[14px] font-semibold uppercase tracking-[3px] text-black">
+                  <h3 className="mb-6 text-[14px] font-semibold uppercase tracking-[3px] text-black">
                     {section.title}
-                  </h4>
+                  </h3>
 
                   <ul className="space-y-4">
                     {section.items.map((item) => (

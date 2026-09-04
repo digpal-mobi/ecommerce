@@ -14,7 +14,7 @@ const OPTIONS: EmblaOptionsType = { loop: true };
 
 const SectionCustomerTestimonial = () => {
   return (
-    <MainContainer>
+    <MainContainer data-testid="section-customer-testimonial">
       <Container className="w-full py-10">
         <EmblaCarousel options={OPTIONS} title="OUR HAPPY CUSTOMERS">
           {TESTIMONIALS.map((testimonial) => (

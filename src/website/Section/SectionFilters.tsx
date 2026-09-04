@@ -14,7 +14,7 @@ import {
   openSideFiltersModal,
 } from "@/redux/slices/filterSlice";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
-import { getCategories } from "@/redux/slices/productSlice";
+import { setCategories } from "@/redux/slices/productSlice";
 
 const extraFilters = [
   {
@@ -187,7 +187,10 @@ function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
               className="flex cursor-pointer items-center gap-[10px] text-left transition hover:opacity-80"
               onClick={() => toggleCategory(option)}
             >
-              <div onClick={(e) => e.stopPropagation()}>
+              <div
+                className="flex items-center"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <CheckBox
                   checked={checked}
                   onChange={() => toggleCategory(option)}
@@ -313,41 +316,45 @@ function FilterOptions({
   );
 }
 
-function useCategories(serverCategories: any = []) {
+function useCategories(serverCategories?: any) {
   const dispatch = useDispatch();
-  const storedCategories = useSelector((state) => state.product.categories);
+  const storedCategories = useSelector(
+    (state: RootState) => state.product.categories,
+  );
 
   useEffect(() => {
-    const hasServerCategories =
-      (Array.isArray(serverCategories) && serverCategories.length > 0) ||
-      (Array.isArray(serverCategories?.data) &&
-        serverCategories.data.length > 0) ||
-      (Array.isArray(serverCategories?.categories) &&
-        serverCategories.categories.length > 0);
+    if (serverCategories) {
+      const list = Array.isArray(serverCategories)
+        ? serverCategories
+        : Array.isArray(serverCategories?.data)
+          ? serverCategories.data
+          : Array.isArray(serverCategories?.categories)
+            ? serverCategories.categories
+            : [];
 
-    if (
-      !hasServerCategories &&
-      (!storedCategories || storedCategories.length === 0)
-    ) {
-      dispatch(getCategories());
+      if (
+        list.length > 0 &&
+        (!storedCategories || storedCategories.length === 0)
+      ) {
+        dispatch(setCategories(list));
+      }
     }
   }, [dispatch, serverCategories, storedCategories]);
 
-  let list: any[] = [];
-  if (serverCategories) {
-    if (Array.isArray(serverCategories)) {
-      list = serverCategories;
-    } else if (Array.isArray(serverCategories.data)) {
-      list = serverCategories.data;
-    } else if (Array.isArray(serverCategories.products)) {
-      list = serverCategories.products;
-    } else if (Array.isArray(serverCategories.categories)) {
-      list = serverCategories.categories;
-    }
+  if (Array.isArray(storedCategories) && storedCategories.length > 0) {
+    return storedCategories;
   }
 
-  if (list.length > 0) return list;
-  return Array.isArray(storedCategories) ? storedCategories : [];
+  if (serverCategories) {
+    if (Array.isArray(serverCategories)) return serverCategories;
+    if (Array.isArray(serverCategories.data)) return serverCategories.data;
+    if (Array.isArray(serverCategories.products))
+      return serverCategories.products;
+    if (Array.isArray(serverCategories.categories))
+      return serverCategories.categories;
+  }
+
+  return [];
 }
 
 function FilterList({
@@ -547,7 +554,9 @@ export function FilterSectionMobile({
   return createPortal(
     <div
       className={`fixed inset-0 z-[100] transition-opacity duration-300 ${
-        isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        isOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
       }`}
     >
       <div
@@ -606,12 +615,30 @@ export function FilterSectionMobile({
   );
 }
 
-const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
+const SectionFilter = ({
+  serverCategories,
+}: Readonly<{ serverCategories?: any }>) => {
   const dispatch = useDispatch();
 
-  const isSideFiltersOpen = useSelector(
-    (state: RootState) => state.filter.isSideFiltersModalOpen,
+  const categories = useSelector(
+    (state: RootState) => state.product.categories,
   );
+
+  useEffect(() => {
+    if (serverCategories) {
+      const list = Array.isArray(serverCategories)
+        ? serverCategories
+        : Array.isArray(serverCategories?.data)
+          ? serverCategories.data
+          : Array.isArray(serverCategories?.categories)
+            ? serverCategories.categories
+            : [];
+      if (list.length > 0 && (!categories || categories.length === 0)) {
+        dispatch(setCategories(list));
+      }
+    }
+  }, [dispatch, serverCategories, categories]);
+
   const { filters } = useFilters();
 
   const hasActiveFilters =
@@ -628,7 +655,9 @@ const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
   return (
     <>
       <div className="hidden shrink-0 laptop:block">
-        <FilterSectionDesktop categories={categories} />
+        <FilterSectionDesktop
+          categories={categories.length > 0 ? categories : serverCategories}
+        />
       </div>
 
       <div className="w-full laptop:hidden">
@@ -644,12 +673,6 @@ const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
           )}
         </button>
       </div>
-
-      <FilterSectionMobile
-        isOpen={isSideFiltersOpen}
-        onClose={() => dispatch(closeSideFiltersModal())}
-        categories={categories}
-      />
     </>
   );
 };

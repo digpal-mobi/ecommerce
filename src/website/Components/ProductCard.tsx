@@ -14,6 +14,7 @@ import { openLoginModal } from "@/redux/slices/authSlice";
 import LazyImage from "./Common/LazyImage";
 import { useState } from "react";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
+import { openSideFiltersModal } from "@/redux/slices/filterSlice";
 
 type Props = Readonly<{
   products?: Array<any>;
@@ -99,12 +100,16 @@ const ProductCard = ({ products }: Readonly<Props>) => {
             key={items.id}
             className="flex flex-col justify-between shrink-0 w-[295px]"
           >
-            <Link href={`/shop/${items.id}`} className="relative block">
+            <Link
+              href={`/shop/${items.id}`}
+              aria-label={`View details for ${items.title}`}
+              className="relative block"
+            >
               <LazyImage
                 src={items.thumbnail}
                 width={295}
                 height={298}
-                alt="product image"
+                alt={items.title}
                 className="bg-[#F0EEED] rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer w-full h-auto"
               />
 
