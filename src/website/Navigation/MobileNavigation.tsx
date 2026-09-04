@@ -200,7 +200,7 @@ const MobileNavigation = () => {
                   <Link
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 py-4 text-[18px] font-medium hover:text-black/70 transition-colors"
+                    className="flex-1 py-4 text-[18px] font-medium hover:text-[#000000]/70 transition-colors"
                   >
                     {item.title}
                   </Link>
@@ -238,7 +238,7 @@ const MobileNavigation = () => {
                         key={child.href}
                         href={child.href}
                         onClick={() => setIsOpen(false)}
-                        className="py-1 text-[16px] text-[#000000]/70 hover:text-black transition-colors"
+                        className="py-1 text-[16px] text-[#000000]/70 hover:text-[#000000] transition-colors"
                       >
                         {child.title}
                       </Link>
@@ -251,7 +251,7 @@ const MobileNavigation = () => {
                 key={item.id}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="border-b border-[#000000]/40 py-4 text-[18px] font-medium hover:text-black/70 transition-colors"
+                className="border-b border-[#000000]/40 py-4 text-[18px] font-medium hover:text-[#000000]/70 transition-colors"
               >
                 {item.title}
               </Link>

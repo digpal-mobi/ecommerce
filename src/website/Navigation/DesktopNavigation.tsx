@@ -51,7 +51,7 @@ export const DesktopHeader = () => {
                 <div className="flex items-center gap-1">
                   <Link
                     href={item.href}
-                    className="text-[16px] font-normal text-black hover:text-black/70 transition-colors cursor-pointer"
+                    className="text-[16px] font-normal text-[#000000] hover:text-[#000000]/70 transition-colors cursor-pointer"
                   >
                     <span>{item.title}</span>
                   </Link>
@@ -92,7 +92,7 @@ export const DesktopHeader = () => {
                         key={subItem.href}
                         href={subItem.href}
                         onClick={() => setExpandedId(null)}
-                        className="block px-5 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                        className="block px-5 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#000000] transition-colors"
                       >
                         {subItem.title}
                       </Link>
@@ -103,7 +103,7 @@ export const DesktopHeader = () => {
             ) : (
               <Link
                 href={item.href}
-                className="text-[16px] font-normal text-black hover:text-black/70 transition-colors"
+                className="text-[16px] font-normal text-[#000000] hover:text-[#000000]/70 transition-colors"
               >
                 {item.title}
               </Link>

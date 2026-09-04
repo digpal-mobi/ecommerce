@@ -44,8 +44,8 @@ const SectionProductDetails = ({ data }: Readonly<{ data?: any }>) => {
                 onClick={() => setActiveTab(tab.id as Tab)}
                 className={`w-full pb-[24px] flex items-center justify-center border-b-2 transition-all cursor-pointer ${
                   active
-                    ? "border-black text-black"
-                    : "border-transparent text-black/60 hover:border-black/30 hover:text-black"
+                    ? "border-black text-[#000000]"
+                    : "border-transparent text-[#000000]/60 hover:border-black/30 hover:text-[#000000]"
                 }`}
               >
                 <TitleTag

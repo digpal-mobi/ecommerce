@@ -178,7 +178,7 @@ const SectionWishlist = () => {
                       </button>
 
                       {item.category && (
-                        <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-[10px] py-[3px] text-[11px] font-medium text-black/70 backdrop-blur-sm capitalize">
+                        <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-[10px] py-[3px] text-[11px] font-medium text-[#000000]/70 backdrop-blur-sm capitalize">
                           {item.category}
                         </span>
                       )}

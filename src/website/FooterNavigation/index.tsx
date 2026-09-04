@@ -34,14 +34,14 @@ const index = () => {
                     aria-label="Enter your email address to stay updated about latest offers"
                     type="email"
                     placeholder="Enter your email"
-                    className="w-full rounded-full border border-[#E5E5E5] bg-white py-3 pl-14 pr-5 text-[16px] font-medium text-black placeholder:text-[#000000]/40 focus:outline-none"
+                    className="w-full rounded-full border border-[#E5E5E5] bg-white py-3 pl-14 pr-5 text-[16px] font-medium text-[#000000] placeholder:text-[#000000]/40 focus:outline-none"
                   />
                 </div>
 
                 {/* Button */}
                 <button
                   type="button"
-                  className="w-full cursor-pointer rounded-full bg-white py-3 text-[16px] font-medium text-black transition hover:bg-gray-100"
+                  className="w-full cursor-pointer rounded-full bg-white py-3 text-[16px] font-medium text-[#000000] transition hover:bg-gray-100"
                 >
                   Subscribe To Newsletter
                 </button>
@@ -68,7 +68,7 @@ const index = () => {
                   href="#"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="flex h-[32px] w-[32px] hover:text-white text-black items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
+                  className="flex h-[32px] w-[32px] hover:text-white text-[#000000] items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
                   aria-label="Twitter"
                 >
                   <TwitterIcon filled color="#FFFFFF" />
@@ -78,7 +78,7 @@ const index = () => {
                   href="#"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="flex h-[32px] w-[32px] hover:text-white text-black items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
+                  className="flex h-[32px] w-[32px] hover:text-white text-[#000000] items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
                   aria-label="Facebook"
                 >
                   <FacebookIcon filled color="#FFFFFF" />
@@ -88,7 +88,7 @@ const index = () => {
                   href="#"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="flex h-[32px] w-[32px] hover:text-white text-black items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
+                  className="flex h-[32px] w-[32px] hover:text-white text-[#000000] items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
                   aria-label="Instagram"
                 >
                   <InstagramIcon filled color="#FFFFFF" />
@@ -98,7 +98,7 @@ const index = () => {
                   href="#"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="flex h-[32px] w-[32px] hover:text-white text-black items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
+                  className="flex h-[32px] w-[32px] hover:text-white text-[#000000] items-center border border-[#000000]/60 rounded-full hover:bg-[#000000] transition justify-center"
                   aria-label="Github"
                 >
                   <GithubIcon filled color="#FFFFFF" />
@@ -110,7 +110,7 @@ const index = () => {
             <div className="grid flex-1 grid-cols-2 gap-y-8 tablet:grid-cols-4 laptop:gap-x-10 desktop:gap-x-16">
               {FOOTER_NAVIGATION.map((section) => (
                 <div key={section.id}>
-                  <h3 className="mb-6 text-[14px] font-semibold uppercase tracking-[3px] text-black">
+                  <h3 className="mb-6 text-[14px] font-semibold uppercase tracking-[3px] text-[#000000]">
                     {section.title}
                   </h3>
 
@@ -119,7 +119,7 @@ const index = () => {
                       <li key={item.href}>
                         <Link
                           href={item.href}
-                          className="text-[15px] text-[#666666] transition hover:text-black"
+                          className="text-[15px] text-[#666666] transition hover:text-[#000000]"
                         >
                           {item.title}
                         </Link>

@@ -59,7 +59,7 @@ const SectionBrowseByDressStyle = () => {
                     className="h-[290px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
 
-                  <h3 className="absolute left-[36px] top-[25px] font-satoshi text-[36px] font-bold text-black">
+                  <h3 className="absolute left-[36px] top-[25px] font-satoshi text-[36px] font-bold text-[#000000]">
                     {dress.title}
                   </h3>
                 </Link>

@@ -20,7 +20,7 @@ const SectionTopSelling = ({
   return (
     <MainContainer data-testid="section-top-selling">
       <Container>
-        <div className="laptop:pt-[80px] pt-[50px]">
+        <div className="laptop:pt-[64px] pt-[50px]">
           <div className="flex justify-center items-center w-full">
             <TitleTag as="h2" variant="heading">
               TOP SELLING
@@ -30,10 +30,7 @@ const SectionTopSelling = ({
             <ProductCard products={products} />
           </div>
           <div className="flex items-center justify-center mt-[10px]">
-            <Link
-              href={viewAllHref}
-              aria-label="View all top selling products"
-            >
+            <Link href={viewAllHref} aria-label="View all top selling products">
               <Button variant="secondary" className="!px-[54px] !py-[16px]">
                 View All
               </Button>

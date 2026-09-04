@@ -7,8 +7,8 @@ export default function SectionRating({
   const roundedRating = RoundRating(rating);
 
   return (
-    <div className=" flex items-center mt-[4px] gap-[13px]">
-      <div className="flex items-center gap-[4px]">
+    <div className=" flex items-center mt-[10px] gap-[13px]">
+      <div className="flex items-center gap-[9px]">
         {[1, 2, 3, 4, 5].map((star) => (
           <div key={star} className="cursor-pointer">
             {roundedRating >= star ? (

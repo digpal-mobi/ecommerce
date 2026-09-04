@@ -19,7 +19,7 @@ const WishlistIconComponent = () => {
   return (
     <Link
       href="/wishlist"
-      className="relative flex items-center justify-center p-1 text-black hover:text-red-500 transition-colors"
+      className="relative flex items-center justify-center p-1 text-[#000000] hover:text-red-500 transition-colors"
       aria-label={`Wishlist with ${count} items`}
     >
       <WishlistIcon className="h-[22px] w-[22px]" />

@@ -40,17 +40,17 @@ const SectionMainBanner = () => {
           className="object-contain object-right-bottom"
         />
 
-        <div className="absolute top-[13.4%] right-[1%]">
+        <div className="absolute top-[12.8%] right-[1.5%]">
           <SparkleIcon2 className="laptop:w-[104px] w-[76px] h-auto" />
         </div>
 
-        <div className="absolute top-[45.4%] left-[10.5%]">
+        <div className="absolute top-[44.5%] left-[10.5%]">
           <SparkleIcon className="" />
         </div>
       </div>
 
       <MainContainer>
-        <Container className="laptop:!pt-[83px] laptop:!pb-[123px] ">
+        <Container className="laptop:!pt-[83px] laptop:!pb-[114px] ">
           <div className="relative z-10 flex min-h-[50%] items-center">
             <div className="w-full laptop:max-w-[52%] ">
               <TitleTag
@@ -63,7 +63,7 @@ const SectionMainBanner = () => {
 
               <Paragraph
                 variant="normalPara"
-                className="desktop:mt-[24px] mt-[14px] laptop:w-[87%] w-[100%] !text-[14px] laptop:!text-[16px] laptop:!leading-[24px] !leading-[21px] text-black/60"
+                className="desktop:mt-[24px] mt-[14px] laptop:w-[87%] w-[100%] !text-[14px] laptop:!text-[16px] laptop:!leading-[24px] !leading-[21px] text-[#000000]/60"
               >
                 Browse through our diverse range of met iculously crafted
                 garments, designed to bring out your individuality and cater to
@@ -89,7 +89,7 @@ const SectionMainBanner = () => {
                     <div
                       className={`${
                         index === 2
-                          ? "w-full laptop:mt-[0px] mt-[17px] laptop:pl-[0px] pl-[8px]  flex justify-center items-center laptop:w-auto laptop:mt-0"
+                          ? "w-full laptop:mt-[0px] mt-[17px] laptop:pl-[0px] pl-[5px]  flex justify-center items-center laptop:w-auto laptop:mt-0"
                           : "w-[48%] laptop:w-auto flex justify-center items-center"
                       }`}
                     >
@@ -99,8 +99,8 @@ const SectionMainBanner = () => {
                 index === 0
                   ? "laptop:pr-[32px] w-full pl-[42px] laptop:pl-[0px]"
                   : index === Metrics.length - 1
-                    ? "laptop:pl-[33px] pl-[48px]"
-                    : "laptop:px-[26px] w-full pl-[30px]"
+                    ? "laptop:pl-[35px] pl-[0px]"
+                    : "laptop:pr-[26px] laptop:pl-[33px] w-full pl-[30px]"
               }
             `}
                       >
@@ -113,7 +113,7 @@ const SectionMainBanner = () => {
                         </TitleTag>
 
                         <Paragraph
-                          className="laptop:mt-[8px] !mt-[0px] !text-[12px] laptop:text-[16px] text-black/60"
+                          className="laptop:!mt-[5px] !mt-[0px] !text-[12px] laptop:!text-[16px] text-[#000000]/60"
                           variant="normalPara"
                         >
                           {item.description}
@@ -142,12 +142,12 @@ const SectionMainBanner = () => {
           className="w-full h-[448px] overflow-hidden object-contain object-bottom"
         />
 
-        <div className="absolute top-[15%] right-[8%] ">
+        <div className="absolute top-[7%] right-[5%] ">
           <SparkleIcon2 className="w-[76px] h-auto laptop:w-[104px]" />
         </div>
 
-        <div className="absolute top-[45%] left-[8%]">
-          <SparkleIcon className="w-[56px] h-auto laptop:w-[76px]" />
+        <div className="absolute top-[28.7%] left-[7%]">
+          <SparkleIcon className="w-[44px] h-auto laptop:w-[76px]" />
         </div>
       </div>
     </section>

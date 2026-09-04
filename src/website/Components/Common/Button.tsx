@@ -26,12 +26,12 @@ const BUTTON_VARIANTS: Record<
 
   secondary: {
     button:
-      "border border-black/10 bg-white text-black hover:opacity-80 flex items-center justify-center",
+      "border border-black/10 bg-white text-[#000000] hover:opacity-80 flex items-center justify-center",
   },
 
   outline: {
     button:
-      "border-2 border-[#000000]/30 bg-transparent text-black hover:bg-black hover:text-white flex items-center justify-center",
+      "border-2 border-[#000000]/30 bg-transparent text-[#000000] hover:bg-black hover:text-white flex items-center justify-center",
   },
 };
 

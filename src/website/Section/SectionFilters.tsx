@@ -106,7 +106,7 @@ function PriceFilter() {
             const value = Number(e.target.value.replace(/\s/g, ""));
             if (!Number.isNaN(value)) handleMinChange(value);
           }}
-          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] font-satoshi text-[13px] font-[500] text-black outline-none transition-colors focus:border-black"
+          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] font-satoshi text-[13px] font-[500] text-[#000000] outline-none transition-colors focus:border-black"
         />
         <span className="h-[1px] w-[16px] shrink-0 bg-[#D4D4D4]" />
         <input
@@ -118,7 +118,7 @@ function PriceFilter() {
             const value = Number(e.target.value.replace(/\s/g, ""));
             if (!Number.isNaN(value)) handleMaxChange(value);
           }}
-          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] text-end font-satoshi text-[13px] font-[500] text-black outline-none transition-colors focus:border-black"
+          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] text-end font-satoshi text-[13px] font-[500] text-[#000000] outline-none transition-colors focus:border-black"
         />
       </div>
       <div className="relative mt-[14px] mb-[6px] flex h-[24px] w-full items-center">
@@ -201,7 +201,7 @@ function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
               <Paragraph
                 variant="normalPara"
                 className={`!text-[13px] capitalize select-none ${
-                  checked ? "!font-semibold !text-black" : "!text-[#555555]"
+                  checked ? "!font-semibold !text-[#000000]" : "!text-[#555555]"
                 }`}
               >
                 {formatCategory(option)}
@@ -298,7 +298,7 @@ function FilterOptions({
               <Paragraph
                 variant="normalPara"
                 className={`!text-[13px] select-none ${
-                  checked ? "!font-semibold !text-black" : "!text-[#555555]"
+                  checked ? "!font-semibold !text-[#000000]" : "!text-[#555555]"
                 }`}
               >
                 {formatOption(filterKey, option)}
@@ -399,7 +399,7 @@ function FilterList({
               <TitleTag
                 as="h3"
                 variant="satoshiBold"
-                className="!text-[15px] font-semibold text-[#111111] transition-colors group-hover:text-black"
+                className="!text-[15px] font-semibold text-[#111111] transition-colors group-hover:text-[#000000]"
               >
                 {filter.label}
               </TitleTag>
@@ -580,7 +580,7 @@ export function FilterSectionMobile({
               className="flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-full hover:bg-[#F5F5F5]"
               aria-label="Close filters"
             >
-              <ArrowLeft className="h-[18px] w-[18px] text-black" />
+              <ArrowLeft className="h-[18px] w-[18px] text-[#000000]" />
             </button>
             <TitleTag as="h2" variant="bold" className="!text-[20px]">
               Filters
@@ -667,7 +667,7 @@ const SectionFilter = ({
         <button
           type="button"
           onClick={() => dispatch(openSideFiltersModal())}
-          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-black/15 bg-white py-[10px] px-[16px] font-satoshi text-[14px] font-semibold text-black shadow-xs transition active:bg-[#F5F5F5]"
+          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-black/15 bg-white py-[10px] px-[16px] font-satoshi text-[14px] font-semibold text-[#000000] shadow-xs transition active:bg-[#F5F5F5]"
         >
           <FilterIcon className="h-[16px] w-[16px]" />
           <span>Filters</span>

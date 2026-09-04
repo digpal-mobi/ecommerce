@@ -20,7 +20,7 @@ const SectionNewArrival = ({
   return (
     <MainContainer data-testid="section-new-arrival">
       <Container>
-        <div className="laptop:pt-[80px] pt-[50px]">
+        <div className="laptop:pt-[85px] pt-[50px] pb-[40px] laptop:pb-[64px]">
           <div className="flex justify-center items-center w-full">
             <TitleTag as="h2" variant="heading">
               NEW ARRIVALS

@@ -22,12 +22,12 @@ const SectionHomeBanner = () => {
   return (
     <MainContainer className="bg-[#000000]">
       <Container>
-        <div className="flex text-[#FFF] w-full py-[10px] h-full">
-          <div className="flex w-full justify-center items-center">
+        <div className="flex text-[#FFF] w-full py-[12px] h-full">
+          <div className="flex w-full justify-center items-center pl-[12px]">
             <span className="text-[12px] laptop:text-[14px] font-satoshi font-[400] leading-[1em]">
               Sign up and get 20% off to your first order.
               <Link
-                className="font-[500] hover:underline"
+                className="font-[500] hover:underline pl-[5px]"
                 href={"/signup"}
                 aria-label="Sign up for 20% off your first order"
               >

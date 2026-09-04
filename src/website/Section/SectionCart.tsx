@@ -163,7 +163,7 @@ const SectionCart = () => {
 
                           <Paragraph
                             variant="boldPara"
-                            className="!text-[16px] sm:!text-[18px] text-black"
+                            className="!text-[16px] sm:!text-[18px] text-[#000000]"
                           >
                             {CurrencyConverter(item.price, currency)}
                           </Paragraph>
@@ -261,7 +261,7 @@ const SectionCart = () => {
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value)}
                       placeholder="Add promo code"
-                      className="w-full bg-transparent uppercase font-satoshi text-[14px] text-black outline-none placeholder:text-[#000000]/40"
+                      className="w-full bg-transparent uppercase font-satoshi text-[14px] text-[#000000] outline-none placeholder:text-[#000000]/40"
                     />
                   </div>
                   <Button

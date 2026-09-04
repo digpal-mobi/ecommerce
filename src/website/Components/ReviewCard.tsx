@@ -17,14 +17,14 @@ const ReviewCard = ({ name, review, rating = 5 }: Readonly<Props>) => {
       </div>
 
       <div className="mt-[15px] flex items-center gap-[8px]">
-        <h3 className="font-satoshi text-[16px] laptop:text-[20px] font-[700] leading-[22px] text-black">
+        <h3 className="font-satoshi text-[16px] laptop:text-[20px] font-[700] leading-[22px] text-[#000000]">
           {name}
         </h3>
 
         <CheckCircleIcon className="h-[24px] w-[24px]" />
       </div>
 
-      <p className="mt-[12px] flex-1 font-satoshi text-[14px] laptop:text-[16px] leading-[22px] text-black/60">
+      <p className="mt-[12px] flex-1 font-satoshi text-[14px] laptop:text-[16px] leading-[22px] text-[#000000]/60">
         &quot;{review}&quot;
       </p>
     </div>

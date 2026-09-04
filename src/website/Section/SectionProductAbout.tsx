@@ -192,7 +192,7 @@ const SectionProductAbout = ({ data }: Readonly<Props>) => {
                   <WishlistIcon
                     filled={isWishlisted}
                     className={`h-[22px] w-[22px] transition-transform duration-200 ${
-                      isWishlisted ? "scale-110 text-white" : "text-black"
+                      isWishlisted ? "scale-110 text-white" : "text-[#000000]"
                     }`}
                   />
                 </button>

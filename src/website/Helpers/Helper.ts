@@ -56,10 +56,10 @@ export const CurrencyConverter = (amount: number, currency: string) => {
 
   if (rates) {
     const convertedAmount = formatPrice(rates.rate * amount);
-    return `${rates.label} ${convertedAmount}`;
+    return `<span class="mr-[-6px]">${rates.label} </span>${convertedAmount}`;
   }
 
-  return `$ ${formatPrice(amount)}`;
+  return `$${formatPrice(amount)}`;
 };
 
 
@@ -89,7 +89,7 @@ export const GetPaginationPages = (totalPages: number, currentPage: number) => {
 
 export function formatPrice(number: number): string {
   return new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(Number(number) || 0);
 }

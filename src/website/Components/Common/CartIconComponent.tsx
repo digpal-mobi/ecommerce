@@ -199,7 +199,7 @@ const CartIconComponent = () => {
 
                           <Paragraph
                             variant="normalPara"
-                            className="!text-[14px] text-black/70"
+                            className="!text-[14px] text-[#000000]/70"
                           >
                             {product.quantity} x{" "}
                             {CurrencyConverter(product.price, currency)}
@@ -238,7 +238,7 @@ const CartIconComponent = () => {
                 <button
                   type="button"
                   onClick={handleRemoveCart}
-                  className="flex-1 rounded-full py-[12px] px-[16px] border border-black/10 bg-white text-black hover:opacity-80 font-satoshi text-[14px] font-[500] leading-[1.3em] transition-all text-center cursor-pointer"
+                  className="flex-1 rounded-full py-[12px] px-[16px] border border-black/10 bg-white text-[#000000] hover:opacity-80 font-satoshi text-[14px] font-[500] leading-[1.3em] transition-all text-center cursor-pointer"
                 >
                   Clear Cart
                 </button>
@@ -248,7 +248,7 @@ const CartIconComponent = () => {
             <div className="flex flex-row-reverse gap-1">
               <button
                 type="button"
-                className="text-[#000000]/60 px-[10px] hover:text-black cursor-pointer"
+                className="text-[#000000]/60 px-[10px] hover:text-[#000000] cursor-pointer"
                 onClick={() => dispatch(closeMiniCart())}
                 aria-label="Close empty cart"
               >
