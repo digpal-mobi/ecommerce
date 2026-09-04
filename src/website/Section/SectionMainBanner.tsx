@@ -31,7 +31,7 @@ const SectionMainBanner = () => {
       data-testid="section-main-banner"
       className="relative overflow-hidden bg-[#F2F0F1]"
     >
-      <div className="hidden laptop:block absolute right-[4%] bottom-0 w-[48%] h-full">
+      <div className="hidden laptop:block absolute right-[5%] bottom-0 w-[48%] h-full">
         <LazyImage
           src="/banner-image.png"
           alt="Banner"
@@ -40,11 +40,11 @@ const SectionMainBanner = () => {
           className="object-contain object-right-bottom"
         />
 
-        <div className="absolute top-[13.4%] right-[3%]">
+        <div className="absolute top-[13.4%] right-[1%]">
           <SparkleIcon2 className="laptop:w-[104px] w-[76px] h-auto" />
         </div>
 
-        <div className="absolute top-[45.4%] left-[8.5%]">
+        <div className="absolute top-[45.4%] left-[10.5%]">
           <SparkleIcon className="" />
         </div>
       </div>

@@ -25,6 +25,8 @@ const SearchBarContent = () => {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <Input
+        id="search-products-input"
+        aria-label="Search for products"
         className="!py-[0px]"
         type="text"
         placeholder="Search for Products.."
@@ -43,6 +45,8 @@ const SearchBar = () => {
         fallback={
           <form className="w-full">
             <Input
+              id="search-products-fallback"
+              aria-label="Search for products"
               className="!py-[0px]"
               type="text"
               placeholder="Search for Products.."

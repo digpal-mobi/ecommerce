@@ -24,7 +24,7 @@ const WishlistIconComponent = () => {
     >
       <WishlistIcon className="h-[22px] w-[22px]" />
       {count > 0 && (
-        <span className="absolute top-[-4px] right-[-4px] font-[700] min-w-[18px] h-[18px] px-[4px] flex items-center justify-center text-white rounded-full text-[11px] bg-red-500 shadow-sm animate-in fade-in zoom-in duration-200">
+        <span className="absolute top-[-4px] right-[-4px] font-[700] min-w-[18px] h-[18px] px-[4px] flex items-center justify-center text-white rounded-full text-[11px] bg-[#dc2626] shadow-sm animate-in fade-in zoom-in duration-200">
           {count}
         </span>
       )}

@@ -38,6 +38,7 @@ const SectionHomeBanner = () => {
           <button
             type="button"
             onClick={handleClick}
+            aria-label="Close promotion banner"
             className="text-[#FFFFFF] flex justify-end cursor-pointer items-center"
           >
             <CrossIcon color="#FFFFFF" />

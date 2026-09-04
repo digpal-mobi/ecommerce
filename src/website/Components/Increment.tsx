@@ -29,7 +29,8 @@ const Increment = ({
       <button
         type="button"
         onClick={handleDecrease}
-        className="flex items-center justify-center hover:opacity-70 transition-opacity"
+        aria-label="Decrease quantity"
+        className="flex items-center justify-center hover:opacity-70 transition-opacity cursor-pointer"
       >
         <MinusIcon />
       </button>
@@ -41,7 +42,8 @@ const Increment = ({
       <button
         type="button"
         onClick={handleIncrease}
-        className="flex items-center justify-center hover:opacity-70 transition-opacity"
+        aria-label="Increase quantity"
+        className="flex items-center justify-center hover:opacity-70 transition-opacity cursor-pointer"
       >
         <PlusIcon />
       </button>

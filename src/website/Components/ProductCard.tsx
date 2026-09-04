@@ -14,7 +14,6 @@ import { openLoginModal } from "@/redux/slices/authSlice";
 import LazyImage from "./Common/LazyImage";
 import { useState } from "react";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
-import { openSideFiltersModal } from "@/redux/slices/filterSlice";
 
 type Props = Readonly<{
   products?: Array<any>;

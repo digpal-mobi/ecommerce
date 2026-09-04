@@ -8,7 +8,6 @@ import Paragraph from "@/website/Components/Common/Paragraph";
 import CheckBox from "@/website/Components/Common/CheckBox";
 import { useFilters } from "@/website/Hooks/UseFilters";
 import {
-  closeSideFiltersModal,
   MAX_PRICE,
   MIN_PRICE,
   openSideFiltersModal,
@@ -101,6 +100,7 @@ function PriceFilter() {
         <input
           type="text"
           placeholder={String(MIN_PRICE)}
+          aria-label="Minimum price"
           value={String(minPrice)}
           onChange={(e) => {
             const value = Number(e.target.value.replace(/\s/g, ""));
@@ -112,6 +112,7 @@ function PriceFilter() {
         <input
           type="text"
           placeholder={String(MAX_PRICE)}
+          aria-label="Maximum price"
           value={String(maxPrice)}
           onChange={(e) => {
             const value = Number(e.target.value.replace(/\s/g, ""));
@@ -193,6 +194,7 @@ function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
               >
                 <CheckBox
                   checked={checked}
+                  aria-label={formatCategory(option)}
                   onChange={() => toggleCategory(option)}
                 />
               </div>
@@ -289,6 +291,7 @@ function FilterOptions({
               >
                 <CheckBox
                   checked={checked}
+                  aria-label={formatOption(filterKey, option)}
                   onChange={() => handleToggle(option)}
                 />
               </div>

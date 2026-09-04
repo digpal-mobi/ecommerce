@@ -128,7 +128,7 @@ const CartIconComponent = () => {
         </div>
 
         <span
-          className={`absolute top-[-8px] right-[-1px] font-[700] w-[18px] h-[18px] flex items-center justify-center text-white rounded-full text-[12px] bg-red-500 transition-transform duration-300 ${
+          className={`absolute top-[-8px] right-[-1px] font-[700] w-[18px] h-[18px] flex items-center justify-center text-white rounded-full text-[12px] bg-[#dc2626] transition-transform duration-300 ${
             isCartAnimating ? "scale-125" : "scale-100"
           }`}
         >

@@ -30,6 +30,8 @@ const index = () => {
                   <MailIcon className="absolute left-5 top-1/2 -translate-y-1/2 text-[#000000]/40" />
 
                   <input
+                    id="newsletter-email-input"
+                    aria-label="Enter your email address to stay updated about latest offers"
                     type="email"
                     placeholder="Enter your email"
                     className="w-full rounded-full border border-[#E5E5E5] bg-white py-3 pl-14 pr-5 text-[16px] font-medium text-black placeholder:text-[#000000]/40 focus:outline-none"
