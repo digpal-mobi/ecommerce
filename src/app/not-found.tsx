@@ -22,7 +22,7 @@ export default function NotFound() {
             <TitleTag
               as="h1"
               variant="mainHeading"
-              className="!text-[80px] !font-satoshi tablet:!text-[120px] !leading-none font-bold text-black"
+              className="!text-[80px] !font-satoshi tablet:!text-[120px] !leading-none font-bold text-[#000000]"
             >
               404
             </TitleTag>
@@ -37,7 +37,7 @@ export default function NotFound() {
 
             <Paragraph
               variant="normalPara"
-              className="mt-3 text-[16px] text-black/60 max-w-[450px]"
+              className="mt-3 text-[16px] text-[#000000]/60 max-w-[450px]"
             >
               Sorry, the page you are looking for doesn&apos;t exist, has been
               removed, or is temporarily unavailable.

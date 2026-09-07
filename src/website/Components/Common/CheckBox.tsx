@@ -6,6 +6,7 @@ type CheckBoxProps = Readonly<
   Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
     id?: string;
     label?: string;
+    "aria-label"?: string;
     checked: boolean;
     onChange: (checked: boolean) => void;
     disabled?: boolean;
@@ -16,16 +17,18 @@ type CheckBoxProps = Readonly<
 const CheckBox = ({
   id,
   label,
+  "aria-label": ariaLabel,
   checked,
   onChange,
   disabled = false,
   className = "",
   ...props
 }: Readonly<CheckBoxProps>) => {
+  const accessibleName = ariaLabel || label;
   const inputId =
     id ||
-    (label
-      ? `checkbox-${label.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`
+    (accessibleName
+      ? `checkbox-${accessibleName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`
       : undefined);
 
   return (
@@ -41,6 +44,7 @@ const CheckBox = ({
           type="checkbox"
           checked={checked}
           disabled={disabled}
+          aria-label={accessibleName}
           onChange={(e) => onChange(e.target.checked)}
           className="sr-only"
           {...props}

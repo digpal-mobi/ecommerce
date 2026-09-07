@@ -163,7 +163,7 @@ const SectionCart = () => {
 
                           <Paragraph
                             variant="boldPara"
-                            className="!text-[16px] sm:!text-[18px] text-black"
+                            className="!text-[16px] sm:!text-[18px] text-[#000000]"
                           >
                             {CurrencyConverter(item.price, currency)}
                           </Paragraph>
@@ -255,11 +255,13 @@ const SectionCart = () => {
                   <div className="relative flex-1 flex items-center rounded-full bg-[#F0F0F0] px-[16px]">
                     <PromoTagIcon className="h-[20px] w-[20px] text-[#000000]/40 shrink-0 mr-2" />
                     <Input
+                      id="promo-code-input"
+                      aria-label="Add promo code"
                       type="text"
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value)}
                       placeholder="Add promo code"
-                      className="w-full bg-transparent uppercase font-satoshi text-[14px] text-black outline-none placeholder:text-[#000000]/40"
+                      className="w-full bg-transparent uppercase font-satoshi text-[14px] text-[#000000] outline-none placeholder:text-[#000000]/40"
                     />
                   </div>
                   <Button

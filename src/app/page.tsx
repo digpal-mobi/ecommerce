@@ -6,6 +6,8 @@ import SectionNewArrival from "@/website/Section/SectionNewArrival";
 import SectionTopSelling from "@/website/Section/SectionTopSelling";
 import { FetchProductsByCategory } from "@/website/Utils/Api";
 import { Metadata } from "next";
+import { PRODUCTS_DATA_1, PRODUCTS_DATA_2 } from "@/website/Data/ProductData";
+import Container from "@/website/Components/Common/Container";
 
 export const metadata: Metadata = {
   title: "Home Page || Ecommerce",
@@ -13,20 +15,23 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const topSellingResult = await FetchProductsByCategory("womens-dresses", 4);
+  // const topSellingResult = await FetchProductsByCategory("womens-dresses", 4);
 
-  const NewArrivalResult = await FetchProductsByCategory("tops", 4);
+  // const NewArrivalResult = await FetchProductsByCategory("tops", 4);
 
   return (
     <div>
       <SectionMainBanner />
       <SectionBrandLogo />
       <SectionNewArrival
-        products={NewArrivalResult?.products ?? []}
+        products={PRODUCTS_DATA_1}
         viewAllHref="/shop?category=tops"
       />
+      <div className="mx-auto w-full max-w-[1920px] px-[16px] tablet-lg:px-[30px] laptop:px-[80px] desktop:px-[100px]">
+        <div className="h-[1px] w-full bg-black/10" />
+      </div>
       <SectionTopSelling
-        products={topSellingResult?.products ?? []}
+        products={PRODUCTS_DATA_2}
         viewAllHref="/shop?category=womens-dresses"
       />
       <SectionBrowseByDressStyle />

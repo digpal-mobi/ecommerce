@@ -8,13 +8,12 @@ import Paragraph from "@/website/Components/Common/Paragraph";
 import CheckBox from "@/website/Components/Common/CheckBox";
 import { useFilters } from "@/website/Hooks/UseFilters";
 import {
-  closeSideFiltersModal,
   MAX_PRICE,
   MIN_PRICE,
   openSideFiltersModal,
 } from "@/redux/slices/filterSlice";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
-import { getCategories } from "@/redux/slices/productSlice";
+import { setCategories } from "@/redux/slices/productSlice";
 
 const extraFilters = [
   {
@@ -101,23 +100,25 @@ function PriceFilter() {
         <input
           type="text"
           placeholder={String(MIN_PRICE)}
+          aria-label="Minimum price"
           value={String(minPrice)}
           onChange={(e) => {
             const value = Number(e.target.value.replace(/\s/g, ""));
             if (!Number.isNaN(value)) handleMinChange(value);
           }}
-          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] font-satoshi text-[13px] font-[500] text-black outline-none transition-colors focus:border-black"
+          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] font-satoshi text-[13px] font-[500] text-[#000000] outline-none transition-colors focus:border-black"
         />
         <span className="h-[1px] w-[16px] shrink-0 bg-[#D4D4D4]" />
         <input
           type="text"
           placeholder={String(MAX_PRICE)}
+          aria-label="Maximum price"
           value={String(maxPrice)}
           onChange={(e) => {
             const value = Number(e.target.value.replace(/\s/g, ""));
             if (!Number.isNaN(value)) handleMaxChange(value);
           }}
-          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] text-end font-satoshi text-[13px] font-[500] text-black outline-none transition-colors focus:border-black"
+          className="h-[38px] w-[100px] min-w-[90px] rounded-[6px] border border-[#D4D4D4] bg-transparent px-[10px] text-end font-satoshi text-[13px] font-[500] text-[#000000] outline-none transition-colors focus:border-black"
         />
       </div>
       <div className="relative mt-[14px] mb-[6px] flex h-[24px] w-full items-center">
@@ -187,16 +188,20 @@ function CategoryOptions({ categories }: Readonly<{ categories: any[] }>) {
               className="flex cursor-pointer items-center gap-[10px] text-left transition hover:opacity-80"
               onClick={() => toggleCategory(option)}
             >
-              <div onClick={(e) => e.stopPropagation()}>
+              <div
+                className="flex items-center"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <CheckBox
                   checked={checked}
+                  aria-label={formatCategory(option)}
                   onChange={() => toggleCategory(option)}
                 />
               </div>
               <Paragraph
                 variant="normalPara"
                 className={`!text-[13px] capitalize select-none ${
-                  checked ? "!font-semibold !text-black" : "!text-[#555555]"
+                  checked ? "!font-semibold !text-[#000000]" : "!text-[#555555]"
                 }`}
               >
                 {formatCategory(option)}
@@ -286,13 +291,14 @@ function FilterOptions({
               >
                 <CheckBox
                   checked={checked}
+                  aria-label={formatOption(filterKey, option)}
                   onChange={() => handleToggle(option)}
                 />
               </div>
               <Paragraph
                 variant="normalPara"
                 className={`!text-[13px] select-none ${
-                  checked ? "!font-semibold !text-black" : "!text-[#555555]"
+                  checked ? "!font-semibold !text-[#000000]" : "!text-[#555555]"
                 }`}
               >
                 {formatOption(filterKey, option)}
@@ -313,41 +319,45 @@ function FilterOptions({
   );
 }
 
-function useCategories(serverCategories: any = []) {
+function useCategories(serverCategories?: any) {
   const dispatch = useDispatch();
-  const storedCategories = useSelector((state) => state.product.categories);
+  const storedCategories = useSelector(
+    (state: RootState) => state.product.categories,
+  );
 
   useEffect(() => {
-    const hasServerCategories =
-      (Array.isArray(serverCategories) && serverCategories.length > 0) ||
-      (Array.isArray(serverCategories?.data) &&
-        serverCategories.data.length > 0) ||
-      (Array.isArray(serverCategories?.categories) &&
-        serverCategories.categories.length > 0);
+    if (serverCategories) {
+      const list = Array.isArray(serverCategories)
+        ? serverCategories
+        : Array.isArray(serverCategories?.data)
+          ? serverCategories.data
+          : Array.isArray(serverCategories?.categories)
+            ? serverCategories.categories
+            : [];
 
-    if (
-      !hasServerCategories &&
-      (!storedCategories || storedCategories.length === 0)
-    ) {
-      dispatch(getCategories());
+      if (
+        list.length > 0 &&
+        (!storedCategories || storedCategories.length === 0)
+      ) {
+        dispatch(setCategories(list));
+      }
     }
   }, [dispatch, serverCategories, storedCategories]);
 
-  let list: any[] = [];
-  if (serverCategories) {
-    if (Array.isArray(serverCategories)) {
-      list = serverCategories;
-    } else if (Array.isArray(serverCategories.data)) {
-      list = serverCategories.data;
-    } else if (Array.isArray(serverCategories.products)) {
-      list = serverCategories.products;
-    } else if (Array.isArray(serverCategories.categories)) {
-      list = serverCategories.categories;
-    }
+  if (Array.isArray(storedCategories) && storedCategories.length > 0) {
+    return storedCategories;
   }
 
-  if (list.length > 0) return list;
-  return Array.isArray(storedCategories) ? storedCategories : [];
+  if (serverCategories) {
+    if (Array.isArray(serverCategories)) return serverCategories;
+    if (Array.isArray(serverCategories.data)) return serverCategories.data;
+    if (Array.isArray(serverCategories.products))
+      return serverCategories.products;
+    if (Array.isArray(serverCategories.categories))
+      return serverCategories.categories;
+  }
+
+  return [];
 }
 
 function FilterList({
@@ -389,7 +399,7 @@ function FilterList({
               <TitleTag
                 as="h3"
                 variant="satoshiBold"
-                className="!text-[15px] font-semibold text-[#111111] transition-colors group-hover:text-black"
+                className="!text-[15px] font-semibold text-[#111111] transition-colors group-hover:text-[#000000]"
               >
                 {filter.label}
               </TitleTag>
@@ -547,7 +557,9 @@ export function FilterSectionMobile({
   return createPortal(
     <div
       className={`fixed inset-0 z-[100] transition-opacity duration-300 ${
-        isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        isOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
       }`}
     >
       <div
@@ -568,7 +580,7 @@ export function FilterSectionMobile({
               className="flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-full hover:bg-[#F5F5F5]"
               aria-label="Close filters"
             >
-              <ArrowLeft className="h-[18px] w-[18px] text-black" />
+              <ArrowLeft className="h-[18px] w-[18px] text-[#000000]" />
             </button>
             <TitleTag as="h2" variant="bold" className="!text-[20px]">
               Filters
@@ -606,12 +618,30 @@ export function FilterSectionMobile({
   );
 }
 
-const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
+const SectionFilter = ({
+  serverCategories,
+}: Readonly<{ serverCategories?: any }>) => {
   const dispatch = useDispatch();
 
-  const isSideFiltersOpen = useSelector(
-    (state: RootState) => state.filter.isSideFiltersModalOpen,
+  const categories = useSelector(
+    (state: RootState) => state.product.categories,
   );
+
+  useEffect(() => {
+    if (serverCategories) {
+      const list = Array.isArray(serverCategories)
+        ? serverCategories
+        : Array.isArray(serverCategories?.data)
+          ? serverCategories.data
+          : Array.isArray(serverCategories?.categories)
+            ? serverCategories.categories
+            : [];
+      if (list.length > 0 && (!categories || categories.length === 0)) {
+        dispatch(setCategories(list));
+      }
+    }
+  }, [dispatch, serverCategories, categories]);
+
   const { filters } = useFilters();
 
   const hasActiveFilters =
@@ -628,14 +658,16 @@ const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
   return (
     <>
       <div className="hidden shrink-0 laptop:block">
-        <FilterSectionDesktop categories={categories} />
+        <FilterSectionDesktop
+          categories={categories.length > 0 ? categories : serverCategories}
+        />
       </div>
 
       <div className="w-full laptop:hidden">
         <button
           type="button"
           onClick={() => dispatch(openSideFiltersModal())}
-          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-black/15 bg-white py-[10px] px-[16px] font-satoshi text-[14px] font-semibold text-black shadow-xs transition active:bg-[#F5F5F5]"
+          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-black/15 bg-white py-[10px] px-[16px] font-satoshi text-[14px] font-semibold text-[#000000] shadow-xs transition active:bg-[#F5F5F5]"
         >
           <FilterIcon className="h-[16px] w-[16px]" />
           <span>Filters</span>
@@ -644,12 +676,6 @@ const SectionFilter = ({ categories }: Readonly<{ categories?: any }>) => {
           )}
         </button>
       </div>
-
-      <FilterSectionMobile
-        isOpen={isSideFiltersOpen}
-        onClose={() => dispatch(closeSideFiltersModal())}
-        categories={categories}
-      />
     </>
   );
 };

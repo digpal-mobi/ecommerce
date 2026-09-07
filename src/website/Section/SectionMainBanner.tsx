@@ -7,6 +7,8 @@ import {
 import Button from "@/website/Components/Common/Button";
 import { SparkleIcon, SparkleIcon2 } from "@/website/Lib/Icons";
 import Link from "next/link";
+import TitleTag from "@/website/Components/Common/TitleTag";
+import Paragraph from "@/website/Components/Common/Paragraph";
 
 const Metrics = [
   {
@@ -25,8 +27,11 @@ const Metrics = [
 
 const SectionMainBanner = () => {
   return (
-    <section className="relative overflow-hidden bg-[#F2F0F1]">
-      <div className="hidden laptop:block absolute right-[4%] bottom-0 w-[48%] h-full">
+    <section
+      data-testid="section-main-banner"
+      className="relative overflow-hidden bg-[#F2F0F1]"
+    >
+      <div className="hidden laptop:block absolute right-[5%] bottom-0 w-[48%] h-full">
         <LazyImage
           src="/banner-image.png"
           alt="Banner"
@@ -35,31 +40,42 @@ const SectionMainBanner = () => {
           className="object-contain object-right-bottom"
         />
 
-        <div className="absolute top-[13.4%] right-[3%]">
+        <div className="absolute top-[12.8%] right-[1.5%]">
           <SparkleIcon2 className="laptop:w-[104px] w-[76px] h-auto" />
         </div>
 
-        <div className="absolute top-[45.4%] left-[8.5%]">
+        <div className="absolute top-[44.5%] left-[10.5%]">
           <SparkleIcon className="" />
         </div>
       </div>
 
       <MainContainer>
-        <Container className="laptop:!pt-[80px] laptop:!pb-[100px] ">
+        <Container className="laptop:!pt-[83px] laptop:!pb-[114px] ">
           <div className="relative z-10 flex min-h-[50%] items-center">
             <div className="w-full laptop:max-w-[52%] ">
-              <h1 className="font-integral text-[36px] leading-[34px] laptop:leading-[64px] laptop:text-[48px] desktop:text-[64px] font-[700]">
+              <TitleTag
+                as="h1"
+                variant="mainHeading"
+                className="!text-[36px] pt-[31px] desktop:pt-[0px] !leading-[34px] laptop:!leading-[64px] laptop:!text-[48px] desktop:!text-[64px]"
+              >
                 FIND CLOTHES THAT MATCHES YOUR STYLE
-              </h1>
+              </TitleTag>
 
-              <p className="mt-6 text-[14px] font-satoshi laptop:text-[16px] font-[400] laptop:leading-[28px] text-black/60">
+              <Paragraph
+                variant="normalPara"
+                className="desktop:mt-[24px] mt-[14px] laptop:w-[87%] w-[100%] !text-[14px] laptop:!text-[16px] laptop:!leading-[24px] !leading-[21px] text-[#000000]/60"
+              >
                 Browse through our diverse range of met iculously crafted
                 garments, designed to bring out your individuality and cater to
                 your sense of style.
-              </p>
+              </Paragraph>
 
-              <div className="mt-[24px] flex max-w-[210px] tablet:justify-start justify-center desktop:mt-[32px]">
-                <Link href="/shop">
+              <div className="mt-[16px] flex max-w-full desktop:!max-w-[210px] tablet:justify-start justify-center desktop:mt-[25px]">
+                <Link
+                  className="w-[100%]"
+                  href="/shop"
+                  aria-label="Shop now for our clothing collection"
+                >
                   <Button className="w-full" variant="primary">
                     Shop Now
                   </Button>
@@ -67,32 +83,41 @@ const SectionMainBanner = () => {
               </div>
 
               {/* Metrics */}
-              <div className="mt-12 flex flex-wrap">
+              <div className="desktop:mt-[55px] mt-[27px] flex flex-wrap">
                 {Metrics.map((item, index) => (
                   <React.Fragment key={item.description}>
                     <div
                       className={`${
                         index === 2
-                          ? "w-full mt-6 flex justify-center items-center laptop:w-auto laptop:mt-0"
-                          : "w-1/2 laptop:w-auto flex justify-center items-center"
+                          ? "w-full laptop:mt-[0px] mt-[17px] laptop:pl-[0px] pl-[5px]  flex justify-center items-center laptop:w-auto laptop:mt-0"
+                          : "w-[48%] laptop:w-auto flex justify-center items-center"
                       }`}
                     >
                       <div
                         className={`
               ${
                 index === 0
-                  ? "laptop:pr-[32px]"
+                  ? "laptop:pr-[32px] w-full pl-[42px] laptop:pl-[0px]"
                   : index === Metrics.length - 1
-                    ? "laptop:pl-[32px]"
-                    : "laptop:px-[32px]"
+                    ? "laptop:pl-[35px] pl-[0px]"
+                    : "laptop:pr-[26px] laptop:pl-[33px] w-full pl-[30px]"
               }
             `}
                       >
-                        <h3 className="text-[32px] laptop:text-[40px] font-bold leading-none">
+                        <TitleTag
+                          as="span"
+                          variant="satoshiBold"
+                          className="text-[24px] laptop:text-[40px] font-bold leading-none block"
+                        >
                           {item.number}
-                        </h3>
+                        </TitleTag>
 
-                        <p className="mt-2 text-black/60">{item.description}</p>
+                        <Paragraph
+                          className="laptop:!mt-[5px] !mt-[0px] !text-[12px] laptop:!text-[16px] text-[#000000]/60"
+                          variant="normalPara"
+                        >
+                          {item.description}
+                        </Paragraph>
                       </div>
                     </div>
 
@@ -109,20 +134,20 @@ const SectionMainBanner = () => {
 
       <div className="relative laptop:hidden">
         <LazyImage
-          src="/banner-image.png"
+          src="/banner-mob-image.png"
           alt="Banner"
           width={700}
-          height={800}
+          height={448}
           priority
-          className="w-full h-auto object-contain object-bottom"
+          className="w-full h-[448px] overflow-hidden object-contain object-bottom"
         />
 
-        <div className="absolute top-[15%] right-[8%]">
-          <SparkleIcon2 />
+        <div className="absolute top-[7%] right-[5%] ">
+          <SparkleIcon2 className="w-[76px] h-auto laptop:w-[104px]" />
         </div>
 
-        <div className="absolute top-[45%] left-[8%]">
-          <SparkleIcon />
+        <div className="absolute top-[28.7%] left-[7%]">
+          <SparkleIcon className="w-[44px] h-auto laptop:w-[76px]" />
         </div>
       </div>
     </section>

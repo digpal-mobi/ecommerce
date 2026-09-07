@@ -28,7 +28,18 @@ const productSlice = createSlice({
 
   initialState,
 
-  reducers: {},
+  reducers: {
+    setCategories: (state, action) => {
+      const payload = action.payload as any;
+      state.categories = Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload?.data)
+          ? payload.data
+          : Array.isArray(payload?.categories)
+            ? payload.categories
+            : [];
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -103,6 +114,8 @@ const productSlice = createSlice({
   },
 });
 
+export const { setCategories } = productSlice.actions;
+
 export const getCategories = createAsyncThunk(
   "product/getCategories",
   async (_, { rejectWithValue }) => {
@@ -119,6 +132,18 @@ export const getCategories = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error?.message ?? "Failed to fetch categories");
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      const state = getState() as RootState;
+      if (
+        state.product.loading ||
+        (Array.isArray(state.product.categories) &&
+          state.product.categories.length > 0)
+      ) {
+        return false;
+      }
+    },
   },
 );
 

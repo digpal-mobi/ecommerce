@@ -29,13 +29,21 @@ const SectionProductPrices = ({
         variant="bold"
         className="laptop:text-[32px] font-satoshi text-[24px] font-[700] leading-[1em]"
       >
-        {CurrencyConverter(finalPrice, currency)}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: CurrencyConverter(finalPrice, currency),
+          }}
+        />
       </TitleTag>
       <TitleTag
         as="h3"
         className="laptop:text-[32px] text-[24px] line-through font-satoshi font-[700] leading-[1em] text-[#000000]/20"
       >
-        {CurrencyConverter(price, currency)}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: CurrencyConverter(price, currency),
+          }}
+        />
       </TitleTag>
       <TitleTag
         as="h4"

@@ -68,7 +68,7 @@ const MobileNavigation = () => {
       <div className="w-full">
         <div className="px-[16px] py-[23px]">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-[16px]">
               <button
                 type="button"
                 onClick={() => setIsOpen(true)}
@@ -78,7 +78,12 @@ const MobileNavigation = () => {
                 <HamburgerIcon />
               </button>
 
-              <Link href="/" className="cursor-pointer">
+              <Link
+                href="/"
+                className="cursor-pointer"
+                
+                aria-label="SHOP.CO Homepage"
+              >
                 <LazyImage
                   src="/shop-logo.png"
                   alt="SHOP.CO"
@@ -97,7 +102,7 @@ const MobileNavigation = () => {
                   className="cursor-pointer"
                   aria-label="Toggle search"
                 >
-                  <SearchIcon color="#000" />
+                  <SearchIcon color="#000000" />
                 </button>
 
                 {isSearchOpen && (
@@ -166,6 +171,7 @@ const MobileNavigation = () => {
           <Link
             href="/"
             className="cursor-pointer"
+            aria-label="SHOP.CO Homepage"
             onClick={() => setIsOpen(false)}
           >
             <LazyImage
@@ -195,7 +201,7 @@ const MobileNavigation = () => {
                   <Link
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 py-4 text-[18px] font-medium hover:text-black/70 transition-colors"
+                    className="flex-1 py-4 text-[18px] font-medium hover:text-[#000000]/70 transition-colors"
                   >
                     {item.title}
                   </Link>
@@ -233,7 +239,7 @@ const MobileNavigation = () => {
                         key={child.href}
                         href={child.href}
                         onClick={() => setIsOpen(false)}
-                        className="py-1 text-[16px] text-[#000000]/70 hover:text-black transition-colors"
+                        className="py-1 text-[16px] text-[#000000]/70 hover:text-[#000000] transition-colors"
                       >
                         {child.title}
                       </Link>
@@ -246,7 +252,7 @@ const MobileNavigation = () => {
                 key={item.id}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="border-b border-[#000000]/40 py-4 text-[18px] font-medium hover:text-black/70 transition-colors"
+                className="border-b border-[#000000]/40 py-4 text-[18px] font-medium hover:text-[#000000]/70 transition-colors"
               >
                 {item.title}
               </Link>

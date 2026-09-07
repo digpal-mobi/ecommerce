@@ -61,10 +61,10 @@ export const useDotButton = (
 type PropType = Readonly<ComponentPropsWithRef<"button">>;
 
 export const DotButton = (props: Readonly<PropType>) => {
-  const { children, ...restProps } = props;
+  const { children, "aria-label": ariaLabel = "Go to slide", ...restProps } = props;
 
   return (
-    <button type="button" {...restProps}>
+    <button type="button" aria-label={ariaLabel} {...restProps}>
       {children}
     </button>
   );

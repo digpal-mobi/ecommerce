@@ -22,6 +22,7 @@ const SectionImageGallery = ({ images = [] }: Readonly<Props>) => {
             key={img}
             type="button"
             onClick={() => setSelectedImage(img)}
+            aria-label={`View product image ${index + 1}`}
             className="cursor-pointer flex-shrink-0"
           >
             <LazyImage

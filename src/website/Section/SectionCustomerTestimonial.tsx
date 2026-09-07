@@ -14,22 +14,24 @@ const OPTIONS: EmblaOptionsType = { loop: true };
 
 const SectionCustomerTestimonial = () => {
   return (
-    <MainContainer>
-      <Container className="w-full py-10">
-        <EmblaCarousel options={OPTIONS} title="OUR HAPPY CUSTOMERS">
-          {TESTIMONIALS.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="embla__slide flex-[0_0_100%] mobile-lg:flex-[0_0_calc((100%-20px)/2)] desktop-lg:flex-[0_0_calc((30%-90px))] desktop:flex-[0_0_calc((100%-40px)/3)] laptop:flex-[0_0_calc((100%-40px)/2.5)] pl-0 mobile-lg:pl-[20px]"
-            >
-              <ReviewCard
-                name={testimonial.name}
-                review={testimonial.review}
-                rating={testimonial.rating}
-              />
-            </div>
-          ))}
-        </EmblaCarousel>
+    <MainContainer data-testid="section-customer-testimonial">
+      <Container className="w-full">
+        <div className="pt-[80px] pb-[40px]">
+          <EmblaCarousel options={OPTIONS} title="OUR HAPPY CUSTOMERS">
+            {TESTIMONIALS.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="embla__slide flex-[0_0_100%] mobile-lg:flex-[0_0_calc((100%-20px)/2)] desktop-lg:flex-[0_0_calc((30%-90px))] desktop:flex-[0_0_calc((100%-40px)/3)] laptop:flex-[0_0_calc((100%-40px)/2.5)] pl-0 mobile-lg:pl-[20px]"
+              >
+                <ReviewCard
+                  name={testimonial.name}
+                  review={testimonial.review}
+                  rating={testimonial.rating}
+                />
+              </div>
+            ))}
+          </EmblaCarousel>
+        </div>
       </Container>
     </MainContainer>
   );

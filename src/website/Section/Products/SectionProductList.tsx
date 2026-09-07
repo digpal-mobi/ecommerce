@@ -11,7 +11,10 @@ import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "@/website/Components/Common/Button";
 import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
-import { CurrencyConverter } from "@/website/Helpers/Helper";
+import {
+  ConvertToFinalPrice,
+  CurrencyConverter,
+} from "@/website/Helpers/Helper";
 import SortingComponent from "@/website/Components/Common/Sorting";
 import { useFilters } from "@/website/Hooks/UseFilters";
 import { setTotal } from "@/redux/slices/paginationSlice";
@@ -70,11 +73,15 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const handleToggleWishlist = (e: React.MouseEvent, item: any) => {
     e.preventDefault();
     e.stopPropagation();
+    const discount = Number(item.discountPercentage ?? 0);
+    const finalPrice =
+      discount > 0 ? ConvertToFinalPrice(item.price, discount) : item.price;
+
     dispatch(
       toggleWishlist({
         id: item.id,
         title: item.title,
-        price: item.price,
+        price: finalPrice,
         thumbnail: item.thumbnail,
         rating: item.rating,
         category:
@@ -201,11 +208,16 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
         return;
       }
       const quantity = getQuantity(product.id);
+      const discount = Number(product.discountPercentage ?? 0);
+      const finalPrice =
+        discount > 0
+          ? ConvertToFinalPrice(product.price, discount)
+          : product.price;
 
       const productCart = {
         id: product.id,
         title: product.title,
-        price: product.price,
+        price: finalPrice,
         thumbnail: product.thumbnail,
         quantity,
       };
@@ -263,79 +275,115 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
     return (
       <>
         <div className="grid min-desktop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-[16px] gap-y-[30px]">
-          {displayProducts.map((items: any) => (
-            <div
-              key={items.id}
-              className="flex flex-col justify-between shrink-0"
-            >
-              <div className="relative block">
-                <Link className="w-full block" href={`/shop/${items.id}`}>
-                  <LazyImage
-                    src={items.thumbnail}
-                    width={295}
-                    height={298}
-                    alt={items.title ?? "product image"}
-                    className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
-                  />
-                </Link>
+          {displayProducts.map((items: any) => {
+            const discount = Number(items.discountPercentage ?? 0);
+            const finalPrice =
+              discount > 0
+                ? ConvertToFinalPrice(items.price, discount)
+                : items.price;
 
-                <div className="absolute top-3 right-3 z-10">
-                  <button
-                    type="button"
-                    onClick={(e) => handleToggleWishlist(e, items)}
-                    aria-label="Add to Wishlist"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
-                  >
-                    <WishlistIcon
-                      filled={isWishlisted(items.id)}
-                      className="h-[18px] cursor-pointer w-[18px]"
+            return (
+              <div
+                key={items.id}
+                className="flex flex-col justify-between shrink-0"
+              >
+                <div className="relative block">
+                  <Link className="w-full block" href={`/shop/${items.id}`}>
+                    <LazyImage
+                      src={items.thumbnail}
+                      width={295}
+                      height={298}
+                      alt={items.title ?? "product image"}
+                      className="bg-[#F0EEED] w-full h-auto rounded-[20px] hover:scale-[1.05] transition-all cursor-pointer"
                     />
-                  </button>
+                  </Link>
+
+                  <div className="absolute top-3 right-3 z-10">
+                    <button
+                      type="button"
+                      onClick={(e) => handleToggleWishlist(e, items)}
+                      aria-label="Add to Wishlist"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
+                    >
+                      <WishlistIcon
+                        filled={isWishlisted(items.id)}
+                        className="h-[18px] cursor-pointer w-[18px]"
+                      />
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="mt-[16px] flex flex-col items-start">
-                <div className="!h-[48px] overflow-hidden">
-                  <TitleTag
-                    variant="satoshiBold"
-                    as="h3"
-                    className="line-clamp-2 leading-[24px]"
-                  >
-                    {items.title}
-                  </TitleTag>
+                <div className="mt-[16px] flex flex-col items-start">
+                  <div className="!h-[48px] overflow-hidden">
+                    <TitleTag
+                      variant="satoshiBold"
+                      as="h3"
+                      className="line-clamp-2 leading-[24px]"
+                    >
+                      {items.title}
+                    </TitleTag>
+                  </div>
+
+                  <SectionRating rating={items.rating} />
+
+                  <div className="mt-[6px] flex items-center gap-[8px] flex-wrap w-full">
+                    <Paragraph variant="boldPara" suppressHydrationWarning>
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: CurrencyConverter(finalPrice, currency),
+                        }}
+                      />
+                    </Paragraph>
+
+                    {discount > 0 && (
+                      <>
+                        <Paragraph
+                          variant="boldPara"
+                          className="text-[14px] line-through font-satoshi font-bold text-[#000000]/40"
+                        >
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: CurrencyConverter(items.price, currency),
+                            }}
+                          />
+                        </Paragraph>
+
+                        <span className="rounded-full px-[8px] py-[2px] font-satoshi text-[12px] font-medium text-[#FF3333] bg-[#FF3333]/10">
+                          -{Math.round(discount)}%
+                        </span>
+                      </>
+                    )}
+                  </div>
                 </div>
 
-                <SectionRating rating={items.rating} />
-
-                <div className="flex items-center justify-between w-full">
-                  <Paragraph variant="boldPara" suppressHydrationWarning>
-                    {CurrencyConverter(items.price, currency)}
-                  </Paragraph>
-
+                <div className="mt-[16px] flex items-center gap-[10px] w-full">
                   <Increment
                     value={getQuantity(items.id)}
                     onChange={(quantity) =>
                       handleQuantityChange(items.id, quantity)
                     }
+                    className="!h-[46px] !min-w-[95px] !px-[12px] shrink-0"
                   />
+
+                  <Button
+                    onClick={() => handleAddToCart(items)}
+                    variant="primary"
+                    className="flex-1 gap-[8px] !py-[12px] !px-[14px] whitespace-nowrap"
+                  >
+                    <AddToCartIcon className="h-[18px] w-[18px]" />
+
+                    <TitleTag
+                      as="span"
+                      variant="satoshiBold"
+                      className="!text-[14px]"
+                    >
+                      Add to Cart
+                    </TitleTag>
+                  </Button>
                 </div>
               </div>
-
-              <div className="mt-[16px] flex items-center justify-center w-full">
-                <Button
-                  onClick={() => handleAddToCart(items)}
-                  variant="primary"
-                  className="w-full gap-[10px]"
-                >
-                  <AddToCartIcon className="h-[20px] w-[20px]" />
-
-                  <TitleTag as="span" variant="satoshiBold">
-                    Add to Cart
-                  </TitleTag>
-                </Button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <Pagination

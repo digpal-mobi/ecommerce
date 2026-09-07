@@ -29,6 +29,8 @@ const SortingComponent = () => {
     <div className="relative bg-[#dedddd] rounded-md border border-[#efefef] px-[10px] py-[10px]">
       <button
         type="button"
+        aria-label={`Sort products, currently ${sortingLabel}`}
+        aria-expanded={isOpen}
         className="flex items-center cursor-pointer gap-[5px]"
         onClick={() => setIsOpen((prev) => !prev)}
       >

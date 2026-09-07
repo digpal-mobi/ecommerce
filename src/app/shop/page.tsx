@@ -52,7 +52,7 @@ export default async function Products({ searchParams }: Readonly<Props>) {
     dressStyle: params?.dressStyle,
   });
 
-  const categories = await FetchCategory();
+  const categoriesData = await FetchCategory();
 
   const BreadCrumbItems: { name: string; url?: string }[] = [
     { name: "Home", url: "/" },
@@ -67,7 +67,7 @@ export default async function Products({ searchParams }: Readonly<Props>) {
         </div>
         <div className="flex w-full gap-[20px] flex-col tablet-lg:flex-row laptop:pb-[80px] pb-[50px]">
           <Suspense fallback={null}>
-            <SectionFilter categories={categories} />
+            <SectionFilter serverCategories={categoriesData} />
           </Suspense>
           <div className="flex w-full flex-col">
             <Suspense fallback={null}>

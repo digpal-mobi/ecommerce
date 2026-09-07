@@ -43,6 +43,8 @@ const CurrencySelector = () => {
     <div ref={wrapperRef} className="relative">
       <button
         type="button"
+        aria-label={`Select currency, current currency is ${currency}`}
+        aria-expanded={isOpen}
         className="flex items-center cursor-pointer gap-[5px]"
         onClick={() => setIsOpen((prev) => !prev)}
       >

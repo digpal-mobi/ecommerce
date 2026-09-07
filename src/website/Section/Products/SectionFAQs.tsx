@@ -78,7 +78,7 @@ const SectionFAQs = () => {
               >
                 <Paragraph
                   variant="boldPara"
-                  className="text-black !text-[14px] !laptop:text-[16px] text-left"
+                  className="text-[#000000] !text-[14px] !laptop:text-[16px] text-left"
                 >
                   {faq?.question}
                 </Paragraph>
@@ -98,7 +98,7 @@ const SectionFAQs = () => {
                 }}
               >
                 <div className="min-h-0 overflow-hidden">
-                  <Paragraph className=" pt-[20px] text-black/60 !text-[14px] !font-[400] !laptop:text-[16px]">
+                  <Paragraph className=" pt-[20px] text-[#000000]/60 !text-[14px] !font-[400] !laptop:text-[16px]">
                     {faq.answer}
                   </Paragraph>
                 </div>
