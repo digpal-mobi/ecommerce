@@ -81,6 +81,7 @@ const MobileNavigation = () => {
               <Link
                 href="/"
                 className="cursor-pointer"
+                
                 aria-label="SHOP.CO Homepage"
               >
                 <LazyImage
