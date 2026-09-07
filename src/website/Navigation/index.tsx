@@ -99,7 +99,7 @@ const Header = () => {
               <div className="flex items-center justify-between w-1/2 desktop:w-[60%] laptop:w-[40%] gap-10">
                 <SearchBar />
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-[14px]">
                   <WishlistIconComponent />
                   <CartIconComponent />
                   <div className="relative" ref={menuRef}>

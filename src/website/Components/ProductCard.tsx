@@ -173,7 +173,7 @@ const ProductCard = ({ products }: Readonly<Props>) => {
                     <>
                       <Paragraph
                         variant="boldPara"
-                        className="text-[14px] line-through font-satoshi font-bold text-black/40"
+                        className="text-[14px] line-through font-satoshi font-bold text-[#000000]/40"
                       >
                         <span
                           dangerouslySetInnerHTML={{

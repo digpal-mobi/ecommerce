@@ -337,7 +337,10 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
 
                     {discount > 0 && (
                       <>
-                        <Paragraph variant="boldPara">
+                        <Paragraph
+                          variant="boldPara"
+                          className="text-[14px] line-through font-satoshi font-bold text-[#000000]/40"
+                        >
                           <span
                             dangerouslySetInnerHTML={{
                               __html: CurrencyConverter(items.price, currency),

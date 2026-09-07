@@ -27,7 +27,7 @@ const SearchBarContent = () => {
       <Input
         id="search-products-input"
         aria-label="Search for products"
-        className="!py-[0px]"
+        className="!py-[0px] bg-transparent pl-[32px] border-none shadow-none focus:outline-none"
         type="text"
         placeholder="Search for Products.."
         value={searchQuery}
@@ -39,15 +39,18 @@ const SearchBarContent = () => {
 
 const SearchBar = () => {
   return (
-    <div className="relative flex w-full items-center justify-start gap-[12px] rounded-full bg-[#F0F0F0] py-[13px] pl-[12px]">
-      <SearchIcon className="absolute top-1/2 left-3 z-100 -translate-y-1/2" />
+    <div className="relative flex w-full items-center justify-start gap-[12px] rounded-full bg-[#F0F0F0] py-[13px] px-[16px]">
+      <SearchIcon
+        color="#00000066"
+        className="absolute top-1/2 left-4 z-10 -translate-y-1/2 pointer-events-none"
+      />
       <Suspense
         fallback={
           <form className="w-full">
             <Input
               id="search-products-fallback"
               aria-label="Search for products"
-              className="!py-[0px]"
+              className="!py-[0px] bg-transparent pl-[32px] border-none shadow-none focus:outline-none"
               type="text"
               placeholder="Search for Products.."
               value=""

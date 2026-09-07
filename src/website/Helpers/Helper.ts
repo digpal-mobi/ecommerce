@@ -38,7 +38,7 @@ export const ConvertToFinalPrice = (
   price: number,
   discountPercentage: number,
 ) => {
-  const discountAmount = (discountPercentage / 100) * price;
+  const discountAmount = Math.round((discountPercentage / 100) * price);
   return Number.parseFloat((price - discountAmount).toFixed(2));
 };
 

@@ -68,7 +68,7 @@ const MobileNavigation = () => {
       <div className="w-full">
         <div className="px-[16px] py-[23px]">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-[16px]">
               <button
                 type="button"
                 onClick={() => setIsOpen(true)}
@@ -101,7 +101,7 @@ const MobileNavigation = () => {
                   className="cursor-pointer"
                   aria-label="Toggle search"
                 >
-                  <SearchIcon color="#000" />
+                  <SearchIcon color="#000000" />
                 </button>
 
                 {isSearchOpen && (

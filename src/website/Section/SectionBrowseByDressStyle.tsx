@@ -13,18 +13,18 @@ const DRESS_STYLES = [
     href: "/shop?category=men-shirts",
   },
   {
-    img: "/dress_2.png",
-    title: "Women",
+    img: "/dress_3.png",
+    title: "Formal",
     href: "/shop?category=womens-dresses",
   },
   {
-    img: "/dress_3.png",
-    title: "Men Shoes",
+    img: "/dress_2.png",
+    title: "Party",
     href: "/shop?category=mens-shoes",
   },
   {
     img: "/dress_4.png",
-    title: "Accessories",
+    title: "Gym",
     href: "/shop?category=accessories",
   },
 ];
@@ -34,12 +34,12 @@ const SectionBrowseByDressStyle = () => {
     <MainContainer data-testid="section-browse-by-dress-style">
       <Container>
         <div className="laptop:pt-[80px] pt-[40px]">
-          <div className="rounded-[40px] bg-[#F0F0F0] px-[24px] tablet:px-[50px] laptop:px-[64px] py-[27px] laptop:py-[70px]">
-            <h2 className="font-integral text-center text-[32px] laptop:text-[48px] font-[700] leading-[1] uppercase text-[#1C1C1C]">
-              BROWSE BY DRESS STYLES
+          <div className="rounded-[40px] bg-[#F0F0F0] px-[24px] tablet:px-[50px] laptop:px-[64px] laptop:!pb-[76px] laptop:!pt-[75px]">
+            <h2 className="font-integral text-center laptop:pl-[2px] pl-[0px] text-[32px] laptop:text-[48px] font-[700] leading-[1] uppercase text-[#1C1C1C]">
+              BROWSE BY DRESS STYLE
             </h2>
 
-            <div className="mt-[64px] grid grid-cols-1 laptop:grid-cols-3 gap-y-[20px] laptop:gap-[20px]">
+            <div className="mt-[67px] grid grid-cols-1 laptop:grid-cols-8 gap-y-[20px] laptop:gap-[20px]">
               {DRESS_STYLES.map((dress, index) => (
                 <Link
                   key={dress.title}
@@ -47,8 +47,8 @@ const SectionBrowseByDressStyle = () => {
                   aria-label={`Browse ${dress.title} dress styles`}
                   className={`
                   group relative overflow-hidden rounded-[20px] cursor-pointer block
-                  ${index === 0 || index === 3 ? "col-span-1" : ""}
-                  ${index === 1 || index === 2 ? "col-span-2" : ""}
+                  ${index === 0 || index === 3 ? "col-span-3" : ""}
+                  ${index === 1 || index === 2 ? "col-span-5" : ""}
                 `}
                 >
                   <LazyImage
