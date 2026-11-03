@@ -22,7 +22,7 @@ const Increment = ({
     onChange?.(value + 1);
   };
 
-  return (
+  return ( 
     <div
       className={`flex h-[44px] min-w-[110px] items-center gap-[16px] px-[20px] py-[12px] justify-between rounded-full bg-[#F0F0F0] ${className}`}
     >
@@ -46,7 +46,7 @@ const Increment = ({
         className="flex items-center justify-center hover:opacity-70 transition-opacity cursor-pointer"
       >
         <PlusIcon />
-      </button>
+        </button>
     </div>
   );
 };

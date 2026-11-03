@@ -52,7 +52,7 @@ const Breadcrumb = ({ items = [], className = "" }: Readonly<Props>) => {
                   href={item.url}
                   className="text-[#000000]/60 font-rubik font-[400] tablet:text-[14px] text-[12px] leading-[100%] hover:underline capitalize"
                   title={formattedName}
-                >
+                >   x
                   {formattedName}
                 </Link>
               ) : (

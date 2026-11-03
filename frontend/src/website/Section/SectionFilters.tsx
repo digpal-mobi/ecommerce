@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, FilterIcon, ArrowLeft } from "@/website/Lib/Icons";
+import {
+  ChevronDown,
+  FilterIcon,
+  ArrowLeft,
+  CrossIcon,
+} from "@/website/Lib/Icons";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import Paragraph from "@/website/Components/Common/Paragraph";
 import CheckBox from "@/website/Components/Common/CheckBox";
@@ -568,8 +573,8 @@ export function FilterSectionMobile({
         aria-hidden="true"
       />
       <div
-        className={`fixed right-0 top-0 z-[110] flex h-full w-full max-w-[340px] flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed right-0 left-0 bottom-0 z-110 flex w-full max-w-full flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-y-0" : "translate-y-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-[#EEEEEE] px-[20px] py-[18px]">
@@ -587,13 +592,22 @@ export function FilterSectionMobile({
             </TitleTag>
           </div>
 
-          {hasActiveFilters && (
+          {hasActiveFilters ? (
             <button
               type="button"
               onClick={resetFilters}
               className="cursor-pointer font-satoshi text-[12px] font-semibold text-red-500 hover:underline"
             >
               Clear All
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close filters"
+              className="cursor-pointer"
+            >
+              <CrossIcon color="#000000" className="h-[14px] w-[14px]" />
             </button>
           )}
         </div>

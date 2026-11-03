@@ -56,7 +56,7 @@ const SectionMainBanner = () => {
               <TitleTag
                 as="h1"
                 variant="mainHeading"
-                className="!text-[36px] pt-[31px] desktop:pt-[0px] !leading-[34px] laptop:!leading-[64px] laptop:!text-[48px] desktop:!text-[64px]"
+                className="!text-[36px] pt-[31px] laptop:pt-[0px] !leading-[34px] laptop:!leading-[64px] laptop:!text-[48px] desktop:!text-[64px]"
               >
                 FIND CLOTHES THAT MATCHES YOUR STYLE
               </TitleTag>
@@ -70,7 +70,7 @@ const SectionMainBanner = () => {
                 your sense of style.
               </Paragraph>
 
-              <div className="mt-[16px] flex max-w-full desktop:!max-w-[210px] tablet:justify-start justify-center desktop:mt-[25px]">
+              <div className="mt-[16px] flex max-w-full tablet:!max-w-[210px] tablet:justify-start justify-center desktop:mt-[25px]">
                 <Link
                   className="w-[100%]"
                   href="/shop"

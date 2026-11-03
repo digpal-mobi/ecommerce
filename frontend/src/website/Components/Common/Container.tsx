@@ -6,7 +6,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 };
 
 const CONTAINER_CLASS =
-  "mx-auto w-full max-w-[1920px] px-[16px] tablet-lg:px-[30px] laptop:px-[80px] desktop:px-[100px]";
+  "mx-auto w-full max-w-[1920px]  ";
 
 export const Container = ({ children, className = "", ...rest }: Props) => {
   return (

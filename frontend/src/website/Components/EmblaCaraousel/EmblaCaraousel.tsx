@@ -10,7 +10,7 @@ import {
 
 type PropType = {
   slides?: number[];
-  options?: EmblaOptionsType;
+  options?: EmblaOptionsType; 
   children: React.ReactNode;
   title?: string;
   showButtons?: boolean;
