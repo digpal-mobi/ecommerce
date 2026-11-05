@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError } from "../utils/ApiError";
+import { verifyToken } from "../helper/jwt";
+import { env } from "../config/env";
+import { jwtUser } from "../types/User";
 
 export const authenticate = (req: Request, _res: Response, next: NextFunction): void => {
   try {
@@ -13,8 +16,9 @@ export const authenticate = (req: Request, _res: Response, next: NextFunction): 
       throw new ApiError(401, "Unauthorized: Invalid token format");
     }
 
-    // Attach user payload to request (can be verified with jwt when jwt is integrated)
-    // req.user = decodedUser;
+    const decodedToken = verifyToken<jwtUser>(token, env.JWT_SECRET);
+
+    req.user = decodedToken;
 
     next();
   } catch (error) {

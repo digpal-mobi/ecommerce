@@ -1,16 +1,26 @@
-import { Request, Response, NextFunction } from "express";
-import { ApiError } from "../utils/ApiError";
+import { Request, Response, NextFunction } from 'express';
+import { z, ZodError } from 'zod';
 
-export type ValidationFunction = (data: unknown) => { isValid: boolean; errors?: string[] };
-
-export const validateRequest = (validator: ValidationFunction) => {
-  return (req: Request, _res: Response, next: NextFunction): void => {
-    const validationResult = validator(req.body);
-    if (!validationResult.isValid) {
-      next(new ApiError(400, "Validation Error", validationResult.errors || []));
-      return;
+export function validateRequest(schema: z.ZodObject<any, any>) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    try {
+      schema.parse(req.body);
+      next();
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.issues.map((issue) => ({
+          message: `${issue.path.join('.')}: ${issue.message}`,
+        }));
+        return res.status(400).json({
+          error: 'Invalid data',
+          details: errorMessages,
+        });
+      }
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
     }
-    next();
   };
-};
+}
+
 

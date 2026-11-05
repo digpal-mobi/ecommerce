@@ -133,7 +133,7 @@ const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center p-[16px]"
+      className="fixed inset-0 z-999 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="login-title"
