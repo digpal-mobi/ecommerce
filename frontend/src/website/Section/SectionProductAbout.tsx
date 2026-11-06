@@ -19,7 +19,7 @@ import { AddToCartIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { useDispatch, useSelector } from "@/redux/store";
 import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
-import { openLoginModal } from "@/redux/slices/authSlice";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data?: ApiResponse | any;
@@ -28,6 +28,7 @@ type Props = {
 
 const SectionProductAbout = ({ data }: Readonly<Props>) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
 
   const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
@@ -67,7 +68,7 @@ const SectionProductAbout = ({ data }: Readonly<Props>) => {
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      dispatch(openLoginModal());
+      router.push("/login");
       return;
     }
     if (!data) return;

@@ -1,15 +1,16 @@
 import SectionLogin from "@/website/Section/SectionLogin";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Login Page || Ecommerce",
-  description: "A fully functional ecommerce website.",
+  title: "Login || Ecommerce",
+  description: "Sign in to your account.",
 };
 
-export default async function Login() {
+export default function LoginPage() {
   return (
-    <div>
+    <Suspense fallback={<main className="flex flex-1 items-center justify-center py-16">Loading...</main>}>
       <SectionLogin />
-    </div>
+    </Suspense>
   );
 }

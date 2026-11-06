@@ -21,7 +21,7 @@ import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { AddToCartIcon, TrashIcon, WishlistIcon } from "@/website/Lib/Icons";
 import { CurrencyConverter } from "@/website/Helpers/Helper";
 import SectionRating from "./SectionRating";
-import { openLoginModal } from "@/redux/slices/authSlice";
+import { useRouter } from "next/navigation";
 
 const BreadCrumbItems = [
   { name: "Home", url: "/" },
@@ -30,6 +30,7 @@ const BreadCrumbItems = [
 
 const SectionWishlist = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
   const { isAuthenticated, userDetails } = useSelector((state) => state.auth);
@@ -52,7 +53,7 @@ const SectionWishlist = () => {
 
   const handleAddToCart = (item: WishlistProduct) => {
     if (!isAuthenticated) {
-      dispatch(openLoginModal());
+      router.push("/login");
       return;
     }
 
@@ -72,7 +73,7 @@ const SectionWishlist = () => {
 
   const handleAddAllToCart = () => {
     if (!isAuthenticated) {
-      dispatch(openLoginModal());
+      router.push("/login");
       return;
     }
 

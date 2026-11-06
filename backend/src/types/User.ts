@@ -1,9 +1,5 @@
-export interface jwtUser {
-  _id?: string;
-  email: string;
-  role?: string;
-  username?: string;
+export interface AccessTokenPayload {
+  sub: string;
+  role: "user" | "admin";
+  tokenType: "access";
 }
-
-export type JwtPayloadUser = jwtUser;
-

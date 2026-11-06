@@ -1,10 +1,13 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
-export interface IUser extends Document {
+export interface IUser {
   username: string;
   email: string;
-  password?: string;
+  password: string;
   role: "user" | "admin";
+  isVerified: boolean;
+  verificationTokenHash?: string;
+  verificationTokenExpiresAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,6 +18,10 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
       trim: true,
+      minlength: 3,
+      maxlength: 30,
+      unique: true,
+      match: /^[a-zA-Z0-9_]{3,20}$/,
     },
     email: {
       type: String,
@@ -22,10 +29,23 @@ const userSchema = new Schema<IUser>(
       unique: true,
       lowercase: true,
       trim: true,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
     password: {
       type: String,
       required: true,
+      select: false,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    verificationTokenHash: {
+      type: String,
+      select: false,
+    },
+    verificationTokenExpiresAt: {
+      type: Date,
       select: false,
     },
     role: {

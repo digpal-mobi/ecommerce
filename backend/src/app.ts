@@ -4,12 +4,30 @@ import userRoutes from "./modules/users/user.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import { ApiError } from "./utils/ApiError";
 import cors from "cors"
+import requestLogger from "./middlewares/requestLogger.middleware";
+import { env } from "./config/env";
+import cookieParser from "cookie-parser";
+import logger from "./utils/logger";
 
 const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cookieParser());
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (origin === env.FRONTEND_URL || !origin) {
+      callback(null, true);
+    } else {
+      logger.warn("CORS origin rejected", { origin });
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
+app.use(requestLogger);
 
 app.get("/health", (_req: Request, res: Response) => {
   res.status(200).json({ status: "OK", message: "Server is healthy" });
