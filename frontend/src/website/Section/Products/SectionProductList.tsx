@@ -20,9 +20,8 @@ import { useFilters } from "@/website/Hooks/UseFilters";
 import { setTotal } from "@/redux/slices/paginationSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
 import { addToCartAsync } from "@/redux/slices/cartSlice";
-import { openLoginModal } from "@/redux/slices/authSlice";
 import { FetchProducts } from "@/website/Utils/Api";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getPaginationFromSearchParams } from "@/website/Utils/ProductUrl";
 
 type Props = Readonly<{
@@ -32,6 +31,7 @@ type Props = Readonly<{
 
 const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const searchParamsString = searchParams.toString();
 
@@ -204,7 +204,7 @@ const SectionProductList = ({ data, initialTotal = 0 }: Readonly<Props>) => {
   const handleAddToCart = (product: any) => {
     try {
       if (!isAuthenticated) {
-        dispatch(openLoginModal());
+        router.push("/login");
         return;
       }
       const quantity = getQuantity(product.id);

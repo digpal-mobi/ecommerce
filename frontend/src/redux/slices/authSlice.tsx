@@ -4,28 +4,31 @@ export interface UserDetails {
   id?: number | string;
   username?: string;
   email?: string;
+  role?: string;
   firstName?: string;
   lastName?: string;
   gender?: string;
   image?: string;
-  token?: string;
-  accessToken?: string;
-  refreshToken?: string;
-  [key: string]: any;
+  [key: string]: unknown;
+}
+
+export interface AuthSession {
+  user: UserDetails;
+  accessToken: string;
 }
 
 export interface AuthState {
+  accessToken: string | null;
   userDetails: UserDetails;
   isAuthenticated: boolean;
   isLoading: boolean;
-  isLoginModalOpen: boolean;
 }
 
 const initialState: AuthState = {
   userDetails: {},
   isAuthenticated: false,
   isLoading: false,
-  isLoginModalOpen: false,
+  accessToken: null,
 };
 
 const authSlice = createSlice({
@@ -35,31 +38,23 @@ const authSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setUserDetails: (state, action: PayloadAction<any>) => {
+    setUserDetails: (state, action: PayloadAction<UserDetails>) => {
       state.userDetails = action.payload;
     },
-    loginSuccess: (state, action: PayloadAction<any | void>) => {
+    setAccessToken: (state, action: PayloadAction<string | null>) => {
+      state.accessToken = action.payload;
+    },
+    loginSuccess: (state, action: PayloadAction<AuthSession>) => {
       state.isAuthenticated = true;
       state.isLoading = false;
-      state.isLoginModalOpen = false;
-      if (action.payload) {
-        state.userDetails = action.payload;
-      }
+      state.userDetails = action.payload.user;
+      state.accessToken = action.payload.accessToken;
     },
     logoutSuccess: (state) => {
       state.userDetails = {};
       state.isAuthenticated = false;
       state.isLoading = false;
-      state.isLoginModalOpen = false;
-    },
-    openLoginModal: (state) => {
-      state.isLoginModalOpen = true;
-    },
-    closeLoginModal: (state) => {
-      state.isLoginModalOpen = false;
-    },
-    setLoginModalOpen: (state, action: PayloadAction<boolean>) => {
-      state.isLoginModalOpen = action.payload;
+      state.accessToken = null;
     },
   },
 });
@@ -67,10 +62,9 @@ const authSlice = createSlice({
 export const {
   setLoading,
   setUserDetails,
+  setAccessToken,
   loginSuccess,
   logoutSuccess,
-  openLoginModal,
-  closeLoginModal,
-  setLoginModalOpen,
 } = authSlice.actions;
+
 export default authSlice.reducer;

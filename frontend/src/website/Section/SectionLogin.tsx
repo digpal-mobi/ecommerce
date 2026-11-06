@@ -1,271 +1,167 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Input from "@/website/Components/Common/Input";
 import Button from "@/website/Components/Common/Button";
 import TitleTag from "@/website/Components/Common/TitleTag";
 import { useDispatch, useSelector } from "@/redux/store";
-import {
-  setLoading,
-  setUserDetails,
-  loginSuccess,
-  closeLoginModal,
-} from "@/redux/slices/authSlice";
-import { fetchUserCart } from "@/redux/slices/cartSlice";
+import { loginSuccess, setLoading } from "@/redux/slices/authSlice";
 import { LoginUser } from "@/website/Utils/Api";
 import { setCookie } from "@/website/Helpers/Helper";
 
 interface LoginFormData {
-  username: string;
+  id: string;
   password: string;
 }
 
-interface LoginModalProps {
-  isOpen?: boolean;
-  onClose?: () => void;
+function safeRedirect(value: string | null) {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/";
+  return value;
 }
 
-const LoginModal = ({ isOpen, onClose }: Readonly<LoginModalProps>) => {
+const SectionLogin = () => {
   const dispatch = useDispatch();
-  const { isLoading, isLoginModalOpen } = useSelector(
-    (state: any) => state.auth,
-  );
-  const activeIsOpen = isOpen !== undefined ? isOpen : isLoginModalOpen;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
+  const redirectTo = safeRedirect(searchParams.get("redirect"));
+  const registerHref = searchParams.get("redirect")
+    ? `/register?redirect=${encodeURIComponent(redirectTo)}`
+    : "/register";
   const [apiError, setApiError] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  const handleClose = useCallback(() => {
-    dispatch(closeLoginModal());
-    if (onClose) onClose();
-  }, [dispatch, onClose]);
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     defaultValues: {
-      username: "",
+      id: "",
       password: "",
     },
   });
 
-  // Portal target only exists client-side
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Reset form/error state whenever the modal opens
-  useEffect(() => {
-    if (activeIsOpen) {
-      reset();
-      setApiError(null);
+    if (isAuthenticated) {
+      router.replace(redirectTo);
     }
-  }, [activeIsOpen, reset]);
-
-  // Lock background scroll while modal is open
-  useEffect(() => {
-    if (activeIsOpen) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = original;
-      };
-    }
-  }, [activeIsOpen]);
-
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
-    },
-    [handleClose],
-  );
-
-  useEffect(() => {
-    if (!activeIsOpen) return;
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [activeIsOpen, handleKeyDown]);
+  }, [isAuthenticated, redirectTo, router]);
 
   const onSubmit = async (data: LoginFormData) => {
     setApiError(null);
     dispatch(setLoading(true));
     try {
       const response = await LoginUser({
-        username: data.username,
+        id: data.id,
         password: data.password,
       });
 
-      if (
-        response.status !== false &&
-        (response.token || response.accessToken || response.id)
-      ) {
-        const accessToken = response.accessToken || response.token;
-        const refreshToken = response.refreshToken;
-        if (accessToken) {
-          setCookie("USER_ACCESS", accessToken, 7);
-        }
-        if (refreshToken) {
-          setCookie("USER_RefreshToken", refreshToken, 7);
-        }
+      const user = response.data?.user;
+      const accessToken = response.data?.accessToken;
 
-        dispatch(setUserDetails(response));
-        dispatch(loginSuccess(response));
-        dispatch(fetchUserCart(Number(response.id ?? 0)));
-        handleClose();
-      } else {
-        setApiError(
-          response.message ?? "Login failed. Please check your credentials.",
-        );
+      if (response.status === false || !user || !accessToken) {
+        setApiError(response.message ?? "Login failed. Please try again.");
+        return;
       }
-    } catch (error: any) {
-      console.error("Login Error:", error);
-      setApiError(error?.message ?? "An unexpected error occurred.");
+
+      setCookie("USER_ACCESS", accessToken, 7);
+      dispatch(loginSuccess({ user, accessToken }));
+      router.push(redirectTo);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "An unexpected error occurred.";
+      setApiError(message);
     } finally {
       dispatch(setLoading(false));
     }
   };
 
-  if (!mounted || !activeIsOpen) return null;
+  return (
+    <main className="flex flex-1 items-center justify-center px-4 py-16">
+      <section className="w-full max-w-155 rounded-[16px] bg-white p-6 shadow-xl laptop:p-10">
+        <header className="flex flex-col gap-[20px]">
+          <TitleTag id="login-title" variant="mainHeading" as="h1">
+            Welcome Back
+          </TitleTag>
+          <TitleTag as="h2" variant="satoshiBold" className="!font-[400]">
+            Sign in to your account to continue shopping.
+          </TitleTag>
+        </header>
 
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[999] flex items-center justify-center p-[16px]"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="login-title"
-    >
-      {/* Overlay */}
-      <div
-        className="absolute inset-0 bg-black/50 cursor-pointer"
-        onClick={handleClose}
-        aria-hidden="true"
-      />
-
-      {/* Modal panel */}
-      <div className="relative w-full max-w-[700px] max-h-[90vh] overflow-y-auto bg-white rounded-[16px] shadow-xl">
-        <button
-          type="button"
-          onClick={handleClose}
-          aria-label="Close login modal"
-          className="absolute top-[16px] right-[16px] z-10 flex items-center justify-center w-[36px] h-[36px] rounded-full bg-[#EDEDED] hover:bg-[#dedede] transition-colors cursor-pointer"
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-[24px] pt-[24px] laptop:pt-[40px]"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L15 15M15 1L1 15"
-              stroke="black"
-              strokeWidth="1.5"
-              strokeLinecap="round"
+          <div className="flex flex-col gap-[8px]">
+            <label htmlFor="id" className="text-[15px] font-medium">
+              Username or Email
+            </label>
+            <Input
+              id="id"
+              type="text"
+              className="border-none bg-[#EDEDED]"
+              placeholder="Enter your username or email"
+              autoComplete="username"
+              {...register("id", {
+                required: "Username or email is required",
+              })}
             />
-          </svg>
-        </button>
-
-        <div className="flex flex-col laptop:flex-row items-center w-full gap-[20px] p-[24px] laptop:p-[40px]">
-          <div className="w-full flex items-center justify-center">
-            <article className="w-full">
-              <header className="flex flex-col gap-[30px]">
-                <TitleTag id="login-title" variant="mainHeading" as="h1">
-                  Welcome Back
-                </TitleTag>
-
-                <TitleTag as="h2" variant="satoshiBold" className="!font-[400]">
-                  Sign in to your account to continue shopping.
-                </TitleTag>
-              </header>
-
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col gap-[24px]"
-              >
-                {/* Username */}
-                <div className="flex flex-col gap-[8px]">
-                  <label htmlFor="username" className="text-[15px] font-medium">
-                    Username
-                  </label>
-
-                  <Input
-                    id="username"
-                    type="text"
-                    className="bg-[#EDEDED] border-none"
-                    placeholder="Enter your username"
-                    autoComplete="username"
-                    {...register("username", {
-                      required: "Username is required",
-                    })}
-                  />
-
-                  {errors.username && (
-                    <span className="form-field-error">
-                      {errors.username.message}
-                    </span>
-                  )}
-                </div>
-
-                {/* Password */}
-                <div className="flex flex-col gap-[8px]">
-                  <div className="flex items-center justify-between gap-[10px]">
-                    <label
-                      htmlFor="password"
-                      className="text-[15px] font-medium"
-                    >
-                      Password
-                    </label>
-                  </div>
-
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    className="bg-[#EDEDED] border-none"
-                    autoComplete="current-password"
-                    {...register("password", {
-                      required: "Password is required",
-                      minLength: {
-                        value: 6,
-                        message: "Password must be at least 6 characters",
-                      },
-                    })}
-                  />
-
-                  {errors.password && (
-                    <span className="form-field-error">
-                      {errors.password.message}
-                    </span>
-                  )}
-                </div>
-
-                {apiError && (
-                  <div className="p-[12px] bg-red-50 border border-red-200 text-red-600 text-[14px] rounded-lg">
-                    {apiError}
-                  </div>
-                )}
-
-                {/* Submit */}
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={isSubmitting || isLoading}
-                  className="w-full rounded-lg px-[20px] py-[14px] font-medium transition-opacity hover:opacity-90"
-                >
-                  {isSubmitting || isLoading ? "Logging in..." : "Login"}
-                </Button>
-              </form>
-            </article>
+            {errors.id && (
+              <span className="form-field-error">{errors.id.message}</span>
+            )}
           </div>
-        </div>
-      </div>
-    </div>,
-    document.body,
+
+          <div className="flex flex-col gap-[8px]">
+            <label htmlFor="password" className="text-[15px] font-medium">
+              Password
+            </label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              className="border-none bg-[#EDEDED]"
+              autoComplete="current-password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+            />
+            {errors.password && (
+              <span className="form-field-error">{errors.password.message}</span>
+            )}
+          </div>
+
+          {apiError && (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-[12px] text-[14px] text-red-600">
+              {apiError}
+            </div>
+          )}
+
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={isSubmitting || isLoading}
+            className="w-full rounded-lg px-[20px] py-[14px] font-medium transition-opacity hover:opacity-90"
+          >
+            {isSubmitting || isLoading ? "Logging in..." : "Login"}
+          </Button>
+        </form>
+
+        <p className="pt-6 text-[15px] text-black/70">
+          Don&apos;t have an account?{" "}
+          <Link href={registerHref} className="font-medium text-black underline">
+            Register
+          </Link>
+        </p>
+      </section>
+    </main>
   );
 };
 
-export default LoginModal;
+export default SectionLogin;

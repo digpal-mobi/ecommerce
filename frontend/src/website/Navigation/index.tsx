@@ -13,24 +13,15 @@ import SectionHomeBanner from "@/website/Section/SectionHomeBanner";
 import { ProfileIcon } from "@/website/Lib/Icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "@/redux/store";
-import {
-  logoutSuccess,
-  openLoginModal,
-  closeLoginModal,
-} from "@/redux/slices/authSlice";
-import { clearCart } from "@/redux/slices/cartSlice";
 import CartIconComponent from "@/website/Components/Common/CartIconComponent";
 import WishlistIconComponent from "@/website/Components/Common/WishlistIconComponent";
 import CurrencySelector from "@/website/Components/CurrencySelector";
-import LoginModal from "@/website/Section/SectionLogin";
-import { deleteCookie } from "@/website/Helpers/Helper";
 import { closeSideFiltersModal } from "@/redux/slices/filterSlice";
 import { FilterSectionMobile } from "@/website/Section/SectionFilters";
+import { logoutSession } from "@/website/Utils/logout";
 
 const Header = () => {
-  const { isAuthenticated, isLoginModalOpen } = useSelector(
-    (state) => state.auth,
-  );
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const isSideFiltersOpen = useSelector(
     (state) => state.filter.isSideFiltersModalOpen,
@@ -41,21 +32,13 @@ const Header = () => {
 
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleLogout = () => {
-    deleteCookie("USER_ACCESS");
-    deleteCookie("USER_RefreshToken");
-    deleteCookie("USER_DATA");
-    dispatch(logoutSuccess());
-    dispatch(clearCart());
+  const handleLogout = async () => {
+    await logoutSession(dispatch);
     setIsMenuOpen(false);
   };
 
   const handleProfileClick = () => {
-    if (isAuthenticated) {
-      setIsMenuOpen((prev) => !prev);
-    } else {
-      dispatch(openLoginModal());
-    }
+    setIsMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -103,14 +86,24 @@ const Header = () => {
                   <WishlistIconComponent />
                   <CartIconComponent />
                   <div className="relative" ref={menuRef}>
-                    <button
-                      type="button"
-                      onClick={handleProfileClick}
-                      className="flex items-center cursor-pointer focus:outline-none"
-                      aria-label={isAuthenticated ? "User Profile" : "Login"}
-                    >
-                      <ProfileIcon />
-                    </button>
+                    {isAuthenticated ? (
+                      <button
+                        type="button"
+                        onClick={handleProfileClick}
+                        className="flex items-center cursor-pointer focus:outline-none"
+                        aria-label="User Profile"
+                      >
+                        <ProfileIcon />
+                      </button>
+                    ) : (
+                      <Link
+                        href="/login"
+                        className="flex items-center"
+                        aria-label="Login"
+                      >
+                        <ProfileIcon />
+                      </Link>
+                    )}
 
                     {/* Dropdown Menu — only relevant once authenticated */}
                     {isAuthenticated && isMenuOpen && (
@@ -146,10 +139,6 @@ const Header = () => {
         <MobileHeader />
       </div>
 
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => dispatch(closeLoginModal())}
-      />
       <FilterSectionMobile
         isOpen={isSideFiltersOpen}
         onClose={() => dispatch(closeSideFiltersModal())}

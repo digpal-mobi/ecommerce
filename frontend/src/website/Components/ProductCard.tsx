@@ -10,9 +10,9 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "@/redux/store";
 import { addToCartAsync } from "@/redux/slices/cartSlice";
 import { toggleWishlist, WishlistProduct } from "@/redux/slices/wishlistSlice";
-import { openLoginModal } from "@/redux/slices/authSlice";
 import LazyImage from "./Common/LazyImage";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ConvertToFinalPrice,
   CurrencyConverter,
@@ -24,6 +24,7 @@ type Props = Readonly<{
 
 const ProductCard = ({ products }: Readonly<Props>) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   const { isAuthenticated, userDetails } = useSelector(
@@ -72,7 +73,7 @@ const ProductCard = ({ products }: Readonly<Props>) => {
 
   const HandleAddToCart = (product: any) => {
     if (!isAuthenticated) {
-      dispatch(openLoginModal());
+      router.push("/login");
       return;
     }
 
