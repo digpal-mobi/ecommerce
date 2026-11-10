@@ -89,29 +89,119 @@ export const FetchProductsById = async (id: number): Promise<ApiResponse> => {
   }
 };
 
-export const LoginUser = async (credentials: any): Promise<ApiResponse> => {
+const getApiErrorMessage = (error: any, fallback: string) => {
+  if (typeof error?.message === "string" && error.message) return error.message;
+  if (typeof error?.error === "string" && error.error) return error.error;
+  const detail = error?.details?.[0]?.message ?? error?.errors?.[0];
+  if (typeof detail === "string" && detail) return detail;
+  return fallback;
+};
+
+export const LoginUser = async (credentials: {
+  id: string;
+  password: string;
+}): Promise<ApiResponse> => {
   try {
     const data = await PostData<ApiResponse>("/auth/login", credentials);
     return { status: true, ...data };
   } catch (e: any) {
     return {
       status: false,
-      message:
-        e.message ?? e.error ?? "Login failed. Please check your credentials.",
+      message: getApiErrorMessage(
+        e,
+        "Login failed. Please check your credentials.",
+      ),
+    };
+  }
+};
+
+export const RegisterUser = async (credentials: {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/register", credentials);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(e, "Registration failed. Please try again."),
     };
   }
 };
 
 export const GetCurrentUserApi = async (
-  token: string,
 ): Promise<ApiResponse> => {
   try {
-    const data = await GetData<ApiResponse>("/auth/me", token);
+    const data = await GetData<ApiResponse>("/auth/me");
     return { status: true, ...data };
   } catch (e: any) {
     return {
       status: false,
       message: e.message ?? "Failed to fetch user session.",
+    };
+  }
+};
+
+export const LogoutUser = async (): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/logout");
+    return { status: true, ...data };
+  } catch (e: any) {
+    return { status: false, message: getApiErrorMessage(e, "Logout failed. Please try again.") };
+  }
+};
+
+export const VerifyEmailApi = async (payload: {
+  token: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/verify-email", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(
+        e,
+        "Email verification failed. Please try again.",
+      ),
+    };
+  }
+};
+
+export const ForgotPasswordApi = async (payload: {
+  email: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/forgot-password", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(
+        e,
+        "Failed to send password reset email. Please try again.",
+      ),
+    };
+  }
+};
+
+export const ResetPasswordApi = async (payload: {
+  token: string;
+  newPassword: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/reset-password", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(
+        e,
+        "Failed to reset password. Please try again.",
+      ),
     };
   }
 };

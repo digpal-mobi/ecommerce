@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import { store, useDispatch } from "@/redux/store";
 import {
   loginSuccess,
-  setUserDetails,
   logoutSuccess,
+  setAccessToken,
 } from "@/redux/slices/authSlice";
 import { fetchUserCart, clearCart } from "@/redux/slices/cartSlice";
 import { getCookie, deleteCookie } from "@/website/Helpers/Helper";
@@ -23,11 +23,21 @@ function AuthInitializer({
       if (!accessToken) return;
 
       try {
-        const response = await GetCurrentUserApi(accessToken);
-        if (response.status !== false && (response.id || response.username)) {
-          dispatch(setUserDetails(response));
-          dispatch(loginSuccess({ ...response, accessToken }));
-          dispatch(fetchUserCart(Number(response.id) || 5));
+        dispatch(setAccessToken(accessToken));
+        const response = await GetCurrentUserApi();
+        const user = response.data;
+        if (
+          response.status !== false &&
+          user &&
+          (user.id || user.username)
+        ) {
+          dispatch(
+            loginSuccess({
+              user,
+              accessToken: store.getState().auth.accessToken ?? accessToken,
+            }),
+          );
+          dispatch(fetchUserCart(Number(user.id) || 5));
         } else {
           // If token expired or invalid, clear cookie & reset
           deleteCookie("USER_ACCESS");

@@ -1,14 +1,11 @@
-export interface JwtPayloadUser {
-  id: string;
-  email: string;
-  role?: string;
-}
+import { AccessTokenPayload } from "../User";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: JwtPayloadUser;
+      user?: AccessTokenPayload;
     }
   }
 }
 
+export {};
