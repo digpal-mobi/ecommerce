@@ -197,8 +197,14 @@ const SectionRegister = () => {
           )}
 
           {successMessage && (
-            <div className="rounded-lg border border-green-200 bg-green-50 p-[12px] text-[14px] text-green-700">
-              {successMessage}
+            <div className="flex flex-col gap-2 rounded-lg border border-green-200 bg-green-50 p-[14px] text-[14px] text-green-700">
+              <p>{successMessage}</p>
+              <Link
+                href={`/verify-email?email=${encodeURIComponent(watch("email"))}`}
+                className="inline-flex w-fit items-center font-semibold text-black underline hover:opacity-80"
+              >
+                Enter your 6-digit verification code &rarr;
+              </Link>
             </div>
           )}
 

@@ -85,6 +85,22 @@ export class AuthController {
     res.clearCookie("refreshToken", refreshCookieOptions);
     res.status(200).json(new ApiResponse(200, {}, "Logged out successfully"));
   });
+
+  forgotPassword = asyncHandler(async (req:Request, res:Response) => {
+    const {email} = req.body;
+    const result = await authService.forgotPassword(email);
+    res.status(200).json(new ApiResponse(200, result, "If an account exists with this email, password reset instructions will be sent."));
+  })
+
+  resetPassword = asyncHandler(async (req: Request, res: Response) => {
+    const {token, newPassword } = req.body;
+
+    const result = await authService.resetPassword(token,
+      newPassword
+    )
+
+    res.status(200).json(new ApiResponse(200, result, "Password Changed successfully"))
+  })
 }
 
 export const authController = new AuthController();

@@ -154,6 +154,58 @@ export const LogoutUser = async (): Promise<ApiResponse> => {
   }
 };
 
+export const VerifyEmailApi = async (payload: {
+  token: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/verify-email", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(
+        e,
+        "Email verification failed. Please try again.",
+      ),
+    };
+  }
+};
+
+export const ForgotPasswordApi = async (payload: {
+  email: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/forgot-password", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(
+        e,
+        "Failed to send password reset email. Please try again.",
+      ),
+    };
+  }
+};
+
+export const ResetPasswordApi = async (payload: {
+  token: string;
+  newPassword: string;
+}): Promise<ApiResponse> => {
+  try {
+    const data = await PostData<ApiResponse>("/auth/reset-password", payload);
+    return { status: true, ...data };
+  } catch (e: any) {
+    return {
+      status: false,
+      message: getApiErrorMessage(
+        e,
+        "Failed to reset password. Please try again.",
+      ),
+    };
+  }
+};
+
 export interface CartItemPayload {
   id: number;
   quantity: number;

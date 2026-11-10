@@ -8,6 +8,8 @@ export interface IUser {
   isVerified: boolean;
   verificationTokenHash?: string;
   verificationTokenExpiresAt?: Date;
+  passwordResetTokenHash?: string;
+  passwordResetTokenExpiresAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -53,6 +55,14 @@ const userSchema = new Schema<IUser>(
       enum: ["user", "admin"],
       default: "user",
     },
+    passwordResetTokenHash: {
+      type: String,
+      select: false,
+    },
+    passwordResetTokenExpiresAt: {
+      type: Date,
+      select: false,
+    }
   },
   { timestamps: true }
 );

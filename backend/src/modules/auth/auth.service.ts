@@ -14,6 +14,8 @@ import SessionModel from "../sessions/session.model";
 import { sendEmail } from "../email/email.service";
 import { verificationEmail } from "../../templates/verification.email";
 import logger from "../../utils/logger";
+import { generateResetToken } from "../../helpers/reset-token";
+import { resetPasswordEmail } from "../../templates/resetPasswordEmail";
 
 async function createAuthSession(
   user: HydratedDocument<IUser>,
@@ -53,11 +55,14 @@ export class AuthService {
       throw new ApiError(400, "Email and password are required");
     }
     const normalizedId = id.trim().toLowerCase();
-    const user = await UserModel.findOne({ $or: [{ email: normalizedId }, { username: normalizedId }] }).select(
-      "+password",
-    );
+    const user = await UserModel.findOne({
+      $or: [{ email: normalizedId }, { username: normalizedId }],
+    }).select("+password");
     if (!user || !user.password) {
-      logger.warn("Login failed", { identifier: normalizedId, reason: "invalid_credentials" });
+      logger.warn("Login failed", {
+        identifier: normalizedId,
+        reason: "invalid_credentials",
+      });
       throw new ApiError(401, "Invalid email or password");
     }
 
@@ -67,11 +72,17 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      logger.warn("Login failed", { userId: user._id.toString(), reason: "invalid_password" });
+      logger.warn("Login failed", {
+        userId: user._id.toString(),
+        reason: "invalid_password",
+      });
       throw new ApiError(401, "Invalid email or password");
     }
     if (!user.isVerified) {
-      logger.warn("Login blocked", { userId: user._id.toString(), reason: "email_unverified" });
+      logger.warn("Login blocked", {
+        userId: user._id.toString(),
+        reason: "email_unverified",
+      });
       throw new ApiError(403, "Please verify your email before logging in");
     }
 
@@ -100,7 +111,10 @@ export class AuthService {
     const existingUser = await UserModel.findOne({ email: normalizedEmail });
 
     if (existingUser) {
-      logger.warn("Registration rejected", { email: normalizedEmail, reason: "email_taken" });
+      logger.warn("Registration rejected", {
+        email: normalizedEmail,
+        reason: "email_taken",
+      });
       throw new ApiError(400, "User with this email already exists");
     }
 
@@ -127,7 +141,6 @@ export class AuthService {
       }),
     });
     logger.info("User registered", { userId: newUser._id.toString() });
-
 
     return {
       user: {
@@ -227,7 +240,7 @@ export class AuthService {
       { _id: session._id, revokedAt: null },
       { $set: { revokedAt: new Date() } },
     ); // revoke the refresh token
-    
+
     if (revokeResult.modifiedCount !== 1) {
       logger.warn("Refresh token reuse detected", {
         userId: session.userId.toString(),
@@ -260,6 +273,80 @@ export class AuthService {
     return {
       message: "Logged out successfully",
     };
+  }
+
+  async forgotPassword(email: string) {
+    if (!email) {
+      logger.warn("Forgot password rejected", { reason: "missing_field" });
+      throw new ApiError(400, "Email is required");
+    }
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const user = await UserModel.findOne({
+      email: normalizedEmail,
+    });
+    if (!user) {
+      logger.info("Forgot password requested");
+      return {
+        message:
+          "If an account exists with this email, password reset instructions will be sent.",
+      };
+    }
+    const { resetToken, hashedToken, expiresAt } = generateResetToken();
+    user.passwordResetTokenHash = hashedToken;
+    user.passwordResetTokenExpiresAt = expiresAt;
+    await user.save();
+    await sendEmail({
+      to: user.email,
+      subject: "Reset Password Request",
+      html: resetPasswordEmail({
+        username: user.username,
+        resetUrl: `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`,
+      }),
+    });
+
+    logger.info("Forgot password email sent", { userId: user._id.toString() });
+    return;
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const hashedToken = hashRefreshToken(token);
+    const user = await UserModel.findOne({
+      passwordResetTokenHash: hashedToken,
+    }).select("+passwordResetTokenHash +passwordResetTokenExpiresAt");
+
+    if (!user) {
+      logger.warn("Reset password rejected", { reason: "invalid_token" });
+      throw new ApiError(401, "Invalid reset token");
+    }
+
+    if (
+      !user.passwordResetTokenExpiresAt ||
+      user.passwordResetTokenExpiresAt.getTime() <= Date.now()
+    ) {
+      logger.warn("Reset password rejected", {
+        userId: user._id.toString(),
+        reason: "expired_token",
+      });
+      throw new ApiError(401, "Reset token has expired");
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.passwordResetTokenHash = undefined;
+    user.passwordResetTokenExpiresAt = undefined;
+    await user.save();
+    await SessionModel.updateMany(
+      {
+        userId: user._id,
+        revokedAt: null,
+      },
+      {
+        $set: { revokedAt: new Date() },
+      },
+    );
+    logger.info("Password reset successfully", { userId: user._id.toString() });
+    return;
   }
 }
 

@@ -47,3 +47,15 @@ export const verifyEmailSchema = z.object({
     .length(6, "Verification token must be exactly 6 digits")
     .regex(/^\d{6}$/, "Verification token must contain numbers only"),
 });
+
+export const resetPasswordSchema = z.object({
+  token: z
+    .string()
+    .length(64, "Invalid reset token")
+    .regex(/^[a-f0-9]{64}$/i, "Invalid reset token"),
+
+  newPassword: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(64, "Password cannot exceed 64 characters"),
+});

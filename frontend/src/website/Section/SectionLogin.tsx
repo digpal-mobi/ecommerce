@@ -115,9 +115,17 @@ const SectionLogin = () => {
           </div>
 
           <div className="flex flex-col gap-[8px]">
-            <label htmlFor="password" className="text-[15px] font-medium">
-              Password
-            </label>
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className="text-[15px] font-medium">
+                Password
+              </label>
+              <Link
+                href="/forgot-password"
+                className="text-[13px] text-black/70 hover:text-black underline transition-colors"
+              >
+                Forgot password?
+              </Link>
+            </div>
             <Input
               id="password"
               type="password"
